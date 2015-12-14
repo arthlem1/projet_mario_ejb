@@ -12,6 +12,18 @@ margin:0;
   background-size: cover; /* version standardisée */
 }
 
+div#steam { background-image: url('../img.backgrounds/nuage.png'); background-repeat: no-repeat; background-position: left bottom; -webkit-animation: slide 10s linear infinite; }
+
+@-webkit-keyframes slide {
+	    from { background-position: left 0; }
+		to { background-position: left 100%; }
+	}
+
+	@-moz-keyframes slide {
+	    from { background-position: 83% 0; }
+		to { background-position: 83% 100%; }
+	}
+
 strong {
 	font-weight: 500;
 }
