@@ -22,8 +22,6 @@ import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
-import be.ipl.projet_ejb.Carte;
 import be.ipl.projet_ejb.util.Util;
 
 /**
