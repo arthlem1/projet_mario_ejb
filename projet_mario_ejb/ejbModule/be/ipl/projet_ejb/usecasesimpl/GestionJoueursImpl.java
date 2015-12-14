@@ -1,11 +1,12 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
 import javax.ejb.EJB;
+import javax.ejb.Startup;
 
 import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
-
+@Startup
 public class GestionJoueursImpl implements GestionJoueurs{
 
 	@EJB
