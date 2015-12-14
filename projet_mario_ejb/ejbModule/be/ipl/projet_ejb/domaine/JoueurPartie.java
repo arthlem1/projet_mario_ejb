@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -40,7 +40,7 @@ public class JoueurPartie implements Serializable {
 	@JoinTable(name="JOUEUR_PARTIE_CARTES",schema = "mario_ejb",
 			inverseJoinColumns={@JoinColumn(name="MAIN_CARTE_ID")})
 	private List<Carte> mainsCarte;
-
+	
 	protected JoueurPartie() {
 		super();
 	}
