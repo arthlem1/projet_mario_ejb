@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
 
