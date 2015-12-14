@@ -62,7 +62,7 @@ public class Partie implements Serializable {
 	
 	@OneToOne(cascade={CascadeType.ALL})
 	private JoueurPartie joueur_courant;
-
+	
 	protected Partie() {
 		super();
 	}
