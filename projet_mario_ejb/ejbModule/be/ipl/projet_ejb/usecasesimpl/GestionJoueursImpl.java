@@ -24,5 +24,10 @@ public class GestionJoueursImpl implements GestionJoueurs{
 		return joueur;
 	}
 
+	@Override
+	public Joueur rechercher(String pseudo) {
+		return joueurDao.rechercher(pseudo);
+	}
+
 	
 }
