@@ -39,7 +39,10 @@ public class Partie implements Serializable {
 	private String nom;
 
 	@NotNull
-	private boolean clockwise;
+	private boolean clockwise = true;
+	
+	@NotNull
+	private boolean started = false;
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -67,7 +70,6 @@ public class Partie implements Serializable {
 	public Partie(String nom, Joueur joueur) {
 		Util.checkString(nom);
 		this.nom = nom;
-		this.clockwise = true;
 		this.dateHeureCreation = Calendar.getInstance();
 		listeJoueurs.add(joueur);
 	}
