@@ -69,6 +69,7 @@
 			le
 			meme joueur.
 		</carte>
+		
 		<carte cout="0" effet="Rejouez et changement de sens" src="images/"
 			codeEffet="10">Le joueur rejoue et la partie continue
 			dans le sens inverse.
