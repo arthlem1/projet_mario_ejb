@@ -11,7 +11,7 @@ import be.ipl.projet_ejb.usecases.GestionJoueurs;
 @Startup
 public class GestionJoueursImpl implements GestionJoueurs{
 
-	@EJB
+	@EJB 
 	private JoueurDaoImpl joueurDao;
 	
 	@Override
