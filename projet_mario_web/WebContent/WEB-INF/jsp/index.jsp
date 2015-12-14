@@ -3,6 +3,7 @@
 </head>
 <body>
 
+	
 	<!-- Top content -->
 	<div class="top-content">
 
@@ -39,6 +40,8 @@
 						</div>
 
 					</div>
+					
+					
 
 					<div class="col-sm-1"></div>
 					<div class="col-sm-1"></div>
