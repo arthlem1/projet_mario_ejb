@@ -299,6 +299,11 @@ public class Carte implements Serializable {
         public void setRef(String value) {
             this.ref = value;
         }
+        
+        @Override
+        protected Object clone() throws CloneNotSupportedException {
+        	return super.clone();
+        }
 
     }
 
