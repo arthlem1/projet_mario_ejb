@@ -22,7 +22,7 @@
 								
 							</div>
 							<div class="form-bottom">
-								<form role="form" action="" method="post" class="login-form">
+								<form role="form" action="login.html" method="post" class="login-form">
 									<div class="form-group">
 										<label class="sr-only" for="form-username">Username</label> <input
 											type="text" name="form-username" placeholder="Username..."
@@ -41,8 +41,6 @@
 
 					</div>
 					
-					
-
 					<div class="col-sm-1"></div>
 					<div class="col-sm-1"></div>
 
@@ -72,9 +70,9 @@
 									</div>
 
 									<div class="form-group">
-										<label class="sr-only" for="form-mdp">Mot de passe</label> <input
-											type="text" name="form-mdp" placeholder="Mot de passe..."
-											class="form-mdp form-control" id="form-mdp">
+										<label class="sr-only" for="form-password">Mot de passe</label> <input
+											type="text" name="form-password" placeholder="Mot de passe..."
+											class="form-password form-control" id="form-password">
 									</div>
 
 									<button type="submit" class="btn">S'inscrire!</button>
@@ -83,6 +81,8 @@
 						</div>
 
 					</div>
+					
+					<a href="attente.html">Attente</a>
 				</div>
 
 			</div>

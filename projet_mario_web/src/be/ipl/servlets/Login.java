@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
+import be.ipl.projet_ejb.usecasesimpl.GestionJoueursImpl;
 
 /**
- * Servlet implementation class Inscription
+ * Servlet implementation class Login
  */
-@WebServlet("/inscrire.html")
-public class Inscription extends HttpServlet {
+@WebServlet("/login.html")
+public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -24,7 +25,7 @@ public class Inscription extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Inscription() {
+	public Login() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,7 +37,7 @@ public class Inscription extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -45,8 +46,14 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
+		String pseudo = request.getParameter("form-username");
+		String mdp = request.getParameter("form-password");
+
+		System.out.println(pseudo + " " + mdp);
+		
+		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
+
 	}
 
 }

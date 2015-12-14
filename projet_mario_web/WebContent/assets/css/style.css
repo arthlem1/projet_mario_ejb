@@ -8,8 +8,25 @@ body {
 margin:0;
   padding:0;
   background: url("../img/backgrounds/1.jpg") no-repeat center fixed; 
+  background-repeat: repeat-x;
   -webkit-background-size: cover; /* pour anciens Chrome et Safari */
   background-size: cover; /* version standardisée */
+}
+
+.loading{
+	position:absolute;
+	width:325px;
+	height:300px;
+	
+}
+
+#test{
+  position: absolute;
+  top:300px;
+  background-image: url("../img/backgrounds/nuage.png");
+  
+  height: 220px;
+  width: 100%;
 }
 
 div#steam { background-image: url('../img.backgrounds/nuage.png'); background-repeat: no-repeat; background-position: left bottom; -webkit-animation: slide 10s linear infinite; }
