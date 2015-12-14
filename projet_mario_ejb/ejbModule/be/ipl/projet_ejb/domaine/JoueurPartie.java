@@ -8,9 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -21,8 +23,8 @@ import javax.validation.constraints.NotNull;
 
 public class JoueurPartie implements Serializable {
 
-	@Column(name = "JOUEUR_PARTIE_ID")
 	@EmbeddedId
+	@Column(name = "JOUEUR_PARTIE_ID")
 	private JoueurPartiePK joueurPartiePK;
 
 	@NotNull
@@ -31,13 +33,12 @@ public class JoueurPartie implements Serializable {
 	private int ordreJoueurs;
 
 	@ManyToMany
-	@JoinTable(name = "JOUEUR_PARTIE_DE", schema = "mario_ejb", joinColumns =
-
-	{ @JoinColumn(name = "JOUEUR_PARTIE_ID") }, inverseJoinColumns =
-
-	{ @JoinColumn(name = "DE_ID") })
+	@JoinTable(name = "JOUEUR_PARTIE_DES", schema = "mario_ejb",
+			inverseJoinColumns={@JoinColumn(name="MAIN_DE_ID")})
 	private List<De> mainsDe;
-	@NotNull
+	@ManyToMany
+	@JoinTable(name="JOUEUR_PARTIE_CARTES",schema = "mario_ejb",
+			inverseJoinColumns={@JoinColumn(name="MAIN_CARTE_ID")})
 	private List<Carte> mainsCarte;
 
 	protected JoueurPartie() {
