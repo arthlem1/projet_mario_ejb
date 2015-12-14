@@ -55,7 +55,7 @@
 								
 							</div>
 							<div class="form-bottom">
-								<form role="form" action="" method="post"
+								<form role="form" action="inscrire.html" method="post"
 									class="registration-form">
 									<div class="form-group">
 										<label class="sr-only" for="form-first-name">Prénom</label> <input

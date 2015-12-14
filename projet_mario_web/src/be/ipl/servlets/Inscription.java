@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
 
 /**
@@ -35,8 +36,8 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
+		
 	}
 
 	/**
@@ -45,8 +46,19 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String prenom = request.getParameter("form-first-name");//prendre en compte le nom
+		String pseudo = request.getParameter("form-username");
+		String mdp = request.getParameter("form-password");
+		Joueur joueur = gestionJoueurs.rechercher(pseudo);
+		if(joueur!=null){
+			String message = "Ce pseudo est déjà utilisé. Veuillez en utiliser un autre S.V.P.";
+			System.out.println(message);
+			getServletContext().getNamedDispatcher("index.html").forward(request, response);
+			return;
+		}
+		gestionJoueurs.creerJoueur(pseudo, mdp);
+		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 	}
+	
 
 }
