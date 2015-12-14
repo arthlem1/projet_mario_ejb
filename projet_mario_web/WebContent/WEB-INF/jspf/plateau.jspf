@@ -1,0 +1,51 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div>
+<h3>Vous êtes ${user}</h3>
+</div>
+<c:choose>
+	<c:when test="${vainqueur != null }">
+		<h4>Le vainqueur est ${vainqueur}</h4>
+	</c:when>
+	<c:otherwise>
+		<h4>C'est au tour de ${joueurCourant}</h4>
+	</c:otherwise>
+</c:choose>
+<div id="lancer">
+	<c:if test="${des != null}">
+		<c:forEach var="de" items="${des}">
+			d&eacute; ${de.numero} : ${de.valeur}<br>
+		</c:forEach>
+		<p>Total pour ce lanc&eacute; : ${total}</p>
+		<p>Total des points : ${points}</p>
+	</c:if>
+</div>
+<c:if test="${joueurCourant !=null && user==joueurCourant}">
+	<c:url var="jouer" value="jouer.html"/>
+	<form method="post" action="${jouer}">
+		<c:if test="${points == null || points <21}">
+			<c:if test="${nb==3}">
+			<input type="submit" name="nbdes" value="Lancer les 3 d&eacute;s"/>
+			</c:if>
+			<c:if test="${points != null}">
+				<c:if test="${nb>=2}">
+					<input type="submit" name="nbdes" value="Lancer 2 d&eacute;s"/>
+				</c:if>
+				<input type="submit" name="nbdes" value="Lancer 1 d&eacute;s"/>
+			</c:if>
+		</c:if>
+	</form>
+	<c:if test="${points != null}">
+		<c:url var="arreter" value="arreter.html"/>
+		<form method="post" action="${arreter}">
+			<input type="submit" value="Arr&ecirc;ter"/>
+		</form>
+	</c:if>
+</c:if>
+<div id="points">
+	<h4>R&eacute;sultats</h4>
+	<c:forEach var="entry" items="${tousLesPoints}">
+		${entry.key} : ${entry.value}<br>
+	</c:forEach>
+</div>
