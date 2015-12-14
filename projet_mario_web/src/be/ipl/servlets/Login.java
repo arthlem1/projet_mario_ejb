@@ -1,6 +1,8 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
-import be.ipl.projet_ejb.usecasesimpl.GestionJoueursImpl;
 
 /**
  * Servlet implementation class Login
@@ -50,8 +52,18 @@ public class Login extends HttpServlet {
 		String pseudo = request.getParameter("form-username");
 		String mdp = request.getParameter("form-password");
 
-		System.out.println(pseudo + " " + mdp);
-		
+		Joueur joueur = gestionJoueurs.creerJoueur(pseudo, mdp);
+
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+
+			@Override
+			public void run() {
+				System.out.println(joueur.getPseudo());
+			}
+		};
+		timer.schedule(task, 30000);
+
 		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 
 	}
