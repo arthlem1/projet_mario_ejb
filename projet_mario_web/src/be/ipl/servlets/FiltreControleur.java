@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @WebFilter(filterName="FiltreControleur", urlPatterns = "/*", dispatcherTypes = {DispatcherType.REQUEST} )
 public class FiltreControleur implements Filter {
+	@SuppressWarnings("unused")
 	private FilterConfig fConfig;
 	
 	public void init(FilterConfig fConfig) throws ServletException {

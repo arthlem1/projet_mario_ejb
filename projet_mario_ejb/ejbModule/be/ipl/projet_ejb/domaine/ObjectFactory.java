@@ -15,7 +15,6 @@ import javax.xml.namespace.QName;
 
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
-import be.ipl.projet_ejb.domaine.Carte.Figure;
 
 
 /**

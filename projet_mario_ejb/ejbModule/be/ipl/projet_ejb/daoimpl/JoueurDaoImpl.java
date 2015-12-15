@@ -18,4 +18,12 @@ public class JoueurDaoImpl extends DaoImpl<String, Joueur> {
 		return recherche(queryString, pseudo);
 	}
 	
+	//TODO à modifier quand ecryption faite.
+	public boolean login(Joueur joueur){
+		Joueur joueurDB = rechercher(joueur.getPseudo());
+		if(joueurDB == null)
+			return false;
+		return joueurDB.getMdp() == joueur.getMdp();
+	}
+	
 }

@@ -3,7 +3,6 @@ package be.ipl.projet_ejb.domaine;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Id;
 
 @SuppressWarnings("serial")
 @Embeddable
