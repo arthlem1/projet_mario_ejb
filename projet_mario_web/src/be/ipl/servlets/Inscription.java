@@ -56,7 +56,7 @@ public class Inscription extends HttpServlet {
 			getServletContext().getNamedDispatcher("index.html").forward(request, response);
 			return;
 		}
-		gestionJoueurs.creerJoueur(pseudo, mdp);
+		gestionJoueurs.creerJoueur(prenom,pseudo, mdp);
 		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 	}
 	

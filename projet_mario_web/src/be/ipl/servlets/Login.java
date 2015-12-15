@@ -49,10 +49,11 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		String prenom = "";//TODO récupérer ce champ!
 		String pseudo = request.getParameter("form-username");
 		String mdp = request.getParameter("form-password");
 
-		Joueur joueur = gestionJoueurs.creerJoueur(pseudo, mdp);
+		Joueur joueur = gestionJoueurs.creerJoueur(prenom,pseudo, mdp);
 
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {

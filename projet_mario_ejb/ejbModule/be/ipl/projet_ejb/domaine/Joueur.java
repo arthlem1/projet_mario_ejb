@@ -25,20 +25,22 @@ public class Joueur implements Serializable {
 	@Column(name = "JOUEUR_ID")
 	private int id;
 	@NotNull
-	@Column
+	private String prenom;
+	@NotNull
 	private String pseudo;
 	@NotNull
-	@Column
 	private String mdp;
 
 	protected Joueur() {
 
 	}
 
-	public Joueur(String pseudo, String mdp) {
+	public Joueur(String prenom, String pseudo, String mdp) {
 		super();
+		Util.checkString(prenom);
 		Util.checkString(pseudo);
 		Util.checkString(mdp);
+		this.prenom = prenom;
 		this.pseudo = pseudo;
 		this.mdp = mdp;
 	}
@@ -65,6 +67,10 @@ public class Joueur implements Serializable {
 		return true;
 	}
 
+	public String getPrenom() {
+		return prenom;
+	}
+	
 	public String getPseudo() {
 		return pseudo;
 	}

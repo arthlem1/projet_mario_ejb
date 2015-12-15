@@ -15,10 +15,10 @@ public class GestionJoueursImpl implements GestionJoueurs{
 	private JoueurDaoImpl joueurDao;
 	
 	@Override
-	public Joueur creerJoueur(String pseudo, String mdp) {
+	public Joueur creerJoueur(String prenom, String pseudo, String mdp) {
 		Joueur joueur = joueurDao.rechercher(pseudo);
 		if (joueur == null) {
-			joueur = new Joueur(pseudo, mdp);
+			joueur = new Joueur(prenom,pseudo, mdp);
 			joueur = joueurDao.enregistrer(joueur);
 		}
 		return joueur;
