@@ -1,8 +1,13 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonBuilderFactory;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +20,7 @@ import be.ipl.projet_ejb.usecases.GestionJoueurs;
 /**
  * Servlet implementation class Inscription
  */
-@WebServlet("/inscrire.html")
+@WebServlet("/Inscription")
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +42,7 @@ public class Inscription extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		doPost(request, response);
-		
+
 	}
 
 	/**
@@ -46,19 +51,33 @@ public class Inscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String prenom = request.getParameter("form-first-name");//prendre en compte le nom
-		String pseudo = request.getParameter("form-username");
-		String mdp = request.getParameter("form-password");
+		String prenom = request.getParameter("prenom");
+		String pseudo = request.getParameter("pseudo");
+		String mdp = request.getParameter("mdp");
+
+		System.out.println(prenom + " " + pseudo + " " + mdp);
+
+		Map<String, Object> config = new HashMap<String, Object>();
+		config.put("javax.json.stream.JsonGenerator.prettyPrinting", Boolean.valueOf(true));
+		JsonBuilderFactory factory = Json.createBuilderFactory(config);
+		JsonObject value;
+
 		Joueur joueur = gestionJoueurs.rechercher(pseudo);
-		if(joueur!=null){
-			String message = "Ce pseudo est d�j� utilis�. Veuillez en utiliser un autre S.V.P.";
-			System.out.println(message);
-			getServletContext().getNamedDispatcher("index.html").forward(request, response);
+		if (joueur != null) {
+			String message = "Ce pseudo est déjà utilisé. Veuillez en utiliser un autre S.V.P.";
+
+			value = factory.createObjectBuilder().add("success", "0").add("message", message).build();
+			response.setContentType("application/json");
+			response.getWriter().write(value.toString());
 			return;
 		}
-		gestionJoueurs.creerJoueur(prenom,pseudo, mdp);
-		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
+		gestionJoueurs.creerJoueur(prenom, pseudo, mdp);
+
+		value = factory.createObjectBuilder().add("success", "1").add("message", "Vous avez été inscrit avec succès!").build();
+		System.out.println(value.toString());
+		response.setContentType("application/json");
+		response.getWriter().write(value.toString());
+
 	}
-	
 
 }

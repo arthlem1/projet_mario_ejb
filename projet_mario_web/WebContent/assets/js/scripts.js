@@ -1,8 +1,6 @@
 
 jQuery(document).ready(function() {
-	
-    
-    
+
     /*
         Login form validation
     */
@@ -31,7 +29,11 @@ jQuery(document).ready(function() {
     	$(this).removeClass('input-error');
     });
     
+ 
+    
     $('.registration-form').on('submit', function(e) {
+    	
+    	e.preventDefault();
     	
     	$(this).find('input[type="text"], textarea').each(function(){
     		if( $(this).val() == "" ) {
@@ -43,7 +45,47 @@ jQuery(document).ready(function() {
     		}
     	});
     	
+    	var prenom = $('#form-first-name').val();
+    	var pseudo = $('#form-username-register').val();
+    	var mdp = $("#form-password-register").val();
+    	
+    	if(prenom && pseudo && mdp){
+    		$.ajax({
+    			url:"Inscription",
+    			method:"POST",
+    			
+    			data:{"prenom":prenom,
+    				"pseudo":pseudo,
+    				"mdp":mdp}
+    		}).done(function(data) {
+
+    			if(data.success == 1){
+    				$.notiny({text: data.message, theme: 'success'});
+    				display_menu();
+    			}else{
+    				$.notiny({text: data.message, theme: 'error'});
+    			}
+    
+    		}).fail( function(jqXHR, textStatus, errorThrown) {
+    	        alert("error : "+textStatus);
+    	    });
+    	}
+    	
+    	return false;
+    	
     });
+    
+    
+    var display_menu = function(){
+    	
+    	$("#form1").slideToggle("slow");
+    	$('#form2').slideToggle("slow");
+    	$("#menu").slideToggle("slow");
+    	
+    };
+    
+    
+    
     /*
     var x = 0;
     setInterval(function(){
