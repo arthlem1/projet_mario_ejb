@@ -130,4 +130,8 @@ public class Partie implements Serializable {
 	public void setJoueur_courant(JoueurPartie joueur_courant) {
 		this.joueur_courant = joueur_courant;
 	}
+	
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
 }
