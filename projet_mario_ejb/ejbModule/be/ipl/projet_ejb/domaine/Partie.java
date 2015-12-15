@@ -48,7 +48,7 @@ public class Partie implements Serializable {
 	private Calendar dateHeureCreation;
 
 	@Transient
-	private List<Joueur> listeJoueurs = new ArrayList<>();;
+	private List<JoueurPartie> listeJoueurs = new ArrayList<>();;
 
 	@ManyToOne
 	@JoinColumn(name = "VAINQUEUR")
@@ -70,7 +70,7 @@ public class Partie implements Serializable {
 		Util.checkString(nom);
 		this.nom = nom;
 		this.dateHeureCreation = Calendar.getInstance();
-		listeJoueurs.add(joueur);
+		listeJoueurs.add(new JoueurPartie(joueur, this, listeJoueurs.size()+1));
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class Partie implements Serializable {
 		return dateHeureCreation;
 	}
 
-	public List<Joueur> getListeJoueurs() {
+	public List<JoueurPartie> getListeJoueurs() {
 		return listeJoueurs;
 	}
 
@@ -123,4 +123,11 @@ public class Partie implements Serializable {
 		return pioche;
 	}
 
+	public void setClockwise(boolean clockwise) {
+		this.clockwise = clockwise;
+	}
+	
+	public void setJoueur_courant(JoueurPartie joueur_courant) {
+		this.joueur_courant = joueur_courant;
+	}
 }

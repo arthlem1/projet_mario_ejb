@@ -30,7 +30,7 @@ public class Joueur implements Serializable {
 	private String pseudo;
 	@NotNull
 	private String mdp;
-
+	
 	protected Joueur() {
 
 	}
@@ -82,5 +82,4 @@ public class Joueur implements Serializable {
 	public int getId() {
 		return id;
 	}
-
 }
