@@ -1,52 +1,71 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.List;
+import java.util.Random;
 
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
+import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
+import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 @Singleton
 @Startup
 public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
+	@EJB JoueurPartieDaoImpl joueurPartieDao;
+	@EJB DeDaoImpl deDao;
+	@EJB PartieDaoImpl partieDao;
 	
 	
 	@Override
-	public void tirerUneCarte(Joueur joueur) {
-		//TODO tirer une carte
+	public void tirerUneCarte(JoueurPartie joueurPartie, Partie partie, Joueur joueur) {
+		List<Carte> pioche = partie.getPioche();
+		if(pioche.size()==0){
+			//lancer exception PiocheNonExistant
+		}
+		Carte carte = pioche.get(0);//premiere carte
+		pioche.remove(0);
+		joueurPartieDao.rajouterCarte(joueur, partie, carte);
 	}
 
 	@Override
-	public void utiliserCarte(Carte carte) {
-		//TODO utiliser une carte
+	public void utiliserCarte(Carte carte, JoueurPartie joueurPartie, Partie partie, Joueur joueur) {
+		//voir effet carte 
+		joueurPartieDao.retirerCarte(joueur, partie, carte);
 	}
 
 	@Override
-	public List<Carte> listerCartesUtilisables(int nbWasabi) {
-		// TODO lister cartes utilisables
+	public List<Carte> listerCartesUtilisables(int nbWasabi,Partie partie) {
+		// pas encore dans Dao
 		return null;
 	}
 
 	@Override
-	public List<Carte> listerCartes(Joueur joueur) {
-		// TODO lister les cartes
-		return null;
+	public List<Carte> listerCartes(Joueur joueur,Partie partie) {
+		return joueurPartieDao.getCartes(joueur, partie);
 	}
 
 	@Override
 	public List<De> lancerDes() {
-		// TODO lancer les dés
+		Random random = new Random();
+		List<De> listeDes = deDao.lister();
+		for (int i = 0; i < listeDes.size(); i++) {
+			//getFace
+		}
 		return null;
 	}
 
 	@Override
-	public void donnerDe(Joueur donneur, Joueur receveur, int nbDes) {
-		// TODO donner des dés
+	public void donnerDe(Joueur donneur, Joueur receveur, int nbDes, Partie partie) {
+		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
 	}
 
 	@Override

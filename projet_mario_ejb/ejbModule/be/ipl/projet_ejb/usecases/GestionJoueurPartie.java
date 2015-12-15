@@ -5,20 +5,21 @@ import java.util.List;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 
 public interface GestionJoueurPartie {
 	/**
 	 * Le joueur tire une carte qui sera ajoutée dans sa main.
-	 * @param joueur.
+	 * @param joueurPartie.// adapter DAo car doublon dans les params
 	 */
-	void tirerUneCarte(Joueur joueur);
+	void tirerUneCarte(JoueurPartie joueurPartie, Partie partie, Joueur joueur);
 	
 	/**
 	 * Méthode qui va activer l'effet de la carte.
-	 * @param carte.
+	 * @param carte.//idem
 	 */
-	void utiliserCarte(Carte carte);
+	void utiliserCarte(Carte carte, JoueurPartie joueurPartie, Partie partie, Joueur joueur);
 	
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de 
@@ -26,14 +27,14 @@ public interface GestionJoueurPartie {
 	 * @param nbWasabi
 	 * @return liste de toutes les cartes
 	 */
-	List<Carte> listerCartesUtilisables(int nbWasabi);
+	List<Carte> listerCartesUtilisables(int nbWasabi, Partie partie);
 	
 	/**
 	 * lister toutes les cartes de ce joueur
 	 * @param joueur qui possède les cartes
 	 * @return
 	 */
-	List<Carte> listerCartes(Joueur joueur);
+	List<Carte> listerCartes(Joueur joueur, Partie partie);
 	
 	/**
 	 * Lancer les dés du joueur et lister le résultat
@@ -47,7 +48,7 @@ public interface GestionJoueurPartie {
 	 * @param donneur
 	 * @param receveur
 	 */
-	void donnerDe(Joueur donneur, Joueur receveur, int nbDes);
+	void donnerDe(Joueur donneur, Joueur receveur, int nbDes, Partie partie);
 	
 	/**
 	 * @param liste des dés lancés par le joueur.
