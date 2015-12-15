@@ -48,7 +48,7 @@ import be.ipl.projet_ejb.util.Util;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "face"
-})
+}) 
 @XmlRootElement(name = "de")
 @Entity
 @Table(name = "DES", schema = "mario_ejb")

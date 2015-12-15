@@ -30,7 +30,7 @@ public class DeDaoImpl extends DaoImpl<Integer, De> {
 	public Face getFace (De d,int num){
 		return d.getFace().get(num);
 	}
-	
+	 
 	public List<De> lister(Joueur joueur){
 		Util.checkObject(joueur);
 		String query = "select d.valeur from des d, joueurs j WHERE j.id=?1";
