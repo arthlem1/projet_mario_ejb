@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.util.Util;
+import be.ipl.projet_ejb.domaine.Face;
 
 @Stateless
 @LocalBean
@@ -26,8 +27,11 @@ public class DeDaoImpl extends DaoImpl<Integer, De> {
 		super(entityClass);
 	}
 	
+	public Face getFace (De d,int num){
+		return d.getFace().get(num);
+	}
+	 
 	public List<De> lister(Joueur joueur){
-		Util.checkObject(joueur);
 		String query = "select d.valeur from des d, joueurs j WHERE j.id=?1";
 		return liste(query, joueur.getId());
 	}

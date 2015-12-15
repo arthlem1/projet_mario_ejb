@@ -128,11 +128,10 @@ public class Carte implements Serializable, Cloneable {
 
 	@Override
 	public Object clone() {
-		// TODO Auto-generated method stub
 		try {
 			return super.clone();
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			// TODO Bloquer l'application? A voir
 			e.printStackTrace();
 		}
 		return null;

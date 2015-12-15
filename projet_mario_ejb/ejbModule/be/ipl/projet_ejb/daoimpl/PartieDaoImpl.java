@@ -8,8 +8,6 @@ import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 
 public class PartieDaoImpl extends DaoImpl<String, Partie> {
-	//TODO tirerJoueurAuHasard Laeti
-	//TODO commencerPartie Laeti
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -34,14 +32,15 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return mettreAJour(partie);
 	}
 
-	public JoueurPartie tirerJoueurAuHasard(Partie partie) {
+	private JoueurPartie tirerJoueurAuHasard(Partie partie) {
 		List<JoueurPartie> lesJoueurs = partie.getListeJoueurs();
 		Random random = new Random();
 		int nb = random.nextInt(lesJoueurs.size()) + 1;
+		
 		return lesJoueurs.get(nb);
 	}
 	
-	Partie passerAuJoueurSuivant(Partie partie, JoueurPartie suivant){
+	public Partie passerAuJoueurSuivant(Partie partie, JoueurPartie suivant){
 		String query = "SELECT p FROM Partie p "
 				+ "WHERE p.joueur_id = ?1";
 		Partie p = recherche(query, suivant.getJoueurId());
@@ -51,15 +50,16 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return mettreAJour(p);
 	}
 
-	Partie changerSens(Partie partie){
-		partie.setClockwise(false);
+	public Partie changerSens(Partie partie){
+		boolean avantSet = partie.isClockwise();
+		partie.setClockwise(!avantSet);
 		return mettreAJour(partie);
 	}
 
-	List<Partie> listerPartiesJouees(Joueur joueur){
+	public List<Partie> listerPartiesJouees(Joueur joueur){
 		String query = "SELECT p FROM JoueurPartie jp, Partie p, Joueur j "
 				+ "WHERE j.id = ?1 "
-				+ "AND j.id = jp.id AND p.id = jp.id";
+				+ "AND j.id = jp.JoueurPartiePK.joueur_id AND p.id = jp.JoueurPartiePK.partie_id";
 		return liste(query, joueur.getId());
 	}
 }
