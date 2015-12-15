@@ -66,7 +66,7 @@ import be.ipl.projet_ejb.util.Util;
 @Entity
 @Table(name = "CARTES", schema = "mario_ejb")
 public class Carte implements Serializable, Cloneable {
-	@Id
+	@Id 
 	@XmlTransient
 	@Column(name = "CARTE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

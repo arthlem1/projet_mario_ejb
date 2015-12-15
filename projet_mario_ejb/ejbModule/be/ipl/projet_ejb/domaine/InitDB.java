@@ -51,7 +51,7 @@ public class InitDB {
 			for (int i = 0; i < nbCartesDeCeType; i++) {
 				cartes[i] = (Carte) carte.clone();
 				carteDao.enregistrer(cartes[i]);
-			}
+			} 
 		}
 	}
 
