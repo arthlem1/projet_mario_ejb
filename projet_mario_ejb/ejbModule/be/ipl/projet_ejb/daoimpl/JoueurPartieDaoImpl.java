@@ -16,52 +16,34 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 	
 	public int getNbDe(Joueur j,Partie p){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		int i=recherche(query,j.getId(),p.getId()).getMainsCarte().size();
+		int i = setQuery(j.getId(),p.getId()).getMainsCarte().size();
 		return i;
 		
 	}
 	
 	public List<Carte> getCartes(Joueur j,Partie p){
-		String query="Select jp FROM  JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jp= recherche(query,j.getId(),p.getId());
+		JoueurPartie jp= setQuery(j.getId(),p.getId());
 		List<Carte> retour = jp.getMainsCarte();
 		return retour;
 	}
 	
 	public int retirerDe(Joueur j, Partie p){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jp= recherche(query,j.getId(),p.getId());
+		JoueurPartie jp= setQuery(j.getId(),p.getId());
 		jp.getMainsDe().remove(jp.getMainsDe().size());
 		mettreAJour(jp);
 		return jp.getMainsDe().size();
 	}
 	
 	public int addDe(Joueur j, Partie p,De d){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jp= recherche(query,j.getId(),p.getId());
+		JoueurPartie jp= setQuery(j.getId(),p.getId());
 		jp.getMainsDe().add(d);
 		mettreAJour(jp);
 		return jp.getMainsDe().size();
 	}
 
 	public int transfererDe(Joueur donnant, Joueur recevant, int nb,Partie p){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie recever= recherche(query,recevant.getId(),p.getId());
-		query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie giver= recherche(query,donnant.getId(),p.getId());
+		JoueurPartie recever= setQuery(recevant.getId(),p.getId());
+		JoueurPartie giver= setQuery(donnant.getId(),p.getId());
 		recever.getMainsDe().add(giver.getMainsDe().remove(giver.getMainsDe().size()));
 		mettreAJour(giver);
 		mettreAJour(recever);
@@ -69,10 +51,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 	
 	public boolean retirerCarte(Joueur j,Partie p, Carte c){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jp= recherche(query,j.getId(),p.getId());
+		JoueurPartie jp= setQuery(j.getId(),p.getId());
 		if(!jp.getMainsCarte().contains(c))
 			return false;
 		jp.getMainsCarte().remove(c);
@@ -81,14 +60,8 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 	
 	public boolean transfererCarte(Joueur giver, Joueur receiver, Partie p, Carte c){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jg= recherche(query,giver.getId(),p.getId());
-		 query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jr= recherche(query,receiver.getId(),p.getId());
+		JoueurPartie jg= setQuery(giver.getId(),p.getId());
+		JoueurPartie jr= setQuery(receiver.getId(),p.getId());
 		if(!jg.getMainsCarte().contains(c)||jr.getMainsCarte().contains(c)){
 			return false;
 		}
@@ -100,10 +73,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 	
 	public boolean rajouterCarte(Joueur j,Partie p, Carte c){
-		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK=?1 "
-				+ "AND jp.joueurPartiePK=?2 ";
-		JoueurPartie jp= recherche(query,j.getId(),p.getId());
+		JoueurPartie jp= setQuery(j.getId(),p.getId());
 		if(jp.getMainsCarte().contains(c))
 			return false;
 		jp.getMainsCarte().add(c);
@@ -111,5 +81,10 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		return true;
 	}
 	
-	
+	private JoueurPartie setQuery(int jid, int pid){
+		String query="Select jp FROM JoueurPartie jp "
+				+ "WHERE jp.joueurPartiePK.joueur_id=?1 "
+				+ "AND jp.joueurPartiePK.partie_id=?2 ";
+		return recherche(query,jid,pid);
+	}
 }
