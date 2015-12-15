@@ -34,5 +34,11 @@ public class GestionJoueursImpl implements GestionJoueurs{
 		return joueurDao.rechercher(pseudo);
 	}
 
+	@Override
+	public boolean login(String pseudo, String mdp) {
+		return joueurDao.login(pseudo,mdp);
+	}
+
+	
 	
 }

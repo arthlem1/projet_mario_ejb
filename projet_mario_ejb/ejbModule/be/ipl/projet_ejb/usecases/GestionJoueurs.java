@@ -8,4 +8,5 @@ public interface GestionJoueurs {
 
 	Joueur creerJoueur(String prenom,String pseudo, String mdp);
 	Joueur rechercher(String pseudo);
+	boolean login(String pseudo, String mdp);
 }
