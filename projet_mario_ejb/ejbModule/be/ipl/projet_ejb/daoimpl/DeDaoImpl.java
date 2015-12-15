@@ -1,13 +1,9 @@
 package be.ipl.projet_ejb.daoimpl;
 
-import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import be.ipl.projet_ejb.domaine.De;
-import be.ipl.projet_ejb.domaine.Joueur;
-import be.ipl.projet_ejb.util.Util;
 import be.ipl.projet_ejb.domaine.Face;
 
 @Stateless
@@ -29,11 +25,6 @@ public class DeDaoImpl extends DaoImpl<Integer, De> {
 	
 	public Face getFace (De d,int num){
 		return d.getFace().get(num);
-	}
-	 
-	public List<De> lister(Joueur joueur){
-		String query = "select d.valeur from des d, joueurs j WHERE j.id=?1";
-		return liste(query, joueur.getId());
 	}
 	
 	public void supprimer(De entite) {

@@ -3,13 +3,22 @@ package be.ipl.projet_ejb.daoimpl;
 import java.util.List;
 import java.util.Random;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 
+@LocalBean
+@Stateless
 public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	
 	private static final long serialVersionUID = 1L;
+	
+	public PartieDaoImpl(){
+		super(Partie.class);
+	}
 	
 	public PartieDaoImpl(Class<Partie> entityClass) {
 		super(entityClass);
