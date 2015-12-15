@@ -32,7 +32,6 @@ public class Inscription extends HttpServlet {
 	 */
 	public Inscription() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
