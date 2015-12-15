@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
+import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.util.Util;
 
 /**
@@ -60,18 +60,19 @@ public class De implements Serializable {
 	@Column(name = "DE_ID")
 	private int id;
 	
-	@XmlTransient
-	public enum Face {
-		MARIO, PRENDRE_CARTE, DONNER_DE;
-	}
-
-	@XmlTransient
-	@NotNull
-	@Enumerated
-	private Face valeur = Face.MARIO;
-
-	@Transient
+//	@XmlTransient
+//	public enum Face {
+//		MARIO, PRENDRE_CARTE, DONNER_DE;
+//	}
+//
+//	@XmlTransient
+//	@NotNull
+//	@Enumerated
+//	private Face valeur = Face.MARIO;
+//
+//	@Transient
 	@XmlElement(required = true)
+	@NotNull
 	protected List<Face> face;
 	@Transient
 	@XmlAttribute(name = "nbParJoueur", required = true)
@@ -80,22 +81,23 @@ public class De implements Serializable {
 	@XmlAttribute(name = "nbTotalDes", required = true)
 	protected int nbTotalDes;
 	
+	
 	protected De() {
 	}
 
-	public De(Face valeur) {
-		super();
-		Util.checkObject(valeur);
-		this.valeur = valeur;
-	}
+//	public De(Face valeur) {
+//		super();
+//		Util.checkObject(valeur);
+//		this.valeur = valeur;
+//	}
 
 	public int getId() {
 		return id;
 	}
 
-	public Face getValeur() {
-		return valeur;
-	}
+//	public Face getValeur() {
+//		return valeur;
+//	}
 
 	@Override
 	public int hashCode() {
