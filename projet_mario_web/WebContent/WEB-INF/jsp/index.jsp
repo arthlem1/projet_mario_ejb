@@ -34,7 +34,7 @@
 											placeholder="Mot de passe..."
 											class="form-password form-control" id="form-password">
 									</div>
-									<button type="submit" class="btn">Se connecter</button>
+									<button type="submit" class="btn">Se connecter!</button>
 								</form>
 							</div>
 						</div>
