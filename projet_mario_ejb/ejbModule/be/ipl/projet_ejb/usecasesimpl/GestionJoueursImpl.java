@@ -36,6 +36,8 @@ public class GestionJoueursImpl implements GestionJoueurs{
 
 	@Override
 	public boolean login(String pseudo, String mdp) {
+		Util.checkString(pseudo);
+		Util.checkString(mdp);
 		return joueurDao.login(pseudo,mdp);
 	}
 

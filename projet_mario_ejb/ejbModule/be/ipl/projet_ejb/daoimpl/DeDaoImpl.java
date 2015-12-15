@@ -27,7 +27,6 @@ public class DeDaoImpl extends DaoImpl<Integer, De> {
 	}
 	
 	public List<De> lister(Joueur joueur){
-		Util.checkObject(joueur);
 		String query = "select d.valeur from des d, joueurs j WHERE j.id=?1";
 		return liste(query, joueur.getId());
 	}
