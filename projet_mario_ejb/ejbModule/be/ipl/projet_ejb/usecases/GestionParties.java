@@ -66,4 +66,11 @@ public interface GestionParties {
 	 * @param joueur
 	 */
 	boolean ajouterJoueur(Partie partie, Joueur joueur);
+	
+	/**
+	 * Affiche le vainqueur de la partie
+	 * @param partie
+	 * @return
+	 */
+	Joueur afficherVainqueur(Partie partie);
 }

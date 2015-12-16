@@ -34,7 +34,11 @@ public class GestionPartiesImpl implements GestionParties {
 		},
 		EN_COURS{
 			
-		}, FINI;
+		}, FINI{
+			public Joueur afficherVainqueur(Partie partie , GestionPartiesImpl gpi) {
+				return gpi.afficherVainqueur(partie);
+			}
+		};
 
 		boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
 			return false;
@@ -42,6 +46,10 @@ public class GestionPartiesImpl implements GestionParties {
 		
 		public boolean commencerPartie(Partie partie,GestionPartiesImpl gpi) {
 			return false;
+		}
+		
+		public Joueur afficherVainqueur(Partie partie , GestionPartiesImpl gpi) {
+			return null;
 		}
 	}
 
@@ -93,4 +101,10 @@ public class GestionPartiesImpl implements GestionParties {
 		return partie.getEtat().commencerPartie(partie, this);
 	}
 
+	@Override
+	public Joueur afficherVainqueur(Partie partie) {
+		return partie.getEtat().afficherVainqueur(partie, this);
+	}
+
+	
 }

@@ -88,4 +88,10 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		}
 		return true;
 	}
+	
+	public Joueur afficherVainqueurPartie(Partie partie){
+		String query = "SELECT p.vainqueur FROM Partie p WHERE p.id = ?1";
+		Partie p=recherche(query, partie.getId());
+		return p.getVainqueur();
+	}
 }
