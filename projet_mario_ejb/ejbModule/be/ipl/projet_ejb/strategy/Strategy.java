@@ -3,15 +3,18 @@ package be.ipl.projet_ejb.strategy;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Strategy {
+import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
+import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
+import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
+import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.Partie;
 
-	private Map<Integer, Strategy> strategies = new HashMap<Integer,Strategy>();
-	
-	public Strategy() {
-		initialiser();
-	}
-	
-	private Map<Integer, Strategy> initialiser(){
+public interface Strategy {
+
+	static Map<Integer, Strategy> strategies = initialiser();
+
+	static Map<Integer, Strategy> initialiser() {
+		Map<Integer, Strategy> strategies = new HashMap<Integer, Strategy>();
 		Strategy supprUnDe = new StrategySupprUnDe();
 		Strategy changerSens = new StrategyChangerSens();
 		Strategy supprDeuxDe = new StrategySupprDeuxDe();
@@ -22,7 +25,7 @@ public abstract class Strategy {
 		Strategy tousDeuxCartesSaufVous = new StrategyTousDeuxCartesSaufVous();
 		Strategy skip = new StrategySkip();
 		Strategy rejoueEtChangeSens = new StrategyRejoueEtChangeSens();
-		
+
 		strategies.put(1, supprUnDe);
 		strategies.put(2, changerSens);
 		strategies.put(3, supprDeuxDe);
@@ -35,10 +38,8 @@ public abstract class Strategy {
 		strategies.put(10, rejoueEtChangeSens);
 		return strategies;
 	}
-	
-	public void effectuer(int codeEffet){
-		strategies.get(codeEffet).traitement();
-	}
-	
-	protected abstract void traitement();
+
+	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
+			Joueur joueur, Joueur cible);
+
 }

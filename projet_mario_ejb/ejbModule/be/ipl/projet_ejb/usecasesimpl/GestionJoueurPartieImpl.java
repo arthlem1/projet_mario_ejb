@@ -2,6 +2,7 @@ package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.ejb.EJB;
@@ -16,6 +17,7 @@ import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 import be.ipl.projet_ejb.util.Util;
 
@@ -25,7 +27,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	@EJB DeDaoImpl deDao;
 	@EJB PartieDaoImpl partieDao;
 	@EJB JoueurPartieDaoImpl joueurPartieDao;
-	
+	private Map<Integer,Strategy> effetCarte = Strategy.initialiser();
 	
 	@Override
 	public void tirerUneCarte(Partie partie, Joueur joueur) {
@@ -40,11 +42,11 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public void utiliserCarte(Carte carte,Partie partie, Joueur joueur) {
+	public void utiliserCarte(Carte carte,Partie partie, Joueur joueur, Joueur cible) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		Util.checkObject(carte);
-		//TODO voir effet carte 
+		effetCarte.get(carte.getCodeEffet()).effectuer(deDao,partieDao,joueurPartieDao,partie,joueur,cible);
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
 	}
 

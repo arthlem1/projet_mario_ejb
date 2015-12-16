@@ -1,11 +1,19 @@
 package be.ipl.projet_ejb.strategy;
 
-public class StrategySupprDeuxDe extends Strategy {
+import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
+import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
+import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
+import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.Partie;
+
+public class StrategySupprDeuxDe implements Strategy {
 
 	@Override
-	protected void traitement() {
-		// TODO Auto-generated method stub
-
+	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
+			Joueur joueur, Joueur cible) {
+		joueurPartieDao.retirerDe(joueur.getId(), partie);
+		joueurPartieDao.retirerDe(joueur.getId(), partie);
 	}
+
 
 }
