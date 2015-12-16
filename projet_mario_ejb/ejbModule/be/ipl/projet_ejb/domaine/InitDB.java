@@ -27,8 +27,12 @@ public class InitDB {
 	//private CarteDaoImpl carteDao;
 @EJB CarteDaoImpl carteDao;
 @EJB DeDaoImpl deDao;
-
+Wazabi wazabi;
 	//private DeDaoImpl deDao;
+
+	public Wazabi getWazabi() {
+	return wazabi;
+}
 
 	@PostConstruct
 	public void go() throws JAXBException, IOException {
@@ -36,7 +40,7 @@ public class InitDB {
 		// création de l’InputStream à adapter selon votre jar.
 		InputStream is = new FileInputStream("../standalone/deployments/projet_mario_EAR.ear/projet_mario_ejb.jar/META-INF/wazabi.xml");
 
-		Wazabi wazabi = fromStream(Wazabi.class, is);
+		 wazabi = fromStream(Wazabi.class, is);
 
 		// enregistrement des dés
 		for (int i = 0; i < wazabi.getDe().getNbTotalDes(); i++) {

@@ -15,6 +15,7 @@ import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Face;
+import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.strategy.Strategy;
@@ -25,13 +26,17 @@ import be.ipl.projet_ejb.util.Util;
 public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	@EJB
-	DeDaoImpl deDao;
+	private DeDaoImpl deDao;
 	@EJB
-	PartieDaoImpl partieDao;
+	private PartieDaoImpl partieDao;
 	@EJB
-	JoueurPartieDaoImpl joueurPartieDao;
+	private JoueurPartieDaoImpl joueurPartieDao;
 	@EJB
-	JoueurDaoImpl joueurDaoImpl;
+	private JoueurDaoImpl joueurDaoImpl;
+	
+	@EJB 
+	private InitDB initDB;
+	
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
 	@Override

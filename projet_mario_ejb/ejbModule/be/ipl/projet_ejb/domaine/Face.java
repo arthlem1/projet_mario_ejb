@@ -45,8 +45,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "face")
-@Entity
-@Table(name = "FACES", schema = "mario_ejb")
 public class Face {
 	@XmlTransient
 	@Id
