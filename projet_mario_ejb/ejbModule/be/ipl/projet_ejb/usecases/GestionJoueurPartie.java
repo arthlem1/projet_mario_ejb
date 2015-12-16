@@ -45,7 +45,7 @@ public interface GestionJoueurPartie {
 	 * Lancer les dés du joueur et lister le résultat
 	 * @return liste des dés lancés.
 	 */
-	List<De> lancerDes();
+	List<Face> lancerDes(Joueur joueur, Partie partie);
 	
 	/**
 	 * Méthode qui permet à un joueur (donneur) de donner ses dés à un

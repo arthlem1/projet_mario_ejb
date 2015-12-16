@@ -87,13 +87,18 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public List<De> lancerDes() {
-		Random random = new Random();
-		List<De> listeDes = deDao.lister();
-		for (De de : listeDes) {
-			// TODO getFace
+	public List<Face> lancerDes(Joueur joueur, Partie partie) {
+		Util.checkObject(joueur);
+		Util.checkObject(partie);
+		List<Face> faces = new ArrayList<>();
+		De de =  initDB.getWazabi().getDe();
+		int nbDesJoueur = joueurPartieDao.getNbDe(joueur, partie);
+		for (int i = 0; i < nbDesJoueur; i++) {
+			Random random = new Random();
+			Face face=de.getFace().get(random.nextInt(6)+1);
+			faces.add(face);
 		}
-		return null;
+		return faces;
 	}
 
 	@Override
