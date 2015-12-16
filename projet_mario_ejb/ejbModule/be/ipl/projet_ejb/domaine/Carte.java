@@ -96,13 +96,9 @@ public class Carte implements Serializable, Cloneable {
 	@XmlAttribute(name = "src")
 	protected String src;
 	
-	private static Map<Integer, Strategy> mapStrategie = new HashMap<Integer,Strategy>();
-	
 	protected Carte() {
 		super();
 	}
-
-	
 	
 	public Carte(int codeEffet, int cout) {
 		super();
