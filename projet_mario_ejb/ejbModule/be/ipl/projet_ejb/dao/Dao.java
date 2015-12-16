@@ -1,9 +1,8 @@
 package be.ipl.projet_ejb.dao;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface Dao<K, E> extends Serializable {
+public interface Dao<K, E> {
 	E rechercher(K id);
 
 	E enregistrer(E entite);

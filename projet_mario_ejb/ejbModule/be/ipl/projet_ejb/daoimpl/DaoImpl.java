@@ -13,7 +13,6 @@ import javax.persistence.TypedQuery;
 
 import be.ipl.projet_ejb.dao.Dao;
 
-@SuppressWarnings("serial")
 public abstract class DaoImpl<K, E> implements Dao<K, E> {
 
 	private Class<E> entityClass;

@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.ejb.Stateless;
 
 import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
@@ -16,13 +15,13 @@ import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
-@Singleton
-@Startup
+
+@Stateless
 public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
-	@EJB JoueurPartieDaoImpl joueurPartieDao;
 	@EJB DeDaoImpl deDao;
 	@EJB PartieDaoImpl partieDao;
+	@EJB JoueurPartieDaoImpl joueurPartieDao;
 	
 	
 	@Override

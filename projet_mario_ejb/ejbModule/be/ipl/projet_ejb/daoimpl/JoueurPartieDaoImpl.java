@@ -11,7 +11,7 @@ import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 
-@SuppressWarnings("serial")
+
 @Stateless
 @LocalBean
 public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
