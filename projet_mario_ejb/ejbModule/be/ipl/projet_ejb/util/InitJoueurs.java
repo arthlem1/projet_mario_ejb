@@ -15,7 +15,7 @@ public class InitJoueurs {
 	@EJB
 	JoueurDaoImpl joueurdao;
 	
-	@PostConstruct
+	@PostConstruct 
 	public void init() {
 		String mdp = Util.getMD5("em");
 		joueurdao.enregistrer(new Joueur("em", "em", mdp));
