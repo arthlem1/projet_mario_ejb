@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.util.Util;
-
+ 
 /**
  * <p>
  * Java class for anonymous complex type.
