@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.util.Util;
 
-@SuppressWarnings("serial")
 @Stateless
 @LocalBean
 public class JoueurDaoImpl extends DaoImpl<String, Joueur> {

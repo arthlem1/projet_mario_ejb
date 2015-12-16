@@ -5,7 +5,6 @@ import javax.ejb.Stateless;
 
 import be.ipl.projet_ejb.domaine.Carte;
 
-@SuppressWarnings("serial")
 @Stateless
 @LocalBean
 public class CarteDaoImpl extends DaoImpl<Integer, Carte> {
