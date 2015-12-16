@@ -8,6 +8,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
+import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
@@ -23,12 +24,15 @@ public class GestionPartiesImpl implements GestionParties {
 	private PartieDaoImpl partieDao;
 	@EJB
 	private JoueurDaoImpl joueurDaoImpl;
+	@EJB
+	private JoueurPartieDaoImpl joueurPartieDaoImpl;
 
 	public enum Etat {
 		INITIAL {
 			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
 				Util.checkObject(joueur);
 				Util.checkObject(partie);
+				gpi.joueurPartieDaoImpl.enregistrer(new JoueurPartie(joueur, partie, gpi.partieDao.listerJoueursPartie(partie).size()+1));
 				return gpi.partieDao.ajouterJoueur(partie, joueur);
 			}
 
@@ -75,11 +79,7 @@ public class GestionPartiesImpl implements GestionParties {
 		return partieDao.rechercher(nom);
 	}
 
-	@Override
-	public boolean ajouterJoueur(Joueur joueur) {
-		Util.checkObject(joueur);
-		return false;
-	}
+	
 
 	@Override
 	public Partie joueurSuivant(Partie partie, JoueurPartie suivant) {
@@ -124,6 +124,11 @@ public class GestionPartiesImpl implements GestionParties {
 			joueurs.add(joueur);
 		}
 		return joueurs; 
+	}
+
+	@Override
+	public boolean ajouterJoueur(Joueur joueur) {
+		return false;
 	}
 
 }
