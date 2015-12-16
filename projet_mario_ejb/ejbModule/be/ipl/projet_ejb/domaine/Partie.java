@@ -126,7 +126,7 @@ public class Partie implements Serializable {
 
 	public List<Carte> getPioche() {
 		return pioche;
-	}
+	} 
 
 	public void setClockwise(boolean clockwise) {
 		this.clockwise = clockwise;

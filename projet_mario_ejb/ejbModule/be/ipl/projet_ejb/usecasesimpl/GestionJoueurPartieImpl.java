@@ -132,7 +132,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		}
 		return compteur;
 	}
-
+ 
 	@Override
 	public int nbFaceWasabi(List<Face> liste) {
 		Util.checkObject(liste);
