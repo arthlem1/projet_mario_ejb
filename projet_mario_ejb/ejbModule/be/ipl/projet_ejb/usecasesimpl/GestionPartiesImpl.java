@@ -70,7 +70,9 @@ public class GestionPartiesImpl implements GestionParties {
 			Util.checkObject(createur);
 		} catch (Exception e) {
 		}
-		return partieDao.creerPartie(nom, createur);
+		Partie partie = partieDao.creerPartie(nom, createur);
+		partie.getEtat().ajouterJoueur(createur, partie, this);
+		return partie;
 	}
 
 	@Override
