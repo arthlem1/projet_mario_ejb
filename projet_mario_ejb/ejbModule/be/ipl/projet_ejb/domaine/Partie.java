@@ -24,7 +24,6 @@ import javax.validation.constraints.NotNull;
 
 import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
 import be.ipl.projet_ejb.util.Util;
-import be.ipl.vingtetun.domaine.Partie.Etat;
 
 @Entity
 @Table(name = "PARTIES", schema = "mario_ejb")
