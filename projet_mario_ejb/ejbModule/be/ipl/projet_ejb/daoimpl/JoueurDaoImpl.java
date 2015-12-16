@@ -19,6 +19,11 @@ public class JoueurDaoImpl extends DaoImpl<String, Joueur> {
 		return recherche(queryString, pseudo);
 	}
 
+	public Joueur rechercher(int id){
+		String queryString = "select j from Joueur j where j.id = ?1";
+		return recherche(queryString, id);
+	}
+	
 	public Joueur login(String pseudo, String mdp) {
 		Joueur joueurDB = rechercher(pseudo);
 		
