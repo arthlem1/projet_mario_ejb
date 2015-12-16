@@ -20,14 +20,16 @@ public class GestionPartiesImpl implements GestionParties {
 	@EJB
 	PartieDaoImpl partieDao;
 
-	private Etat value = Etat.INITIAL;
-
 	public enum Etat {
 		INITIAL {
 			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
 				Util.checkObject(joueur);
 				Util.checkObject(partie);
 				return gpi.partieDao.ajouterJoueur(partie, joueur);
+			}
+			public boolean commencerPartie(Partie partie,GestionPartiesImpl gpi) {
+				partie.setEtat(EN_COURS);
+				return false;
 			}
 		},
 		EN_COURS, FINI;
@@ -56,11 +58,11 @@ public class GestionPartiesImpl implements GestionParties {
 		return false;
 	}
 
-	@Override
+	/*@Override
 	public Partie commencerPartie(String nom) {
 		Util.checkString(nom);
 		return partieDao.commencerPartie(nom);
-	}
+	}*/
 
 	@Override
 	public Partie joueurSuivant(Partie partie, JoueurPartie suivant) {
@@ -83,7 +85,14 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public boolean ajouterJoueur(Partie partie, Joueur joueur) {
-		return value.ajouterJoueur(joueur, partie, this);
+		//return .ajouterJoueur(joueur, partie, this);
+		return false;
+	}
+
+	@Override
+	public boolean commencerPartie(Partie partie) {
+		//partieDao.commencerPartie(partie);
+		return false;
 	}
 
 }
