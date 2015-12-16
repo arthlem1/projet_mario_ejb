@@ -18,7 +18,8 @@ import javax.servlet.http.HttpSession;
 public class FiltreControleur implements Filter {
 	private FilterConfig fConfig;
 	
-	private static final String LOGIN = "/WEB-INF/jsp/index.jsp";
+	private static final String ACCES_CONNEXION = "/Login";
+	private static final String SESSION = "joueur";
 	
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.fConfig = fConfig;
@@ -46,9 +47,9 @@ public class FiltreControleur implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 		
-		if(session.getAttribute("joueur") == null)
-			res.sendRedirect(req.getContextPath() + LOGIN);
-		else
+		if(session.getAttribute(SESSION) == null){
+			req.getRequestDispatcher(ACCES_CONNEXION).forward(request, response);
+		}else
 			chain.doFilter(request, response);
 	}
 
