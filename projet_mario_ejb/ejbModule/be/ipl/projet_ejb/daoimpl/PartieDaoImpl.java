@@ -33,12 +33,17 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return enregistrer(new Partie(nom, createur));
 	}
 
-	public Partie commencerPartie(String nom) {
-		Partie partie = rechercher(nom);
-		JoueurPartie courant = tirerJoueurAuHasard(partie);
-		partie.setJoueur_courant(courant);
-		partie.setStarted(true);
-		return mettreAJour(partie);
+	public boolean commencerPartie(String nom) {
+		try {
+			Partie partie = rechercher(nom);
+			JoueurPartie courant = tirerJoueurAuHasard(partie);
+			partie.setJoueur_courant(courant);
+			partie.setStarted(true);
+			mettreAJour(partie);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;		
 	}
 
 	private JoueurPartie tirerJoueurAuHasard(Partie partie) {
