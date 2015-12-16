@@ -2,12 +2,15 @@ package be.ipl.projet_ejb.usecases;
 
 import java.util.List;
 
+import javax.ejb.Remote;
+
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 
+@Remote 
 public interface GestionJoueurPartie {
 	/**
 	 * Le joueur tire une carte qui sera ajoutée dans sa main.

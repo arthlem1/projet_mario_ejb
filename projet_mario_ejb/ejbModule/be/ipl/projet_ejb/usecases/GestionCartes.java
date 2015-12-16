@@ -1,7 +1,10 @@
 package be.ipl.projet_ejb.usecases;
 
+import javax.ejb.Remote;
+
 import be.ipl.projet_ejb.domaine.Carte;
 
+@Remote
 public interface GestionCartes {
 
 	/**
