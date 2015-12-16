@@ -3,6 +3,7 @@ package be.ipl.projet_ejb.usecases;
 import javax.ejb.Remote;
 
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.exceptions.JoueurDejaExistantException;
 @Remote
 public interface GestionJoueurs {
 
@@ -13,8 +14,9 @@ public interface GestionJoueurs {
 	 * @param pseudo
 	 * @param mdp
 	 * @return joueur créé dans la DB
+	 * @throws JoueurDejaExistantException 
 	 */
-	Joueur creerJoueur(String prenom,String pseudo, String mdp);
+	Joueur creerJoueur(String prenom,String pseudo, String mdp) throws JoueurDejaExistantException;
 	
 	/**
 	 * @param pseudo du joueur à trouver

@@ -6,6 +6,7 @@ import javax.ejb.Startup;
 
 import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.exceptions.JoueurDejaExistantException;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
 import be.ipl.projet_ejb.util.Util;
 
@@ -17,17 +18,16 @@ public class GestionJoueursImpl implements GestionJoueurs {
 	private JoueurDaoImpl joueurDao;
 
 	@Override
-	public Joueur creerJoueur(String prenom, String pseudo, String mdp) {
+	public Joueur creerJoueur(String prenom, String pseudo, String mdp) throws JoueurDejaExistantException {
 		Util.checkString(pseudo);
 		Util.checkString(mdp);
 		mdp = Util.getMD5(mdp);
 		Util.checkString(prenom);
 		Joueur joueur = joueurDao.rechercher(pseudo);
-		if (joueur == null) {
-			joueur = new Joueur(prenom, pseudo, mdp);
-			joueur = joueurDao.enregistrer(joueur);
-		}
-		return joueur;
+		if(joueur!=null)
+			throw new JoueurDejaExistantException("Ce pseudo est déjà pris!");
+		joueur = new Joueur(prenom, pseudo, mdp);
+		return joueurDao.enregistrer(joueur);
 	}
 
 	@Override

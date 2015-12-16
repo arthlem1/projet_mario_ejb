@@ -34,10 +34,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	private JoueurPartieDaoImpl joueurPartieDao;
 	@EJB
 	private JoueurDaoImpl joueurDaoImpl;
-	
-	@EJB 
+
+	@EJB
 	private InitDB initDB;
-	
+
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
 	@Override
@@ -47,6 +47,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		List<Carte> pioche = partie.getPioche();
 		if (pioche.size() == 0) {
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
+			/* TODO à discuter. Selon les consignes, si plus de carte dans la
+ 			pioche, prendre une carte dans la main d'un autre*/
 		}
 		Carte carte = pioche.remove(0);// premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);
@@ -88,7 +90,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public List<De> lancerDes() {
 		Random random = new Random();
 		List<De> listeDes = deDao.lister();
-		for (int i = 0; i < listeDes.size(); i++) {
+		for (De de : listeDes) {
 			// TODO getFace
 		}
 		return null;
@@ -138,7 +140,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		}
 		return compteur;
 	}
- 
+
 	@Override
 	public int nbFaceWasabi(List<Face> liste) {
 		Util.checkObject(liste);
