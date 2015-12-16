@@ -14,12 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName="FiltreControleur", urlPatterns = "/restreint/*", dispatcherTypes = {DispatcherType.REQUEST} )
+@WebFilter(filterName="FiltreControleur", urlPatterns = "", dispatcherTypes = {DispatcherType.REQUEST} )
 public class FiltreControleur implements Filter {
+	@SuppressWarnings("unused")
 	private FilterConfig fConfig;
-	
-	private static final String ACCES_CONNEXION = "/Login";
-	private static final String SESSION = "joueur";
 	
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.fConfig = fConfig;
@@ -28,6 +26,7 @@ public class FiltreControleur implements Filter {
 	public void destroy() {
 	}
 
+	@SuppressWarnings("unused")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if (! (request instanceof HttpServletRequest)) {
 			String message = "Ce Site n'est accessible qu'en HTTP";
@@ -46,11 +45,8 @@ public class FiltreControleur implements Filter {
 		/*NE PAS TOUCHER A LA PARTIE DU DESSUS*/
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
-		
-		if(session.getAttribute(SESSION) == null){
-			req.getRequestDispatcher(ACCES_CONNEXION).forward(request, response);
-		}else
-			chain.doFilter(request, response);
+	
+		chain.doFilter(request, response);
 	}
 
 }

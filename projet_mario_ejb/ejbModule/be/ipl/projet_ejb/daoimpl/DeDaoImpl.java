@@ -10,11 +10,6 @@ import be.ipl.projet_ejb.domaine.Face;
 @LocalBean
 public class DeDaoImpl extends DaoImpl<Integer, De> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public DeDaoImpl(){
 		super(De.class);
 	}

@@ -2,9 +2,7 @@ package be.ipl.projet_ejb.domaine;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.util.Util;
  
 /**

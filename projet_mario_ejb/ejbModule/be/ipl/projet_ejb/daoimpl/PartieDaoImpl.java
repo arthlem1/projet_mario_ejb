@@ -14,8 +14,6 @@ import be.ipl.projet_ejb.domaine.Partie;
 @Stateless
 public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	
-	private static final long serialVersionUID = 1L;
-	
 	public PartieDaoImpl(){
 		super(Partie.class);
 	}
