@@ -33,9 +33,9 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return enregistrer(new Partie(nom, createur));
 	}
 
-	public boolean commencerPartie(String nom) {
+	public boolean commencerPartie(Partie partie) {
 		try {
-			Partie partie = rechercher(nom);
+			partie = rechercher(partie.getNom());
 			JoueurPartie courant = tirerJoueurAuHasard(partie);
 			partie.setJoueur_courant(courant);
 			partie.setStarted(true);
