@@ -145,4 +145,8 @@ public class Partie implements Serializable {
 	public void setEtat(GestionPartiesImpl.Etat etat) {
 		this.etat = etat;
 	}
+	
+	public GestionPartiesImpl.Etat getEtat() {
+		return etat;
+	}
 }
