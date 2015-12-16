@@ -54,10 +54,15 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public void creerPartie(String nom, Joueur createur) {
-		Util.checkString(nom);
-		Util.checkObject(createur);
-		partieDao.creerPartie(nom, createur);
+	public boolean creerPartie(String nom, Joueur createur) {
+		try {
+			Util.checkString(nom);
+			Util.checkObject(createur);
+			partieDao.creerPartie(nom, createur);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

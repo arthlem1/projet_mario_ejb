@@ -41,14 +41,14 @@ public class Partie implements Serializable {
 
 	@NotNull
 	private boolean clockwise = true;
-	
+
 	@NotNull
 	private boolean started = false;
 
 	@NotNull
 	@Enumerated
 	private GestionPartiesImpl.Etat etat = GestionPartiesImpl.Etat.INITIAL;
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Calendar dateHeureCreation;
@@ -61,13 +61,12 @@ public class Partie implements Serializable {
 	private Joueur vainqueur;
 
 	@ManyToMany
-	@JoinTable(name = "PARTIE_CARTE", schema = "mario_ejb",
-			joinColumns={@JoinColumn(name="PARTIE_ID")})
+	@JoinTable(name = "PARTIE_CARTE", schema = "mario_ejb", joinColumns = { @JoinColumn(name = "PARTIE_ID") })
 	private List<Carte> pioche = new ArrayList<>();
-	
-	@OneToOne(cascade={CascadeType.ALL})
+
+	@OneToOne(cascade = { CascadeType.ALL })
 	private JoueurPartie joueur_courant;
-	
+
 	protected Partie() {
 		super();
 	}
@@ -76,7 +75,7 @@ public class Partie implements Serializable {
 		Util.checkString(nom);
 		this.nom = nom;
 		this.dateHeureCreation = Calendar.getInstance();
-		listeJoueurs.add(new JoueurPartie(joueur, this, listeJoueurs.size()+1));
+		listeJoueurs.add(new JoueurPartie(joueur, this, listeJoueurs.size() + 1));
 	}
 
 	@Override
@@ -127,28 +126,33 @@ public class Partie implements Serializable {
 
 	public List<Carte> getPioche() {
 		return pioche;
-	}
+	} 
 
 	public void setClockwise(boolean clockwise) {
 		this.clockwise = clockwise;
 	}
+
 	public JoueurPartie getJoueur_courant() {
 		return joueur_courant;
 	}
-	
+
 	public void setJoueur_courant(JoueurPartie joueur_courant) {
 		this.joueur_courant = joueur_courant;
 	}
-	
+
 	public void setStarted(boolean started) {
 		this.started = started;
 	}
-	
+
 	public void setEtat(GestionPartiesImpl.Etat etat) {
 		this.etat = etat;
 	}
-	
+
 	public GestionPartiesImpl.Etat getEtat() {
 		return etat;
-	} 
+	}
+
+	public void setVainqueur(Joueur vainqueur) {
+		this.vainqueur = vainqueur;
+	}
 }

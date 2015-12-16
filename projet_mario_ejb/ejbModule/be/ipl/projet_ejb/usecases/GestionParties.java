@@ -15,8 +15,9 @@ public interface GestionParties {
 	 * Création de la partie. La date et l'heure de création sont enregistrés.
 	 * @param nom
 	 * @param joueur
+	 * @return 
 	 */
-	void creerPartie(String nom, Joueur joueur);
+	boolean creerPartie(String nom, Joueur joueur);
 	/**
 	 * recherche de la partie avec son nom. Si elle n'existe pas,
 	 * la méthode renvoie null.

@@ -23,7 +23,7 @@ public interface GestionJoueurPartie {
 	 * Méthode qui va activer l'effet de la carte.
 	 * @param carte.//idem
 	 */
-	void utiliserCarte(Carte carte, Partie partie, Joueur joueur);
+	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible);
 	
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de 

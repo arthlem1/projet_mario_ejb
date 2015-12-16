@@ -74,7 +74,7 @@ public class Joueur implements Serializable {
 	public String getPseudo() {
 		return pseudo;
 	}
-
+ 
 	public String getMdp() {
 		return mdp;
 	}
