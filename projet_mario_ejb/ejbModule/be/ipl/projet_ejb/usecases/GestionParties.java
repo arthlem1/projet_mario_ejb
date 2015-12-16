@@ -71,7 +71,7 @@ public interface GestionParties {
 	/**
 	 * Affiche le vainqueur de la partie
 	 * @param partie
-	 * @return
-	 */
+	 * @return vainqueur
+	 */ 
 	Joueur afficherVainqueur(Partie partie);
 }

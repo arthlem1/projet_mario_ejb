@@ -38,7 +38,7 @@ public class GestionPartiesImpl implements GestionParties {
 			public Joueur afficherVainqueur(Partie partie , GestionPartiesImpl gpi) {
 				return gpi.afficherVainqueur(partie);
 			}
-		};
+		}; 
 
 		boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
 			return false;
