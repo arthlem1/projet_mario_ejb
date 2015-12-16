@@ -2,6 +2,9 @@ package be.ipl.projet_ejb.daoimpl;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Joueur;
@@ -9,10 +12,12 @@ import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 
 @SuppressWarnings("serial")
+@Stateless
+@LocalBean
 public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 
-	public JoueurPartieDaoImpl(Class<JoueurPartie> entityClass) {
-		super(entityClass);
+	public JoueurPartieDaoImpl() {
+		super(JoueurPartie.class);
 	}
 	
 	public int getNbDe(Joueur j,Partie p){
