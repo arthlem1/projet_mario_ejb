@@ -29,21 +29,32 @@ public class GestionPartiesImpl implements GestionParties {
 			}
 			public boolean commencerPartie(Partie partie,GestionPartiesImpl gpi) {
 				partie.setEtat(EN_COURS);
-				return false;
+				return true;
 			}
 		},
-		EN_COURS, FINI;
+		EN_COURS{
+			
+		}, FINI;
 
 		boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
+			return false;
+		}
+		
+		public boolean commencerPartie(Partie partie,GestionPartiesImpl gpi) {
 			return false;
 		}
 	}
 
 	@Override
-	public void creerPartie(String nom, Joueur createur) {
-		Util.checkString(nom);
-		Util.checkObject(createur);
-		partieDao.creerPartie(nom, createur);
+	public boolean creerPartie(String nom, Joueur createur) {
+		try {
+			Util.checkString(nom);
+			Util.checkObject(createur);
+			partieDao.creerPartie(nom, createur);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -57,12 +68,6 @@ public class GestionPartiesImpl implements GestionParties {
 		Util.checkObject(joueur);
 		return false;
 	}
-
-	/*@Override
-	public Partie commencerPartie(String nom) {
-		Util.checkString(nom);
-		return partieDao.commencerPartie(nom);
-	}*/
 
 	@Override
 	public Partie joueurSuivant(Partie partie, JoueurPartie suivant) {
@@ -85,14 +90,12 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public boolean ajouterJoueur(Partie partie, Joueur joueur) {
-		//return .ajouterJoueur(joueur, partie, this);
-		return false;
+		return partie.getEtat().ajouterJoueur(joueur, partie, this);
 	}
 
 	@Override
 	public boolean commencerPartie(Partie partie) {
-		//partieDao.commencerPartie(partie);
-		return false;
+		return partie.getEtat().commencerPartie(partie, this);
 	}
 
 }

@@ -73,7 +73,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	public List<Partie> listerPartiesJouees(Joueur joueur){
 		String query = "SELECT p FROM JoueurPartie jp, Partie p, Joueur j "
 				+ "WHERE j.id = ?1 "
-				+ "AND j.id = jp.JoueurPartiePK.joueur_id AND p.id = jp.JoueurPartiePK.partie_id";
+				+ "AND j.id = jp.joueurPartiePK.joueur_id AND p.id = jp.joueurPartiePK.partie_id";
 		return liste(query, joueur.getId());
 	}
 
