@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,7 +47,7 @@ public class Partie implements Serializable {
 	private boolean started = false;
 
 	@NotNull
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private GestionPartiesImpl.Etat etat = GestionPartiesImpl.Etat.INITIAL;
 
 	@NotNull

@@ -45,8 +45,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "face")
-@Entity
-@Table(name = "FACES", schema = "mario_ejb")
+//@Entity
+//@Table(name = "FACES", schema = "mario_ejb")
+//plus besoin de persister
 public class Face {
 	@XmlTransient
 	@Id
