@@ -148,5 +148,5 @@ public class Partie implements Serializable {
 	
 	public GestionPartiesImpl.Etat getEtat() {
 		return etat;
-	}
+	} 
 }
