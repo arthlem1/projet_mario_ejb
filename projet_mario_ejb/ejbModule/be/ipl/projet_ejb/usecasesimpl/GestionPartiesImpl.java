@@ -13,6 +13,8 @@ import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
 
@@ -29,10 +31,15 @@ public class GestionPartiesImpl implements GestionParties {
 
 	public enum Etat {
 		INITIAL {
-			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
+			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) throws MaxJoueursException {
 				Util.checkObject(joueur);
 				Util.checkObject(partie);
-				gpi.joueurPartieDaoImpl.enregistrer(new JoueurPartie(joueur, partie, gpi.partieDao.listerJoueursPartie(partie).size()+1));
+				try {
+					gpi.joueurPartieDaoImpl.enregistrer(
+							new JoueurPartie(joueur, partie, gpi.partieDao.listerJoueursPartie(partie).size()));
+				} catch (Exception e) {
+					throw new MaxJoueursException("Max joueurs atteint!");
+				}
 				return gpi.partieDao.ajouterJoueur(partie, joueur);
 			}
 
@@ -50,7 +57,7 @@ public class GestionPartiesImpl implements GestionParties {
 			}
 		};
 
-		boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
+		boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) throws MaxJoueursException {
 			return false;
 		}
 
@@ -64,11 +71,16 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie creerPartie(String nom, Joueur createur) {
+	public Partie creerPartie(String nom, Joueur createur) throws PartieDejaEnCoursException, MaxJoueursException {
 		try {
 			Util.checkString(nom);
 			Util.checkObject(createur);
 		} catch (Exception e) {
+			return null;
+		}
+		List<Partie> liste = partieDao.lister();
+		if (liste.get(liste.size()).getEtat() == Etat.EN_COURS) {
+			throw new PartieDejaEnCoursException("Impossible de créer une partie, une autre est déjà en cours");
 		}
 		Partie partie = partieDao.creerPartie(nom, createur);
 		partie.getEtat().ajouterJoueur(createur, partie, this);
@@ -80,8 +92,6 @@ public class GestionPartiesImpl implements GestionParties {
 		Util.checkString(nom);
 		return partieDao.rechercher(nom);
 	}
-
-	
 
 	@Override
 	public Partie joueurSuivant(Partie partie, JoueurPartie suivant) {
@@ -103,7 +113,7 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public boolean ajouterJoueur(Partie partie, Joueur joueur) {
+	public boolean ajouterJoueur(Partie partie, Joueur joueur) throws MaxJoueursException {
 		return partie.getEtat().ajouterJoueur(joueur, partie, this);
 	}
 
@@ -125,7 +135,7 @@ public class GestionPartiesImpl implements GestionParties {
 			Joueur joueur = joueurDaoImpl.rechercher(joueurPartie.getJoueurId());
 			joueurs.add(joueur);
 		}
-		return joueurs; 
+		return joueurs;
 	}
 
 	@Override

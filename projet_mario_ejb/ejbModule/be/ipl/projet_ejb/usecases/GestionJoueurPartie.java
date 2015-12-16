@@ -9,14 +9,16 @@ import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
 
 @Remote 
 public interface GestionJoueurPartie {
 	/**
 	 * Le joueur tire une carte qui sera ajoutée dans sa main.
 	 * @param joueurPartie.// adapter DAo car doublon dans les params
+	 * @throws PiocheVideException si plus de carte dans la pioche
 	 */
-	void tirerUneCarte(Partie partie, Joueur joueur);
+	void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException;
 	
 	/**
 	 * Méthode qui va activer l'effet de la carte.

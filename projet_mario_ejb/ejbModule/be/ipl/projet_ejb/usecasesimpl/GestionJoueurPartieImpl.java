@@ -18,6 +18,7 @@ import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 import be.ipl.projet_ejb.util.Util;
@@ -40,12 +41,12 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
 	@Override
-	public void tirerUneCarte(Partie partie, Joueur joueur) {
+	public void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		List<Carte> pioche = partie.getPioche();
 		if (pioche.size() == 0) {
-			// TODO lancer exception PiocheNonExistant
+			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
 		}
 		Carte carte = pioche.remove(0);// premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);

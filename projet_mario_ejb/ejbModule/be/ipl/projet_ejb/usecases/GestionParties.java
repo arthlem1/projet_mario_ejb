@@ -7,6 +7,8 @@ import javax.ejb.Remote;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 
 @Remote
 public interface GestionParties {
@@ -16,8 +18,10 @@ public interface GestionParties {
 	 * @param nom
 	 * @param joueur
 	 * @return 
+	 * @throws PartieDejaEnCoursException 
+	 * @throws MaxJoueursException 
 	 */
-	Partie creerPartie(String nom, Joueur joueur);
+	Partie creerPartie(String nom, Joueur joueur) throws PartieDejaEnCoursException, MaxJoueursException;
 	/**
 	 * recherche de la partie avec son nom. Si elle n'existe pas,
 	 * la méthode renvoie null.
@@ -65,8 +69,9 @@ public interface GestionParties {
 	 * Ajout d'un joueur dans la partie
 	 * @param partie
 	 * @param joueur
+	 * @throws MaxJoueursException 
 	 */
-	boolean ajouterJoueur(Partie partie, Joueur joueur);
+	boolean ajouterJoueur(Partie partie, Joueur joueur) throws MaxJoueursException;
 	
 	/**
 	 * Affiche le vainqueur de la partie
