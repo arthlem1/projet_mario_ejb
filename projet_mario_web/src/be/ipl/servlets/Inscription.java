@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.exceptions.JoueurDejaExistantException;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
 
 /**
@@ -62,16 +63,23 @@ public class Inscription extends HttpServlet {
 		JsonBuilderFactory factory = Json.createBuilderFactory(config);
 		JsonObject value;
 
-		Joueur joueur = gestionJoueurs.rechercher(pseudo);
-		if (joueur != null) {
-			String message = "Ce pseudo est déjà utilisé. Veuillez en utiliser un autre S.V.P.";
-
-			value = factory.createObjectBuilder().add("success", "0").add("message", message).build();
+//		Joueur joueur = gestionJoueurs.rechercher(pseudo);
+//		if (joueur != null) {
+//			String message = "Ce pseudo est déjà utilisé. Veuillez en utiliser un autre S.V.P.";
+//
+//			value = factory.createObjectBuilder().add("success", "0").add("message", message).build();
+//			response.setContentType("application/json");
+//			response.getWriter().write(value.toString());
+//			return;
+//		}
+		try {
+			gestionJoueurs.creerJoueur(prenom, pseudo, mdp);
+		} catch (JoueurDejaExistantException e) {
+			value = factory.createObjectBuilder().add("success", "0").add("message", e.getMessage()).build();
 			response.setContentType("application/json");
 			response.getWriter().write(value.toString());
 			return;
 		}
-		gestionJoueurs.creerJoueur(prenom, pseudo, mdp);
 
 		HttpSession session = request.getSession();
 		Joueur nouveauJoueur = new Joueur(prenom, pseudo, mdp);

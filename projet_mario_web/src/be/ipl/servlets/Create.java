@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 
 
 
@@ -61,13 +63,24 @@ public class Create extends HttpServlet {
 		
 		Partie partie = null;
 		
-		if((partie = gestionPartie.creerPartie(nom, joueur)) != null){
-			session.setAttribute("partie", partie);
-			
+		try {
+			partie = gestionPartie.creerPartie(nom, joueur);
 			value = factory.createObjectBuilder().add("success", "1").build();
-		}else{
-			value = factory.createObjectBuilder().add("success", "0").add("message", "Une partie est déjà en cours...").build();
+			session.setAttribute("partie", partie);
+		} catch (PartieDejaEnCoursException e) {
+			value = factory.createObjectBuilder().add("success", "0").add("message", e.getMessage()).build();
+		} catch (MaxJoueursException e) {
+			value = factory.createObjectBuilder().add("success", "0").add("message", e.getMessage()).build();
 		}
+		
+		
+//		if((partie = gestionPartie.creerPartie(nom, joueur)) != null){
+//			session.setAttribute("partie", partie);
+//			
+//			value = factory.createObjectBuilder().add("success", "1").build();
+//		}else{
+//			value = factory.createObjectBuilder().add("success", "0").add("message", "Une partie est déjà en cours...").build();
+//		}
 		
 		response.setContentType("application/json");
 		response.getWriter().write(value.toString());
