@@ -65,5 +65,5 @@ public interface GestionParties {
 	 * @param partie
 	 * @param joueur
 	 */
-	Partie ajouterJoueur(Partie partie, Joueur joueur);
+	boolean ajouterJoueur(Partie partie, Joueur joueur);
 }

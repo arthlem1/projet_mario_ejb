@@ -19,6 +19,14 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@EJB PartieDaoImpl partieDao;
 	
+	enum Etat{
+		INITIAL{
+			boolean ajouterJoueur(Joueur joueur){
+				return true;
+			}
+		},EN_COURS,FINI;
+	}
+	
 	@Override
 	public void creerPartie(String nom, Joueur createur) {
 		Util.checkString(nom);
@@ -64,7 +72,7 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie ajouterJoueur(Partie partie, Joueur joueur) {
+	public boolean ajouterJoueur(Partie partie, Joueur joueur) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		return partieDao.ajouterJoueur(partie, joueur);
