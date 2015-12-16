@@ -12,7 +12,7 @@ import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
- 
+
 @Singleton
 @Startup
 public class GestionPartiesImpl implements GestionParties {
@@ -27,42 +27,42 @@ public class GestionPartiesImpl implements GestionParties {
 				Util.checkObject(partie);
 				return gpi.partieDao.ajouterJoueur(partie, joueur);
 			}
-			public boolean commencerPartie(Partie partie,GestionPartiesImpl gpi) {
+
+			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) {
 				partie.setEtat(EN_COURS);
 				return true;
 			}
 		},
-		EN_COURS{
-			
-		}, FINI{
-			public Joueur afficherVainqueur(Partie partie , GestionPartiesImpl gpi) {
+		EN_COURS {
+
+		},
+		FINI {
+			public Joueur afficherVainqueur(Partie partie, GestionPartiesImpl gpi) {
 				return gpi.afficherVainqueur(partie);
 			}
-		}; 
+		};
 
 		boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) {
 			return false;
 		}
-		
-		public boolean commencerPartie(Partie partie,GestionPartiesImpl gpi) {
+
+		public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) {
 			return false;
 		}
-		
-		public Joueur afficherVainqueur(Partie partie , GestionPartiesImpl gpi) {
+
+		public Joueur afficherVainqueur(Partie partie, GestionPartiesImpl gpi) {
 			return null;
 		}
 	}
 
 	@Override
-	public boolean creerPartie(String nom, Joueur createur) {
+	public Partie creerPartie(String nom, Joueur createur) {
 		try {
 			Util.checkString(nom);
 			Util.checkObject(createur);
-			partieDao.creerPartie(nom, createur);
 		} catch (Exception e) {
-			return false;
 		}
-		return true;
+		return partieDao.creerPartie(nom, createur);
 	}
 
 	@Override
@@ -111,5 +111,10 @@ public class GestionPartiesImpl implements GestionParties {
 		return partie.getEtat().afficherVainqueur(partie, this);
 	}
 
-	
+	@Override
+	public List<Joueur> listeJoueursPartie(Partie partie) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

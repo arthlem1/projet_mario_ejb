@@ -17,7 +17,7 @@ public interface GestionParties {
 	 * @param joueur
 	 * @return 
 	 */
-	boolean creerPartie(String nom, Joueur joueur);
+	Partie creerPartie(String nom, Joueur joueur);
 	/**
 	 * recherche de la partie avec son nom. Si elle n'existe pas,
 	 * la méthode renvoie null.
@@ -74,4 +74,11 @@ public interface GestionParties {
 	 * @return vainqueur
 	 */ 
 	Joueur afficherVainqueur(Partie partie);
+	
+	/**
+	 * 
+	 * @param partie
+	 * @return liste joueurs
+	 */
+	List<Joueur> listeJoueursPartie(Partie partie);
 }
