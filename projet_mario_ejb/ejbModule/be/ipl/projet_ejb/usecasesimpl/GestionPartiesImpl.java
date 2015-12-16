@@ -123,7 +123,7 @@ public class GestionPartiesImpl implements GestionParties {
 			Joueur joueur = joueurDaoImpl.rechercher(joueurPartie.getJoueurId());
 			joueurs.add(joueur);
 		}
-		return joueurs;
+		return joueurs; 
 	}
 
 }
