@@ -37,7 +37,7 @@ public interface GestionParties {
 	 * @param nom
 	 * @return Partie
 	 */
-	Partie commencerPartie(String nom);
+	boolean commencerPartie(Partie partie);
 	
 	/**
 	 * Passer au joueur suivant.

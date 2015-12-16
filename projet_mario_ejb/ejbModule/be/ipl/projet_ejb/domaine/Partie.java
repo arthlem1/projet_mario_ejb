@@ -22,7 +22,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
 import be.ipl.projet_ejb.util.Util;
+import be.ipl.vingtetun.domaine.Partie.Etat;
 
 @Entity
 @Table(name = "PARTIES", schema = "mario_ejb")
@@ -43,6 +45,9 @@ public class Partie implements Serializable {
 	@NotNull
 	private boolean started = false;
 
+	@NotNull
+	private GestionPartiesImpl.Etat etat = GestionPartiesImpl.Etat.INITIAL;
+	
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	private Calendar dateHeureCreation;
@@ -136,5 +141,9 @@ public class Partie implements Serializable {
 	
 	public void setStarted(boolean started) {
 		this.started = started;
+	}
+	
+	public void setEtat(GestionPartiesImpl.Etat etat) {
+		this.etat = etat;
 	}
 }
