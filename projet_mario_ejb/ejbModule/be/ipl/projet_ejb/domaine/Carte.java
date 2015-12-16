@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import be.ipl.projet_ejb.util.Util;
-
+ 
 /**
  * <p>
  * Java class for anonymous complex type.
