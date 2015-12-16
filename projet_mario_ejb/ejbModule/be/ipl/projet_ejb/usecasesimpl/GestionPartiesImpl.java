@@ -12,7 +12,7 @@ import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
-
+ 
 @Singleton
 @Startup
 public class GestionPartiesImpl implements GestionParties {
