@@ -34,11 +34,10 @@ jQuery(document).ready(function() {
     				"mdp":mdp}
     		}).done(function(data) {
 
-    			if(data.success == 1){
-    				$.notiny({text: data.message, theme: 'success'});
-    				 window.location.href = 'attente.html'; 
-    			}else{
+    			if(data.success != 1){
     				$.notiny({text: data.message, theme: 'error'});
+    			}else{
+    				 window.location.href = 'menu.html';
     			}
     
     		}).fail( function(jqXHR, textStatus, errorThrown) {
@@ -87,11 +86,10 @@ jQuery(document).ready(function() {
     				"mdp":mdp}
     		}).done(function(data) {
 
-    			if(data.success == 1){
-    				$.notiny({text: data.message, theme: 'success'});
-    				//display_menu();
-    			}else{
+    			if(data.success != 1){
     				$.notiny({text: data.message, theme: 'error'});
+    			}else{
+    				 window.location.href = 'menu.html';
     			}
     
     		}).fail( function(jqXHR, textStatus, errorThrown) {
@@ -111,6 +109,82 @@ jQuery(document).ready(function() {
     	$("#menu").slideToggle("slow");
     	
     };
+    
+    $(".show_sub_menu").click(function(){
+    	show_sub_menu($(this).attr("id"));
+    });
+    
+    $(".close").click(function(){
+    	hide_and_show_menu($(this));
+    	
+    });
+    
+    var hide_and_show_menu = function(div){
+    	div.parent().parent().parent().parent().slideToggle("fast");
+    	$("#menu").slideToggle("slow");
+    };
+    
+    $("#create_game").click(function(){
+    	var nom = $("#form-game-name").val();
+    	
+    	if(nom){
+    		$.ajax({
+    			url:"Create",
+    			data:{"nom":nom}
+    		}).done(function(data){
+    			if(data.success == 1){
+    				window.location.href = "attente.html";
+    			}else{
+    				$.notiny({text: data.message, theme: 'error'});
+    				$("#create").slideToggle("fast");
+    		    	$("#menu").slideToggle("slow");
+    			}
+    		}).fail(function(jqXHR, textStatus, errorThrown){
+    			alert(errorThrown);
+    		});
+    	}else{
+    		$.notiny({text: "Veuillez entrer un nom pour la partie", theme: 'error'});
+    	}
+    });
+    
+    var show_sub_menu = function(id){
+    	
+    	$("#menu").slideToggle("fast");
+    	switch(id){
+    	case "create-btn":
+    		$("#create").slideToggle("slow");
+    		break;
+    	case "join-btn":
+    		$("#join").slideToggle("slow");
+    		break;
+    	case "list-btn":
+    		$("#list").slideToggle("slow");
+    		$.ajax({
+    			url:"ListerPartiesJouees"
+    		}).done(function(data){
+    			var liste = $("#parties-results");
+    			liste.empty();
+    			jQuery.each(data, function(index, item){
+    				console.log(item.nom);
+    				liste.append("<p>"+item.nom+"</p>");
+    			});
+    		}).fail(function(jqXHR, textStatus, errorThrown){
+    			alert(errorThrown);
+    		});
+    		break;
+    	}
+    	
+    };
+    
+    $("#deconnexion").click(function(){
+    	$.ajax({
+    		url:"Deconnexion"
+    	}).done(function(){
+    		window.location.href = "index.html";
+    	}).fail(function(jqXHR, textStatus, errorThrown){
+			alert(errorThrown);
+		});
+    });
     
     
     

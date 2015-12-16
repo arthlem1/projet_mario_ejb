@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
 
@@ -58,6 +61,7 @@ public class Login extends HttpServlet {
 		config.put("javax.json.stream.JsonGenerator.prettyPrinting", Boolean.valueOf(true));
 		JsonBuilderFactory factory = Json.createBuilderFactory(config);
 		JsonObject value = null;
+		JSONObject jsonObject = new JSONObject();
 		
 		Joueur joueur = gestionJoueurs.login(pseudo, mdp);
 		if(joueur != null){
@@ -65,17 +69,31 @@ public class Login extends HttpServlet {
 			session.setAttribute("joueur", joueur);
 			
 			System.out.println(joueur.getPseudo());
-			value = factory.createObjectBuilder().add("success", "1").add("message", "Connexion avec succès").build();
+			try {
+				jsonObject.put("success", "1");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//value = factory.createObjectBuilder().add("success", "1").add("message", "Connexion avec succès").build();
 			response.setContentType("application/json");
-			response.getWriter().write(value.toString());
+			response.getWriter().write(jsonObject.toString());
 			
 			return;
 		}else{
-			value = factory.createObjectBuilder().add("success", "0").add("message", "Vérifiez vos informations.").build();
+			try {
+				jsonObject.put("success", "0");
+				jsonObject.put("message", "Vérifiez vos informations.");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//value = factory.createObjectBuilder().add("success", "0").add("message", "Vérifiez vos informations.").build();
 		}
 
 		response.setContentType("application/json");
-		response.getWriter().write(value.toString());
+		response.getWriter().write(jsonObject.toString());
 		
 
 

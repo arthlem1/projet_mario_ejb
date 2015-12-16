@@ -119,15 +119,33 @@ button.btn:active:focus, button.btn.active:focus {
 }
 
 .menu-container{
-	display:none;
 	position: absolute;
   	margin: auto;
- 	top: 0;
+ 	width:350px;
+ 	height:350px;
+  	top: 60px;
  	right: 0;
- 	bottom: 0;
+ 	
  	left: 0;
- 	width: 350px;
- 	height: 350px;
- 	background-color: #ccc;
-  border-radius: 3px;
+  display:block;
+}
+
+.menu-btn{
+	margin:20px;
+	width:100%;
+}
+
+.deco{
+	position: absolute;
+	top:20px;
+	right:20px;
+	width:250px;
+}
+
+#create, #join, #list{
+	display:none;
+}
+
+.cursor{
+	cursor:pointer;
 }

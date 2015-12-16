@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
@@ -72,8 +73,12 @@ public class Inscription extends HttpServlet {
 		}
 		gestionJoueurs.creerJoueur(prenom, pseudo, mdp);
 
+		HttpSession session = request.getSession();
+		Joueur nouveauJoueur = new Joueur(prenom, pseudo, mdp);
+
+		session.setAttribute("joueur", nouveauJoueur);
+
 		value = factory.createObjectBuilder().add("success", "1").add("message", "Inscription avec succès!").build();
-		System.out.println(value.toString());
 		response.setContentType("application/json");
 		response.getWriter().write(value.toString());
 
