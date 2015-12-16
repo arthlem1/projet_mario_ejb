@@ -8,21 +8,23 @@ import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
 import be.ipl.projet_ejb.util.Util;
+
 @Singleton
 @Startup
-public class GestionJoueursImpl implements GestionJoueurs{
+public class GestionJoueursImpl implements GestionJoueurs {
 
-	@EJB 
+	@EJB
 	private JoueurDaoImpl joueurDao;
-	
+
 	@Override
 	public Joueur creerJoueur(String prenom, String pseudo, String mdp) {
 		Util.checkString(pseudo);
 		Util.checkString(mdp);
+		mdp = Util.getMD5(mdp);
 		Util.checkString(prenom);
 		Joueur joueur = joueurDao.rechercher(pseudo);
 		if (joueur == null) {
-			joueur = new Joueur(prenom,pseudo, mdp);
+			joueur = new Joueur(prenom, pseudo, mdp);
 			joueur = joueurDao.enregistrer(joueur);
 		}
 		return joueur;
@@ -35,12 +37,10 @@ public class GestionJoueursImpl implements GestionJoueurs{
 	}
 
 	@Override
-	public boolean login(String pseudo, String mdp) {
+	public Joueur login(String pseudo, String mdp) {
 		Util.checkString(pseudo);
 		Util.checkString(mdp);
-		return joueurDao.login(pseudo,mdp);
+		return joueurDao.login(pseudo, mdp);
 	}
 
-	
-	
 }

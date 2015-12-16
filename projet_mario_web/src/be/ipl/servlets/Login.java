@@ -1,15 +1,19 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.json.Json;
+import javax.json.JsonBuilderFactory;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.usecases.GestionJoueurs;
@@ -17,7 +21,7 @@ import be.ipl.projet_ejb.usecases.GestionJoueurs;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/login.html")
+@WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -47,23 +51,33 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String prenom = "";//TODO récupérer ce champ!
-		String pseudo = request.getParameter("form-username");
-		String mdp = request.getParameter("form-password");
+		String pseudo = request.getParameter("pseudo");
+		String mdp = request.getParameter("mdp");
+		
+		Map<String, Object> config = new HashMap<String, Object>();
+		config.put("javax.json.stream.JsonGenerator.prettyPrinting", Boolean.valueOf(true));
+		JsonBuilderFactory factory = Json.createBuilderFactory(config);
+		JsonObject value = null;
+		
+		Joueur joueur = gestionJoueurs.login(pseudo, mdp);
+		if(joueur != null){
+			HttpSession session = request.getSession();
+			session.setAttribute("joueur", joueur);
+			
+			System.out.println(joueur.getPseudo());
+			value = factory.createObjectBuilder().add("success", "1").add("message", "Connexion avec succÃ¨s").build();
+			response.setContentType("application/json");
+			response.getWriter().write(value.toString());
+			
+			return;
+		}else{
+			value = factory.createObjectBuilder().add("success", "0").add("message", "VÃ©rifiez vos informations.").build();
+		}
 
-		Joueur joueur = gestionJoueurs.creerJoueur(prenom,pseudo, mdp);
+		response.setContentType("application/json");
+		response.getWriter().write(value.toString());
+		
 
-		Timer timer = new Timer();
-		TimerTask task = new TimerTask() {
-
-			@Override
-			public void run() {
-				System.out.println(joueur.getPseudo());
-			}
-		};
-		timer.schedule(task, 30000);
-
-		getServletContext().getNamedDispatcher("attente.html").forward(request, response);
 
 	}
 

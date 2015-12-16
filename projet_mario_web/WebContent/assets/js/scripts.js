@@ -10,6 +10,8 @@ jQuery(document).ready(function() {
     
     $('.login-form').on('submit', function(e) {
     	
+    	e.preventDefault();
+    	
     	$(this).find('input[type="text"], input[type="password"], textarea').each(function(){
     		if( $(this).val() == "" ) {
     			e.preventDefault();
@@ -19,6 +21,32 @@ jQuery(document).ready(function() {
     			$(this).removeClass('input-error');
     		}
     	});
+    	
+    	var pseudo = $('#form-username').val();
+    	var mdp = $("#form-password").val();
+    	
+    	if(pseudo && mdp){
+    		$.ajax({
+    			url:"Login",
+    			method:"POST",
+    			
+    			data:{"pseudo":pseudo,
+    				"mdp":mdp}
+    		}).done(function(data) {
+
+    			if(data.success == 1){
+    				$.notiny({text: data.message, theme: 'success'});
+    				 window.location.href = 'attente.html'; 
+    			}else{
+    				$.notiny({text: data.message, theme: 'error'});
+    			}
+    
+    		}).fail( function(jqXHR, textStatus, errorThrown) {
+    	        alert("error : "+textStatus);
+    	    });
+    	}
+    	
+    	return false;
     	
     });
     
@@ -61,7 +89,7 @@ jQuery(document).ready(function() {
 
     			if(data.success == 1){
     				$.notiny({text: data.message, theme: 'success'});
-    				display_menu();
+    				//display_menu();
     			}else{
     				$.notiny({text: data.message, theme: 'error'});
     			}

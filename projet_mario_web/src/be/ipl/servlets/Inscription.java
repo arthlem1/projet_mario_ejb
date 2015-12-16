@@ -72,7 +72,7 @@ public class Inscription extends HttpServlet {
 		}
 		gestionJoueurs.creerJoueur(prenom, pseudo, mdp);
 
-		value = factory.createObjectBuilder().add("success", "1").add("message", "Vous avez été inscrit avec succès!").build();
+		value = factory.createObjectBuilder().add("success", "1").add("message", "Inscription avec succès!").build();
 		System.out.println(value.toString());
 		response.setContentType("application/json");
 		response.getWriter().write(value.toString());

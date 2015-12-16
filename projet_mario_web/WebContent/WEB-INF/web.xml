@@ -48,7 +48,7 @@
 	</servlet-mapping>
 	<servlet>
 		<servlet-name>plateau</servlet-name>
-		<jsp-file>/WEB-INF/jsp/plateau.jsp</jsp-file>
+		<jsp-file>/restreint/plateau.jsp</jsp-file>
 	</servlet>
 	<servlet>
 		<servlet-name>plateau.html</servlet-name>

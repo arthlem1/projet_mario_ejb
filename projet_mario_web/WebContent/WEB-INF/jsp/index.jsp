@@ -1,4 +1,3 @@
-
 <title>Bienvenue</title>
 </head>
 <body>
@@ -76,7 +75,7 @@
 
 									<div class="form-group">
 										<label class="sr-only" for="form-password-register">Mot
-											de passe</label> <input type="text" name="form-password-register"
+											de passe</label> <input type="password" name="form-password-register"
 											placeholder="Mot de passe..."
 											class="form-password-register form-control"
 											id="form-password-register">
@@ -100,13 +99,7 @@
 	</div>
 	
 	
-	<div id='menu' class="menu-container">
 	
-		<button class="btn">Créer une partie</button>
-		<button class="btn">Rejoindre une partie</button>
-		<button class="btn">Historique des parties</button>
-	
-	</div>
 
 
 

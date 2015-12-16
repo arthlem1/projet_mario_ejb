@@ -1,6 +1,7 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -10,6 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebFilter(filterName="FiltreControleur", urlPatterns = "/*", dispatcherTypes = {DispatcherType.REQUEST} )
 public class FiltreControleur implements Filter {
@@ -31,13 +34,20 @@ public class FiltreControleur implements Filter {
 		}
 		HttpServletRequest req = (HttpServletRequest) request;
 		if (!req.isRequestedSessionIdFromCookie()) {
-			String message = "Pour le bon fonctionnement de ce site, vous devez accepter les cookies.<br> Si vous ne les accetez pas vous ne pourrez pas dépasser la page d'accueil.";
+			String message = "Pour le bon fonctionnement de ce site, vous devez accepter les cookies.<br> Si vous ne les accetez pas vous ne pourrez pas dï¿½passer la page d'accueil.";
 			request.setAttribute("messageAcceuil", message);
 			request.getServletContext().getNamedDispatcher("index.html").forward(request, response);
 			return;
 		} else
 			request.removeAttribute("messageAccueil");
 		/*NE PAS TOUCHER A LA PARTIE DU DESSUS*/
+		HttpServletResponse res = (HttpServletResponse) response;
+		HttpSession session = req.getSession();
+		
+		if(session.getAttribute("joueur") == null){
+		}else{
+			
+		}
 		
 		chain.doFilter(request, response);
 	}

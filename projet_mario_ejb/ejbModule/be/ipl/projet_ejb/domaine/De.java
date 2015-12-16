@@ -1,6 +1,5 @@
 package be.ipl.projet_ejb.domaine;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -22,9 +22,12 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>
+ * Java class for anonymous complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType>
@@ -43,9 +46,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "face"
-}) 
+@XmlType(name = "", propOrder = { "face" })
 @XmlRootElement(name = "de")
 @Entity
 @Table(name = "DES", schema = "mario_ejb")
@@ -56,20 +57,20 @@ public class De implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "DE_ID")
 	private int id;
-	
-//	@XmlTransient
-//	public enum Face {
-//		MARIO, PRENDRE_CARTE, DONNER_DE;
-//	}
-//
-//	@XmlTransient
-//	@NotNull
-//	@Enumerated
-//	private Face valeur = Face.MARIO;
-//
-//	@Transient
+
+	// @XmlTransient
+	// public enum Face {
+	// MARIO, PRENDRE_CARTE, DONNER_DE;
+	// }
+	//
+	// @XmlTransient
+	// @NotNull
+	// @Enumerated
+	// private Face valeur = Face.MARIO;
+	//
+	// @Transient
 	@XmlElement(required = true)
-	@NotNull
+	@Transient
 	protected List<Face> face;
 	@Transient
 	@XmlAttribute(name = "nbParJoueur", required = true)
@@ -77,24 +78,23 @@ public class De implements Serializable {
 	@Transient
 	@XmlAttribute(name = "nbTotalDes", required = true)
 	protected int nbTotalDes;
-	
-	
+
 	protected De() {
 	}
 
-//	public De(Face valeur) {
-//		super();
-//		Util.checkObject(valeur);
-//		this.valeur = valeur;
-//	}
+	// public De(Face valeur) {
+	// super();
+	// Util.checkObject(valeur);
+	// this.valeur = valeur;
+	// }
 
 	public int getId() {
 		return id;
 	}
 
-//	public Face getValeur() {
-//		return valeur;
-//	}
+	// public Face getValeur() {
+	// return valeur;
+	// }
 
 	@Override
 	public int hashCode() {
@@ -117,66 +117,66 @@ public class De implements Serializable {
 			return false;
 		return true;
 	}
-	
-	 /**
-     * Gets the value of the face property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the face property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getFace().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Face }
-     * 
-     * 
-     */
-    public List<Face> getFace() {
-        if (face == null) {
-            face = new ArrayList<Face>();
-        }
-        return this.face;
-    }
 
-    /**
-     * Gets the value of the nbParJoueur property.
-     * 
-     */
-    public int getNbParJoueur() {
-        return nbParJoueur;
-    }
+	/**
+	 * Gets the value of the face property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the face property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getFace().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Face }
+	 * 
+	 * 
+	 */
+	public List<Face> getFace() {
+		if (face == null) {
+			face = new ArrayList<Face>();
+		}
+		return this.face;
+	}
 
-    /**
-     * Sets the value of the nbParJoueur property.
-     * 
-     */
-    public void setNbParJoueur(int value) {
-        this.nbParJoueur = value;
-    }
+	/**
+	 * Gets the value of the nbParJoueur property.
+	 * 
+	 */
+	public int getNbParJoueur() {
+		return nbParJoueur;
+	}
 
-    /**
-     * Gets the value of the nbTotalDes property.
-     * 
-     */
-    public int getNbTotalDes() {
-        return nbTotalDes;
-    }
+	/**
+	 * Sets the value of the nbParJoueur property.
+	 * 
+	 */
+	public void setNbParJoueur(int value) {
+		this.nbParJoueur = value;
+	}
 
-    /**
-     * Sets the value of the nbTotalDes property.
-     * 
-     */
-    public void setNbTotalDes(int value) {
-        this.nbTotalDes = value;
-    }
+	/**
+	 * Gets the value of the nbTotalDes property.
+	 * 
+	 */
+	public int getNbTotalDes() {
+		return nbTotalDes;
+	}
+
+	/**
+	 * Sets the value of the nbTotalDes property.
+	 * 
+	 */
+	public void setNbTotalDes(int value) {
+		this.nbTotalDes = value;
+	}
 
 }
