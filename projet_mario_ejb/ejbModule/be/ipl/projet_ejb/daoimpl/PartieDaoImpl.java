@@ -94,4 +94,10 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		Partie p=recherche(query, partie.getId());
 		return p.getVainqueur(); 
 	}
+	
+	public List<JoueurPartie> listerJoueursPartie(Partie partie){
+		String query = "SELECT p FROM Partie p WHERE p.id = ?1";
+		Partie p = recherche(query, partie.getId());
+		return p.getListeJoueurs();
+	}		
 }

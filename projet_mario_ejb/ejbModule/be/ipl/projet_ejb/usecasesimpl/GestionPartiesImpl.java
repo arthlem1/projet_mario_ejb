@@ -1,11 +1,13 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
@@ -18,7 +20,9 @@ import be.ipl.projet_ejb.util.Util;
 public class GestionPartiesImpl implements GestionParties {
 
 	@EJB
-	PartieDaoImpl partieDao;
+	private PartieDaoImpl partieDao;
+	@EJB
+	private JoueurDaoImpl joueurDaoImpl;
 
 	public enum Etat {
 		INITIAL {
@@ -113,8 +117,13 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public List<Joueur> listeJoueursPartie(Partie partie) {
-		// TODO Auto-generated method stub
-		return null;
+		List<JoueurPartie> liste = partieDao.listerJoueursPartie(partie);
+		List<Joueur> joueurs = new ArrayList<>();
+		for (JoueurPartie joueurPartie : liste) {
+			Joueur joueur = joueurDaoImpl.rechercher(joueurPartie.getJoueurId());
+			joueurs.add(joueur);
+		}
+		return joueurs;
 	}
 
 }
