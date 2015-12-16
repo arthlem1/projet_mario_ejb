@@ -62,5 +62,12 @@ public class GestionPartiesImpl implements GestionParties {
 		Util.checkObject(joueur);
 		return partieDao.listerPartiesJouees(joueur);
 	}
+
+	@Override
+	public Partie ajouterJoueur(Partie partie, Joueur joueur) {
+		Util.checkObject(joueur);
+		Util.checkObject(partie);
+		return partieDao.ajouterJoueur(partie, joueur);
+	}
 	
 }

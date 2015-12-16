@@ -71,4 +71,11 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 				+ "AND j.id = jp.JoueurPartiePK.joueur_id AND p.id = jp.JoueurPartiePK.partie_id";
 		return liste(query, joueur.getId());
 	}
+
+	public Partie ajouterJoueur(Partie partie, Joueur joueur) {
+		List<JoueurPartie> liste = partie.getListeJoueurs();
+		JoueurPartie joueurPartie = new JoueurPartie(joueur, partie, liste.size()+1);
+		partie.getListeJoueurs().add(joueurPartie);
+		return mettreAJour(partie);
+	}
 }

@@ -59,4 +59,11 @@ public interface GestionParties {
 	 * @return
 	 */
 	List<Partie> listerPartiesJouees(Joueur joueur);
+	
+	/**
+	 * Ajout d'un joueur dans la partie
+	 * @param partie
+	 * @param joueur
+	 */
+	Partie ajouterJoueur(Partie partie, Joueur joueur);
 }

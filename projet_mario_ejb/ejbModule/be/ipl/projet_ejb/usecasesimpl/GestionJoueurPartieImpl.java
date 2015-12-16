@@ -1,5 +1,6 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -11,10 +12,12 @@ import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
+import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
+import be.ipl.projet_ejb.util.Util;
 
 @Stateless
 public class GestionJoueurPartieImpl implements GestionJoueurPartie {
@@ -25,30 +28,43 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	
 	
 	@Override
-	public void tirerUneCarte(JoueurPartie joueurPartie, Partie partie, Joueur joueur) {
+	public void tirerUneCarte(Partie partie, Joueur joueur) {
+		Util.checkObject(joueur);
+		Util.checkObject(partie);
 		List<Carte> pioche = partie.getPioche();
 		if(pioche.size()==0){
-			//lancer exception PiocheNonExistant
+			//TODO lancer exception PiocheNonExistant
 		}
-		Carte carte = pioche.get(0);//premiere carte
-		pioche.remove(0);
+		Carte carte = pioche.remove(0);//premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);
 	}
 
 	@Override
-	public void utiliserCarte(Carte carte, JoueurPartie joueurPartie, Partie partie, Joueur joueur) {
-		//voir effet carte 
+	public void utiliserCarte(Carte carte,Partie partie, Joueur joueur) {
+		Util.checkObject(joueur);
+		Util.checkObject(partie);
+		Util.checkObject(carte);
+		//TODO voir effet carte 
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
 	}
 
 	@Override
 	public List<Carte> listerCartesUtilisables(int nbWasabi,Partie partie) {
-		// pas encore dans Dao
-		return null;
+		Util.checkPositiveOrZero(nbWasabi);
+		Util.checkObject(partie);
+		List<Carte> utilisable = new ArrayList<Carte>();
+		List<Carte> main = partie.getJoueur_courant().getMainsCarte();
+		for (Carte carte : main) {
+			if(carte.getCout() <= nbWasabi)
+				utilisable.add(carte);
+		}
+		return utilisable;
 	}
 
 	@Override
 	public List<Carte> listerCartes(Joueur joueur,Partie partie) {
+		Util.checkObject(joueur);
+		Util.checkObject(partie);
 		return joueurPartieDao.getCartes(joueur, partie);
 	}
 
@@ -57,44 +73,60 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Random random = new Random();
 		List<De> listeDes = deDao.lister();
 		for (int i = 0; i < listeDes.size(); i++) {
-			//getFace
+			//TODO getFace
 		}
 		return null;
 	}
 
 	@Override
 	public void donnerDe(Joueur donneur, Joueur receveur, int nbDes, Partie partie) {
+		Util.checkObject(donneur);
+		Util.checkObject(receveur);
+		Util.checkPositiveOrZero(nbDes);
+		Util.checkObject(partie);
 		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
 	}
 
 	@Override
-	public int nbFaceDons(List<De> liste) {
-		// TODO nombre de face "dés à donner"
-		return 0;
+	public void supprimerDe(int nbDes, Partie partie) {
+		Util.checkPositiveOrZero(nbDes);
+		Util.checkObject(partie);
+		for (int i = 0; i < nbDes; i++) {
+			joueurPartieDao.retirerDe(partie.getJoueur_courant().getJoueurId(), partie);
+		}	
 	}
 
 	@Override
-	public int nbFaceCartes(List<De> liste) {
-		// TODO nombre de face "dés à cartes"
-		return 0;
+	public int nbFaceDons(List<Face> liste) {
+		Util.checkObject(liste);
+		int compteur = 0;
+		for (Face face : liste) {
+			if(face.getIdentif() == "d")
+				compteur++;
+		}
+		return compteur;
 	}
 
 	@Override
-	public int nbFaceWasabi(List<De> liste) {
-		// TODO nombre de face "dés à wasabi"
-		return 0;
+	public int nbFaceCartes(List<Face> liste) {
+		Util.checkObject(liste);
+		int compteur = 0;
+		for (Face face : liste) {
+			if(face.getIdentif() == "c")
+				compteur++;
+		}
+		return compteur;
 	}
 
 	@Override
-	public void ajouterJoueur(Partie partie, Joueur joueur) {
-		// TODO ajouter joueur à la partie
-		
-	}
-
-	@Override
-	public void supprimerDe(int nbDes, Joueur joueur) {
-		// TODO suppression d'un dé
-		
+	public int nbFaceWasabi(List<Face> liste) {
+		Util.checkObject(liste);
+		int compteur = 0;
+		for (Face face : liste) {
+			if(face.getIdentif() == "w")
+				compteur++;
+		}
+		return compteur;
 	}
 
 }

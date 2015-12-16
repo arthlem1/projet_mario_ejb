@@ -9,6 +9,7 @@ import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.domaine.Face;
 
 @Remote 
 public interface GestionJoueurPartie {
@@ -16,13 +17,13 @@ public interface GestionJoueurPartie {
 	 * Le joueur tire une carte qui sera ajoutée dans sa main.
 	 * @param joueurPartie.// adapter DAo car doublon dans les params
 	 */
-	void tirerUneCarte(JoueurPartie joueurPartie, Partie partie, Joueur joueur);
+	void tirerUneCarte(Partie partie, Joueur joueur);
 	
 	/**
 	 * Méthode qui va activer l'effet de la carte.
 	 * @param carte.//idem
 	 */
-	void utiliserCarte(Carte carte, JoueurPartie joueurPartie, Partie partie, Joueur joueur);
+	void utiliserCarte(Carte carte, Partie partie, Joueur joueur);
 	
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de 
@@ -57,31 +58,24 @@ public interface GestionJoueurPartie {
 	 * @param liste des dés lancés par le joueur.
 	 * @return nombre de dés pouvant être donnés.
 	 */
-	int nbFaceDons(List<De> liste);
+	int nbFaceDons(List<Face> liste);
 	
 	/**
 	 * @param liste des dés lancés par le joueur.
 	 * @return nombre de dés pouvant permettre le tirage d'une carte.
 	 */
-	int nbFaceCartes(List<De> liste);
+	int nbFaceCartes(List<Face> liste);
 	
 	/**
 	 * @param liste des dés lancés par le joueur
 	 * @return nombre de dés permettant l'utilisation d'une carte
 	 */
-	int nbFaceWasabi(List<De> liste);
-	
-	/**
-	 * Ajout d'un joueur dans la partie
-	 * @param partie
-	 * @param joueur
-	 */
-	void ajouterJoueur(Partie partie, Joueur joueur);
+	int nbFaceWasabi(List<Face> liste);
 	
 	/**
 	 * Suppresion de dés pour le joueur
 	 * @param nbDes nombre de dés à supprimer
 	 * @param joueur joueur dont les dés sont supprimés.
 	 */
-	void supprimerDe(int nbDes, Joueur joueur);
+	void supprimerDe(int nbDes, Partie partie);
 }
