@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebFilter(filterName="FiltreControleur", urlPatterns = "/*", dispatcherTypes = {DispatcherType.REQUEST} )
+@WebFilter(filterName="FiltreControleur", urlPatterns = "/restreint/*", dispatcherTypes = {DispatcherType.REQUEST} )
 public class FiltreControleur implements Filter {
 	private FilterConfig fConfig;
+	
+	private static final String LOGIN = "/WEB-INF/jsp/index.jsp";
 	
 	public void init(FilterConfig fConfig) throws ServletException {
 		this.fConfig = fConfig;
@@ -44,12 +46,10 @@ public class FiltreControleur implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession();
 		
-		if(session.getAttribute("joueur") == null){
-		}else{
-			
-		}
-		
-		chain.doFilter(request, response);
+		if(session.getAttribute("joueur") == null)
+			res.sendRedirect(req.getContextPath() + LOGIN);
+		else
+			chain.doFilter(request, response);
 	}
 
 }
