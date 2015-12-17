@@ -37,6 +37,8 @@ public class GestionPartiesImpl implements GestionParties {
 	private JoueurPartieDaoImpl joueurPartieDaoImpl;
 	@EJB
 	private InitDB initDB;
+	
+	private static int ordreJoueur = 1; 
 
 	public enum Etat {
 		INITIAL {
@@ -45,7 +47,7 @@ public class GestionPartiesImpl implements GestionParties {
 				Util.checkObject(partie);
 				JoueurPartie jp;
 				try {
-					jp = new JoueurPartie(joueur, partie, 1);
+					jp = new JoueurPartie(joueur, partie, ordreJoueur++);
 					System.out.println("ID JOUEUR " + jp.getJoueur().getId() + " ID PARTIE " + jp.getPartie().getId());
 					gpi.joueurPartieDaoImpl.enregistrer(jp);
 				} catch (Exception e) {
