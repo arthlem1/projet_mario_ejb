@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,11 +50,11 @@ public class JoueurPartie implements Serializable {
 	@Max(6)
 	private int ordreJoueurs;
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "JOUEUR_PARTIE_DES", schema = "mario_ejb",
 			inverseJoinColumns={@JoinColumn(name="MAIN_DE_ID")})
 	private List<De> mainsDe;
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name="JOUEUR_PARTIE_CARTES",schema = "mario_ejb",
 			inverseJoinColumns={@JoinColumn(name="MAIN_CARTE_ID")})
 	private List<Carte> mainsCarte;
