@@ -5,10 +5,10 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import be.ipl.projet_ejb.domaine.Joueur;
-import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.MaxJoueursException;
 import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
+import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 
 @Remote
 public interface GestionParties {
@@ -35,8 +35,9 @@ public interface GestionParties {
 	 * Lancer la partie. Le joueur qui commence est tiré au hasard.
 	 * @param nom
 	 * @return Partie
+	 * @throws PasAssezDeJoueursException 
 	 */
-	boolean commencerPartie(Partie partie);
+	boolean commencerPartie(Partie partie) throws PasAssezDeJoueursException;
 	
 	/**
 	 * Passer au joueur suivant.

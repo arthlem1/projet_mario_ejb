@@ -12,14 +12,13 @@ import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
-import be.ipl.projet_ejb.domaine.De;
-import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.MaxJoueursException;
 import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
+import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
 
@@ -55,7 +54,9 @@ public class GestionPartiesImpl implements GestionParties {
 				return gpi.partieDao.ajouterJoueur(partie, jp);
 			}
 
-			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) {
+			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) throws PasAssezDeJoueursException {
+				if(partie.getListeJoueurs().size()==1)
+					throw new PasAssezDeJoueursException("Pas assez de joueurs dans la partie.");
 				partie.setEtat(EN_COURS);
 				gpi.initialiserPioche();
 				gpi.initialiserMainCartes();
@@ -75,7 +76,7 @@ public class GestionPartiesImpl implements GestionParties {
 			return false;
 		}
 
-		public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) {
+		public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) throws PasAssezDeJoueursException {
 			return false;
 		}
 
@@ -152,7 +153,7 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public boolean commencerPartie(Partie partie) {
+	public boolean commencerPartie(Partie partie) throws PasAssezDeJoueursException {
 		Util.checkObject(partie);
 		return partie.getEtat().commencerPartie(partie, this);
 	}
