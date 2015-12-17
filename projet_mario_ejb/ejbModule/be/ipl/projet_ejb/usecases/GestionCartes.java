@@ -15,6 +15,11 @@ public interface GestionCartes {
 	 */
 	Carte rechercherCarte(int id);
 	
-	
+	/**
+	 * Renvoie la description d'une carte
+	 * @param codeEffet
+	 * @return
+	 */
+	String descriptionCarte(int codeEffet);
 	
 }

@@ -9,10 +9,12 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 import be.ipl.projet_ejb.daoimpl.CarteDaoImpl;
+import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
+import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
@@ -22,8 +24,6 @@ import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
-import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
-import be.ipl.projet_ejb.domaine.De;
 
 @Singleton
 @Startup
@@ -42,7 +42,7 @@ public class GestionPartiesImpl implements GestionParties {
 	@EJB
 	private DeDaoImpl deDao;
 	
-	private static int ordreJoueur = 1; 
+	private static int ordreJoueur = 2; 
 
 	public enum Etat {
 		INITIAL {
@@ -197,7 +197,6 @@ public class GestionPartiesImpl implements GestionParties {
 		
 		partie = partieDao.rechercher(partie.getNom());
 		List<Carte> pioche = partie.getPioche();
-		//List<Carte> cartes = initDB.getWazabi().getCarte();
 		List<Carte> cartes = carteDao.lister();
 		pioche.addAll(cartes);
 		return partieDao.mettreAJour(partie);
@@ -207,7 +206,7 @@ public class GestionPartiesImpl implements GestionParties {
 	public Partie getPartieInitiale() {
 		return partieDao.getPartieInitiale();
 	}
-
+	
 	@Override
 	public Partie initialiserMainsDes(Partie partie) {
 		partie = partieDao.rechercher(partie.getNom());
@@ -216,10 +215,11 @@ public class GestionPartiesImpl implements GestionParties {
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 4; i++) {
 				De de = des.remove(0);
+				de = deDao.initFaces(de);
+				//System.out.println("faces: "+de.getFace().size()); OK
 				joueurPartie.getMainsDe().add(de);
 			}
 		}
 		return partieDao.mettreAJour(partie);
 	}
-
 }
