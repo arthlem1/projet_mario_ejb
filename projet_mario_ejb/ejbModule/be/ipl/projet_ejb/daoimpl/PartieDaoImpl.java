@@ -55,7 +55,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	public Partie passerAuJoueurSuivant(Partie partie, JoueurPartie suivant){
 		String query = "SELECT p FROM Partie p "
 				+ "WHERE p.joueur_id = ?1";
-		Partie p = recherche(query, suivant.getJoueurId());
+		Partie p = recherche(query, suivant.getJoueur().getId());
 		if(p.getListeJoueurs().contains(suivant)){
 			p.setJoueur_courant(suivant);
 		}
@@ -71,7 +71,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	public List<Partie> listerPartiesJouees(Joueur joueur){
 		String query = "SELECT p FROM JoueurPartie jp, Partie p, Joueur j "
 				+ "WHERE j.id = ?1 "
-				+ "AND j.id = jp.joueurPartiePK.joueur_id AND p.id = jp.joueurPartiePK.partie_id";
+				+ "AND j.id = jp.joueur_id AND p.id = jp.partie_id";
 		return liste(query, joueur.getId());
 	}
 

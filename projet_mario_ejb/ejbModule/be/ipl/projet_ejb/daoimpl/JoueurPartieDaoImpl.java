@@ -88,8 +88,8 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	
 	public JoueurPartie getPlayer(int jid, int pid){
 		String query="Select jp FROM JoueurPartie jp "
-				+ "WHERE jp.joueurPartiePK.joueur_id=?1 "
-				+ "AND jp.joueurPartiePK.partie_id=?2 ";
+				+ "WHERE jp.joueur_id=?1 "
+				+ "AND jp.partie_id=?2 ";
 		return recherche(query,jid,pid);
 	}
 }
