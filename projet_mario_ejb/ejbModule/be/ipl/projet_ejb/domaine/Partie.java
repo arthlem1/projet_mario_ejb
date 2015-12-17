@@ -55,7 +55,7 @@ public class Partie implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dateHeureCreation;
 
-	@OneToMany(mappedBy = "partie")
+	@OneToMany(mappedBy = "partie", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	private List<JoueurPartie> listeJoueurs = new ArrayList<>();
 
 	@ManyToOne
