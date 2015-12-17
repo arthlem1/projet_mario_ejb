@@ -17,7 +17,7 @@ public class StrategyTousDeuxCartesSaufVous implements Strategy {
 			Joueur joueur, Joueur cible) {
 		List<JoueurPartie> liste = partie.getListeJoueurs();
 		for (JoueurPartie joueurPartie : liste) {
-			if(joueurPartie.getJoueurId()!=joueur.getId()){
+			if(joueurPartie.getJoueur().getId()!=joueur.getId()){
 				List<Carte> cartesDuJoueur = joueurPartie.getMainsCarte();
 				while(cartesDuJoueur.size() > 2){
 					cartesDuJoueur.remove(0);

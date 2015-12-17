@@ -57,6 +57,8 @@ public class JoueurPartie implements Serializable {
 	public JoueurPartie(Joueur joueur, Partie partie, int ordreJoueurs) {
 		super();
 		this.ordreJoueurs = ordreJoueurs;
+		this.joueur = joueur;
+		this.partie = partie;
 		this.mainsDe = new ArrayList<>();
 		this.mainsCarte = new ArrayList<>();
 	}
