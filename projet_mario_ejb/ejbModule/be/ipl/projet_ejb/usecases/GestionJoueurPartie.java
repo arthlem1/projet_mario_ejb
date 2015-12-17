@@ -8,6 +8,7 @@ import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 
 @Remote 
@@ -22,8 +23,9 @@ public interface GestionJoueurPartie {
 	/**
 	 * Méthode qui va activer l'effet de la carte.
 	 * @param carte.//idem
+	 * @throws JoueurNonTrouveException 
 	 */
-	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible);
+	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible) throws JoueurNonTrouveException;
 	
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de 

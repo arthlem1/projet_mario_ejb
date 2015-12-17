@@ -19,6 +19,7 @@ import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
@@ -61,7 +62,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible) {
+	public void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		Util.checkObject(carte);
