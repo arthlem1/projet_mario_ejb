@@ -62,6 +62,9 @@ public class Partie implements Serializable {
 	@JoinColumn(name = "VAINQUEUR")
 	private Joueur vainqueur;
 
+	//@NotNull
+	//private int nbJoueur=0;
+	
 	@ManyToMany
 	@JoinTable(name = "PARTIE_CARTE", schema = "mario_ejb", joinColumns = { @JoinColumn(name = "PARTIE_ID") })
 	private List<Carte> pioche = new ArrayList<>();
@@ -102,6 +105,14 @@ public class Partie implements Serializable {
 		return true;
 	}
 
+	//public int getNbJoueur(){
+	//	return nbJoueur;
+	//}
+	
+	//public void setNbJoueur(int nb){
+	//	nbJoueur=nb;
+	//}
+	
 	public int getId() {
 		return id;
 	}
