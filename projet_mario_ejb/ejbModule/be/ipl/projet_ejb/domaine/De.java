@@ -75,7 +75,8 @@ public class De implements Serializable {
 	@Transient
 	@XmlAttribute(name = "nbTotalDes", required = true)
 	protected int nbTotalDes;
-
+	@XmlTransient
+	private String valeur ;
 	protected De() {
 	}
 
@@ -92,6 +93,14 @@ public class De implements Serializable {
 	// public Face getValeur() {
 	// return valeur;
 	// }
+
+	public String getValeur() {
+		return valeur;
+	}
+
+	public void setValeur(String valeur) {
+		this.valeur = valeur;
+	}
 
 	@Override
 	public int hashCode() {
@@ -142,6 +151,10 @@ public class De implements Serializable {
 			face = new ArrayList<Face>();
 		}
 		return this.face;
+	}
+	
+	public void setFace(List<Face> face) {
+		this.face = face;
 	}
 
 	/**

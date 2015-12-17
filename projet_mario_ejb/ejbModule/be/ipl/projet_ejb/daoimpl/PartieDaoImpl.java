@@ -123,8 +123,8 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	}	
 	
 	public Partie getPartieInitiale(){
-		String query = "SELECT p FROM Partie p WHERE p.etat = 'INITIAL'";
-		Partie p = recherche(query, null);
+		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
+		Partie p = recherche(query, "INITIAL");
 		return p;
 	}
 }

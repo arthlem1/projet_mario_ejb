@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -25,15 +28,16 @@ public class JoueurPartie implements Serializable {
 	@Column(name = "JOUEUR_PARTIE_ID")
 	private JoueurPartiePK joueurPartiePK;
 */
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "JOUEUR_PARTIE_ID")
+	private int id;
 	@ManyToOne
 	@JoinColumn(name = "JOUEUR_ID")
-	@Id
 	private Joueur joueur;
 	
 	@ManyToOne
 	@JoinColumn(name = "PARTIE_ID")
-	@Id
 	private Partie partie;
 	
 	@NotNull

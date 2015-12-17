@@ -52,7 +52,7 @@ public class Partie implements Serializable {
 	private GestionPartiesImpl.Etat etat = GestionPartiesImpl.Etat.INITIAL;
 
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dateHeureCreation;
 
 	@OneToMany(mappedBy = "partie")

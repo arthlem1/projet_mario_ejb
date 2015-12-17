@@ -2,6 +2,7 @@ package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -10,6 +11,10 @@ import javax.ejb.Startup;
 import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
+import be.ipl.projet_ejb.domaine.Carte;
+import be.ipl.projet_ejb.domaine.De;
+import be.ipl.projet_ejb.domaine.Face;
+import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
@@ -28,7 +33,9 @@ public class GestionPartiesImpl implements GestionParties {
 	private JoueurDaoImpl joueurDaoImpl;
 	@EJB
 	private JoueurPartieDaoImpl joueurPartieDaoImpl;
-
+	@EJB
+	private InitDB initDB;
+	
 	public enum Etat {
 		INITIAL {
 			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) throws MaxJoueursException {
@@ -36,8 +43,8 @@ public class GestionPartiesImpl implements GestionParties {
 				Util.checkObject(partie);
 				JoueurPartie jp;
 				try {
-					jp =new JoueurPartie(joueur, partie, 1);
-					System.out.println("ID JOUEUR "+jp.getJoueur().getId()+" ID PARTIE "+jp.getPartie().getId());
+					jp = new JoueurPartie(joueur, partie, 1);
+					System.out.println("ID JOUEUR " + jp.getJoueur().getId() + " ID PARTIE " + jp.getPartie().getId());
 					gpi.joueurPartieDaoImpl.enregistrer(jp);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,11 +52,13 @@ public class GestionPartiesImpl implements GestionParties {
 				}
 				Util.checkObject(joueur);
 				Util.checkObject(partie);
-					return gpi.partieDao.ajouterJoueur(partie, jp);
+				return gpi.partieDao.ajouterJoueur(partie, jp);
 			}
 
 			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) {
 				partie.setEtat(EN_COURS);
+				gpi.initialiserPioche();
+				gpi.initialiserMainCartes();
 				return true;
 			}
 		},
@@ -88,9 +97,27 @@ public class GestionPartiesImpl implements GestionParties {
 			throw new PartieDejaEnCoursException("Impossible de cr�er une partie, une autre est d�j� en cours");
 		}
 		Partie partie = partieDao.creerPartie(nom, createur);
-		System.out.println("ID PARTIE "+partie.getId());
+		System.out.println("ID PARTIE " + partie.getId());
 		partie.getEtat().ajouterJoueur(createur, partie, this);
 		return partie;
+	}
+
+	protected void initialiserMainCartes() {
+		List<Carte> cartes = initDB.getWazabi().getCarte();
+		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(getPartieCourante());
+		for (JoueurPartie joueurPartie : joueurs) {
+			for (int i = 0; i < 3; i++) {
+				Random random = new Random();
+				Carte carte = cartes.remove(random.nextInt(cartes.size()) + 1);
+				joueurPartie.getMainsCarte().add(carte);
+			}
+		}
+	}
+
+	protected void initialiserPioche() {
+		List<Carte> pioche = partieDao.getPartieInitiale().getPioche();
+		List<Carte> cartes = initDB.getWazabi().getCarte();
+		pioche.addAll(cartes);
 	}
 
 	@Override
@@ -152,6 +179,5 @@ public class GestionPartiesImpl implements GestionParties {
 	public Partie getPartieCourante() {
 		return partieDao.getPartieInitiale();
 	}
-	
 
 }
