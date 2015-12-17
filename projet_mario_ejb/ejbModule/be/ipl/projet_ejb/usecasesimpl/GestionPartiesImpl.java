@@ -42,7 +42,7 @@ public class GestionPartiesImpl implements GestionParties {
 	@EJB
 	private DeDaoImpl deDao;
 	
-	private static int ordreJoueur = 1; 
+	private static int ordreJoueur = 2; 
 
 	public enum Etat {
 		INITIAL {
