@@ -34,7 +34,7 @@ public class GestionPartiesImpl implements GestionParties {
 	private JoueurPartieDaoImpl joueurPartieDaoImpl;
 	@EJB
 	private InitDB initDB;
-	
+
 	public enum Etat {
 		INITIAL {
 			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) throws MaxJoueursException {
@@ -56,7 +56,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) throws PasAssezDeJoueursException {
 				partie = gpi.rechercherPartie(partie.getNom());
-				if(partie.getListeJoueurs().size()==1){
+				if (partie.getListeJoueurs().size() == 1) {
 					partie.setEtat(FINI);
 					throw new PasAssezDeJoueursException("Pas assez de joueurs dans la partie.");
 				}
@@ -94,13 +94,16 @@ public class GestionPartiesImpl implements GestionParties {
 		} catch (Exception e) {
 			return null;
 		}
-		List<Partie> liste = partieDao.lister();
-		if (liste != null && !liste.isEmpty() && liste.get(liste.size()).getEtat() == Etat.EN_COURS) {
+		Partie partie = partieDao.rechercher(nom);
+		if (partie != null && partie.getEtat() == Etat.EN_COURS) {
 			throw new PartieDejaEnCoursException("Impossible de cr�er une partie, une autre est d�j� en cours");
+		} else if (partie.getEtat() == Etat.FINI)
+			partie = partieDao.creerPartie(nom, createur);
+		else {
+			System.out.println("ID PARTIE " + partie.getId());
+			partie.getEtat().ajouterJoueur(createur, partie, this);
 		}
-		Partie partie = partieDao.creerPartie(nom, createur);
-		System.out.println("ID PARTIE " + partie.getId());
-		partie.getEtat().ajouterJoueur(createur, partie, this);
+		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
 
@@ -166,6 +169,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserMainsCartes(Partie partie) {
+		partie = partieDao.recharger(partie.getNom());
 		List<Carte> cartes = initDB.getWazabi().getCarte();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
@@ -180,6 +184,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserPioche(Partie partie) {
+		partie = partieDao.recharger(partie.getNom());
 		List<Carte> pioche = partie.getPioche();
 		List<Carte> cartes = initDB.getWazabi().getCarte();
 		pioche.addAll(cartes);
