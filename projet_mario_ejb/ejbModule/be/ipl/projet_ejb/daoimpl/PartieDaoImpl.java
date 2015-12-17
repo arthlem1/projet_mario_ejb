@@ -112,12 +112,9 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return p.getListeJoueurs(); 
 	}	
 	
-	public void setJoueurSuivant(Partie partie, Joueur suivant) {
-		String query = "SELECT p FROM Partie p "
-				+ "WHERE p.joueur_id = ?1";
-		Partie p = recherche(query, suivant.getId());
+	public void setJoueurSuivant(Partie p, JoueurPartie suivant) {
 		if(p.getListeJoueurs().contains(suivant)){
-			//p.setJoueur_courant(suivant);
+			p.setJoueur_courant(suivant);
 		}
 		mettreAJour(p);		
 	}	
