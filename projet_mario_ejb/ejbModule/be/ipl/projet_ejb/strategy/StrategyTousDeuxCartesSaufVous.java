@@ -9,12 +9,15 @@ import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 
 public class StrategyTousDeuxCartesSaufVous implements Strategy {
 
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
-			Joueur joueur, Joueur cible) {
+			Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
+		if(!partie.getListeJoueurs().contains(joueur))
+			throw new JoueurNonTrouveException();
 		List<JoueurPartie> liste = partie.getListeJoueurs();
 		for (JoueurPartie joueurPartie : liste) {
 			if(joueurPartie.getJoueur().getId()!=joueur.getId()){
