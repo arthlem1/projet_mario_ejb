@@ -1,5 +1,7 @@
 package be.ipl.projet_ejb.daoimpl;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -30,6 +32,15 @@ public class DeDaoImpl extends DaoImpl<Integer, De> {
 		return super.rechercher(entite.getId());
 	}
 	
-	
+	public De initFaces(De de){
+		de = rechercher(de);
+		List<Face> faces = de.getFace();
+		for (int i = 0; i < 6; i++) {
+			Face face = new Face();
+			face.getIdentif(i);
+			faces.add(face);
+		}
+		return super.mettreAJour(de);
+	}
 	
 }

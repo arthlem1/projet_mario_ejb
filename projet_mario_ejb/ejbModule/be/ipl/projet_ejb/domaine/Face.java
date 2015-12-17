@@ -8,6 +8,8 @@
 
 package be.ipl.projet_ejb.domaine;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,10 +42,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@SuppressWarnings("serial")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
 @XmlRootElement(name = "face")
-public class Face {
+public class Face implements Serializable{
 	@XmlTransient
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,8 +93,18 @@ public class Face {
      *     {@link String }
      *     
      */
-    public String getIdentif() {
+    public String getIdentif(int num) {
+    	if(num<=2){
+    		setIdentif("w");
+    	}else if(num==5){
+    		setIdentif("d");
+    	}else
+    		setIdentif("c");
         return identif;
+    }
+    
+    public String getIdentif(){
+    	return this.identif;
     }
 
     /**

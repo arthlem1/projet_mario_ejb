@@ -20,5 +20,4 @@ public class GestionDesImpl implements GestionDes {
 		Util.checkObject(de);
 		return deDao.rechercher(de);
 	}
-
 }

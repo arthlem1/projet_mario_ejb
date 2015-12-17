@@ -100,17 +100,19 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public List<Face> lancerDes(Joueur joueur, Partie partie) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
-		List<Face> faces = new ArrayList<>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		System.out.println("Main Dés: "+jp.getMainsDe().size());
-		De de = jp.getMainsDe().get(0);
+		De de = deDao.rechercher(jp.getMainsDe().get(0));
+		List<Face> faces = de.getFace();
+		System.out.println("faces du dés: "+faces.size());
+		List<Face> lancers = new ArrayList<Face>();
 		int nbDesJoueur = nbDe(joueur, partie);
 		for (int i = 0; i < nbDesJoueur; i++) {
 			Random random = new Random();
-			Face face = de.getFace().get(random.nextInt(6) + 1);
-			faces.add(face);
+			Face face = faces.get(random.nextInt(6));
+			lancers.add(face);
 		}
-		return faces;
+		return lancers;
 	}
 	
 	
