@@ -88,8 +88,8 @@ public interface GestionParties {
 	 */
 	Partie getPartieCourante();
 	
-	Partie initialiserPioche();
+	Partie initialiserPioche(Partie partie);
 	
-	Partie initialiserMainsCartes();
+	Partie initialiserMainsCartes(Partie partie);
 	
 }

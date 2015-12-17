@@ -165,9 +165,9 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie initialiserMainsCartes() {
+	public Partie initialiserMainsCartes(Partie partie) {
 		List<Carte> cartes = initDB.getWazabi().getCarte();
-		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(getPartieCourante());
+		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 3; i++) {
 				Random random = new Random();
@@ -175,17 +175,15 @@ public class GestionPartiesImpl implements GestionParties {
 				joueurPartie.getMainsCarte().add(carte);
 			}
 		}
-		return null;
+		return partieDao.mettreAJour(partie);
 	}
 
 	@Override
-	public Partie initialiserPioche() {
-		Partie partie = partieDao.getPartieInitiale();
-		List<Carte> pioche = partieDao.getPartieInitiale().getPioche();
+	public Partie initialiserPioche(Partie partie) {
+		List<Carte> pioche = partie.getPioche();
 		List<Carte> cartes = initDB.getWazabi().getCarte();
 		pioche.addAll(cartes);
-		partie = partieDao.mettreAJour(partie);
-		return partie;
+		return partieDao.mettreAJour(partie);
 	}
 
 }
