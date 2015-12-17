@@ -128,4 +128,10 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		Partie p = recherche(query, GestionPartiesImpl.Etat.INITIAL);
 		return p;
 	}
+	
+	public Partie getPartieEnCours(){
+		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
+		Partie p = recherche(query, GestionPartiesImpl.Etat.EN_COURS);
+		return p;
+	}
 }

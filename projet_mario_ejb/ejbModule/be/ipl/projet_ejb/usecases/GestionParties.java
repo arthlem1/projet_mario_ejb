@@ -86,7 +86,9 @@ public interface GestionParties {
 	 * GetPartieCourante
 	 * @return
 	 */
-	Partie getPartieCourante();
+	Partie getPartieInitiale();
+	
+	Partie getPartieEnCours();
 	
 	Partie initialiserPioche(Partie partie);
 	

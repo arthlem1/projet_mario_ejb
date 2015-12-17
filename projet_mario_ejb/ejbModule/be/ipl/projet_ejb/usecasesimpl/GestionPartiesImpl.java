@@ -160,8 +160,8 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie getPartieCourante() {
-		return partieDao.getPartieInitiale();
+	public Partie getPartieEnCours() {
+		return partieDao.getPartieEnCours();
 	}
 
 	@Override
@@ -184,6 +184,11 @@ public class GestionPartiesImpl implements GestionParties {
 		List<Carte> cartes = initDB.getWazabi().getCarte();
 		pioche.addAll(cartes);
 		return partieDao.mettreAJour(partie);
+	}
+
+	@Override
+	public Partie getPartieInitiale() {
+		return partieDao.getPartieInitiale();
 	}
 
 }
