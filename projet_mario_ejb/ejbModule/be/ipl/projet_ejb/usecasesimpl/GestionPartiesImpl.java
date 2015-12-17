@@ -169,7 +169,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserMainsCartes(Partie partie) {
-		partie = partieDao.recharger(partie.getNom());
+		partie = partieDao.recharger(String.valueOf(partie.getId()));
 		List<Carte> cartes = initDB.getWazabi().getCarte();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
@@ -184,7 +184,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserPioche(Partie partie) {
-		partie = partieDao.recharger(partie.getNom());
+		partie = partieDao.recharger(String.valueOf(partie.getId()));
 		List<Carte> pioche = partie.getPioche();
 		List<Carte> cartes = initDB.getWazabi().getCarte();
 		pioche.addAll(cartes);
