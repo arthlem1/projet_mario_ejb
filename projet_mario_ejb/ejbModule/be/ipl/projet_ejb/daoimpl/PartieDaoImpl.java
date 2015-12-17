@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
+import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 
 @LocalBean
 @Stateless
@@ -112,9 +113,11 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return p.getListeJoueurs(); 
 	}	
 	
-	public void setJoueurSuivant(Partie p, JoueurPartie suivant) {
+	public void setJoueurSuivant(Partie p, JoueurPartie suivant) throws JoueurNonTrouveException {
 		if(p.getListeJoueurs().contains(suivant)){
 			p.setJoueur_courant(suivant);
+		}else{
+			throw new JoueurNonTrouveException();
 		}
 		mettreAJour(p);		
 	}	
