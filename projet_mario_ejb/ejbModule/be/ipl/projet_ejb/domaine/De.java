@@ -68,7 +68,7 @@ public class De implements Serializable {
 	//
 	@Transient
 	@XmlElement(required = true)
-	protected List<Face> face;
+	protected List<Face> face = new ArrayList<Face>();;
 	@Transient
 	@XmlAttribute(name = "nbParJoueur", required = true)
 	protected int nbParJoueur;
@@ -147,9 +147,6 @@ public class De implements Serializable {
 	 * 
 	 */
 	public List<Face> getFace() {
-		if (face == null) {
-			face = new ArrayList<Face>();
-		}
 		return this.face;
 	}
 	

@@ -113,4 +113,12 @@ public interface GestionJoueurPartie {
 	 * @return
 	 */
 	public int ordreJoueur(int idJoueur, int idPartie);
+	
+	/**
+	 * récupère le nombre de dés que le joueur a dans sa main
+	 * @param j joueur
+	 * @param p partie
+	 * @return nombre de dés dans sa main
+	 */
+	public int nbDe(Joueur j, Partie p);
 }

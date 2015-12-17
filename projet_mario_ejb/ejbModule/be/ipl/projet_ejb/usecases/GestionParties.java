@@ -88,10 +88,31 @@ public interface GestionParties {
 	 */
 	Partie getPartieInitiale();
 	
+	/**
+	 * Partie en cours
+	 * @return
+	 */
 	Partie getPartieEnCours();
 	
+	/**
+	 * initialise la pioche avec valeur du XML
+	 * @param partie
+	 * @return
+	 */
 	Partie initialiserPioche(Partie partie);
 	
+	/**
+	 * Initialise la main de carte des joueurs avec valeur du XML
+	 * @param partie
+	 * @return
+	 */
 	Partie initialiserMainsCartes(Partie partie);
+	
+	/**
+	 * initialise la main de dés des joueurs avec valeur du XML
+	 * @param partie
+	 * @return
+	 */
+	Partie initialiserMainsDes(Partie partie);
 	
 }

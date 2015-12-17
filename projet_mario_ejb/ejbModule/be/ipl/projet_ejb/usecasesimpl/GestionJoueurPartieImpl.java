@@ -102,8 +102,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(partie);
 		List<Face> faces = new ArrayList<>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
+		System.out.println("Main Dés: "+jp.getMainsDe().size());
 		De de = jp.getMainsDe().get(0);
-		int nbDesJoueur = joueurPartieDao.getNbDe(joueur, partie);
+		int nbDesJoueur = nbDe(joueur, partie);
 		for (int i = 0; i < nbDesJoueur; i++) {
 			Random random = new Random();
 			Face face = de.getFace().get(random.nextInt(6) + 1);
@@ -111,6 +112,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		}
 		return faces;
 	}
+	
+	
 
 	@Override
 	public void donnerDe(Joueur donneur, Joueur receveur, int nbDes, Partie partie) {
@@ -180,5 +183,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	@Override
 	public int ordreJoueur(int idJoueur, int idPartie) {
 		return joueurPartieDao.getPlayer(idJoueur, idPartie).getOrdreJoueurs();
+	}
+
+	@Override
+	public int nbDe(Joueur j, Partie p) {
+		return joueurPartieDao.getNbDe(j, p);
 	}
 }
