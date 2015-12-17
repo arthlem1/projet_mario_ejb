@@ -59,7 +59,7 @@ public class JoueurPartie implements Serializable {
 		this.mainsDe = new ArrayList<>();
 		this.mainsCarte = new ArrayList<>();
 	}
-
+ 
 	public Joueur getJoueur() {
 		return joueur;
 	}
