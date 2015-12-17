@@ -105,7 +105,7 @@ public class GestionPartiesImpl implements GestionParties {
 		}
 		partie = partieDao.creerPartie(nom, createur);
 		System.out.println("ID PARTIE " + partie.getId());
-		partie.getEtat().ajouterJoueur(createur, partie, this);
+		//partie.getEtat().ajouterJoueur(createur, partie, this);
 		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
