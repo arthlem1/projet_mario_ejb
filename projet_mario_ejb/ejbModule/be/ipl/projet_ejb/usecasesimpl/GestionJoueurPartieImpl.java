@@ -34,7 +34,6 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	private JoueurPartieDaoImpl joueurPartieDao;
 	@EJB
 	private JoueurDaoImpl joueurDaoImpl;
-
 	@EJB
 	private InitDB initDB;
 
@@ -157,4 +156,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		return compteur;
 	}
 
+	public boolean lancerTour(Joueur j, Partie p){
+		return !joueurPartieDao.isBlocked(j, p);
+	}
 }
