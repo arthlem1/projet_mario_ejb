@@ -10,6 +10,7 @@ import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
+import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
 
 @LocalBean
 @Stateless
@@ -124,7 +125,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	
 	public Partie getPartieInitiale(){
 		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
-		Partie p = recherche(query, "INITIAL");
+		Partie p = recherche(query, GestionPartiesImpl.Etat.INITIAL);
 		return p;
 	}
 }
