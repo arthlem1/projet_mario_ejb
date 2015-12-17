@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -29,10 +28,12 @@ public class JoueurPartie implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "JOUEUR_ID")
+	@Id
 	private Joueur joueur;
 	
 	@ManyToOne
 	@JoinColumn(name = "PARTIE_ID")
+	@Id
 	private Partie partie;
 	
 	@NotNull
