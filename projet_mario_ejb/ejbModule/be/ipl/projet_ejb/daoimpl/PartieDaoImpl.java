@@ -70,9 +70,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()-1));
 			}
 		}
-		String query = "SELECT p FROM Partie p "
-				+ "WHERE p.joueur_id = ?1";
-		Partie p = recherche(query, suivant.getJoueur().getId());
+		Partie p = getPartieInitiale();
 		if(p.getListeJoueurs().contains(suivant)){
 			p.setJoueur_courant(suivant);
 		}
