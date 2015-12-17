@@ -36,7 +36,7 @@ public class Partie implements Serializable {
 	@Column(name = "PARTIE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+ 
 	@NotNull
 	@Column(unique = true)
 	private String nom;
