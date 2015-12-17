@@ -169,7 +169,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	@Override
 	public boolean lancerTour(Joueur j, Partie p) {
 		j = joueurDaoImpl.rechercher(j.getId());
+		System.out.println("id j "+j.getId());
 		p = partieDao.rechercher(p.getNom());
+		System.out.println("id p "+p.getId());
 		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
 	}
 
