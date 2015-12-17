@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
+import be.ipl.projet_ejb.daoimpl.CarteDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurDaoImpl;
 import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
@@ -28,6 +29,8 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@EJB
 	private PartieDaoImpl partieDao;
+	@EJB
+	private CarteDaoImpl carteDao;
 	@EJB
 	private JoueurDaoImpl joueurDaoImpl;
 	@EJB
@@ -167,8 +170,8 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserMainsCartes(Partie partie) {
-		partie = partieDao.recharger(String.valueOf(partie.getId()));
-		List<Carte> cartes = initDB.getWazabi().getCarte();
+		partie = partieDao.rechercher(partie.getNom());
+		List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 3; i++) {
@@ -182,9 +185,12 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserPioche(Partie partie) {
-		partie = partieDao.recharger(String.valueOf(partie.getId()));
+	
+		
+		partie = partieDao.rechercher(partie.getNom());
 		List<Carte> pioche = partie.getPioche();
-		List<Carte> cartes = initDB.getWazabi().getCarte();
+		//List<Carte> cartes = initDB.getWazabi().getCarte();
+		List<Carte> cartes = carteDao.lister();
 		pioche.addAll(cartes);
 		return partieDao.mettreAJour(partie);
 	}
