@@ -40,12 +40,12 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
-	public void jouerTourCarte(Joueur j, Partie p, boolean play){
-		if(!play){
+	public void jouerTourCarte(Joueur j, Partie p, boolean play) {
+		if (!play) {
 			partieDao.passerAuJoueurSuivant(p);
 		}
 	}
-	
+
 	@Override
 	public void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
 		Util.checkObject(joueur);
@@ -53,8 +53,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		List<Carte> pioche = partie.getPioche();
 		if (pioche.size() == 0) {
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
-			/* TODO à discuter. Selon les consignes, si plus de carte dans la
- 			pioche, prendre une carte dans la main d'un autre*/
+			/*
+			 * TODO à discuter. Selon les consignes, si plus de carte dans la
+			 * pioche, prendre une carte dans la main d'un autre
+			 */
 		}
 		Carte carte = pioche.remove(0);// premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);
@@ -98,11 +100,11 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		List<Face> faces = new ArrayList<>();
-		De de =  initDB.getWazabi().getDe();
+		De de = initDB.getWazabi().getDe();
 		int nbDesJoueur = joueurPartieDao.getNbDe(joueur, partie);
 		for (int i = 0; i < nbDesJoueur; i++) {
 			Random random = new Random();
-			Face face=de.getFace().get(random.nextInt(6)+1);
+			Face face = de.getFace().get(random.nextInt(6) + 1);
 			faces.add(face);
 		}
 		return faces;
@@ -164,7 +166,15 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		return compteur;
 	}
 
-	public boolean lancerTour(Joueur j, Partie p){
-		return !joueurPartieDao.isBlocked(j, p);
+	@Override
+	public boolean lancerTour(Joueur j, Partie p) {
+		j = joueurDaoImpl.rechercher(j.getId());
+		p = partieDao.rechercher(p.getNom());
+		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
+	}
+
+	@Override
+	public int ordreJoueur(int idJoueur, int idPartie) {
+		return joueurPartieDao.getPlayer(idJoueur, idPartie).getOrdreJoueurs();
 	}
 }
