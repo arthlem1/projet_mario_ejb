@@ -118,4 +118,10 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		}
 		mettreAJour(p);		
 	}	
+	
+	public Partie getPartieInitiale(){
+		String query = "SELECT p FROM Partie p WHERE p.etat = 'INITIAL'";
+		Partie p = recherche(query, null);
+		return p;
+	}
 }

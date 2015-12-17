@@ -80,4 +80,10 @@ public interface GestionParties {
 	 * @return liste joueurs
 	 */
 	List<Joueur> listeJoueursPartie(Partie partie);
+	
+	/**
+	 * GetPartieCourante
+	 * @return
+	 */
+	Partie getPartieCourante();
 }

@@ -148,4 +148,10 @@ public class GestionPartiesImpl implements GestionParties {
 		return joueurs;
 	}
 
+	@Override
+	public Partie getPartieCourante() {
+		return partieDao.getPartieInitiale();
+	}
+	
+
 }
