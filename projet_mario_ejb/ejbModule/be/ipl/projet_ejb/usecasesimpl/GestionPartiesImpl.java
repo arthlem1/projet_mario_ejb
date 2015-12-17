@@ -34,13 +34,16 @@ public class GestionPartiesImpl implements GestionParties {
 			boolean ajouterJoueur(Joueur joueur, Partie partie, GestionPartiesImpl gpi) throws MaxJoueursException {
 				Util.checkObject(joueur);
 				Util.checkObject(partie);
+				JoueurPartie jp;
 				try {
-					gpi.joueurPartieDaoImpl.enregistrer(
-							new JoueurPartie(joueur, partie, gpi.partieDao.listerJoueursPartie(partie).size()));
+					jp =new JoueurPartie(joueur, partie, gpi.partieDao.listerJoueursPartie(partie).size()+1);
+					gpi.joueurPartieDaoImpl.enregistrer(jp);
 				} catch (Exception e) {
 					throw new MaxJoueursException("Max joueurs atteint!");
 				}
-				return gpi.partieDao.ajouterJoueur(partie, joueur);
+				Util.checkObject(joueur);
+				Util.checkObject(partie);
+					return gpi.partieDao.ajouterJoueur(partie, jp);
 			}
 
 			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) {

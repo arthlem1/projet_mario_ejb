@@ -75,10 +75,8 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return liste(query, joueur.getId());
 	}
 
-	public boolean ajouterJoueur(Partie partie, Joueur joueur) {
+	public boolean ajouterJoueur(Partie partie, JoueurPartie joueurPartie) {
 		try {
-			List<JoueurPartie> liste = partie.getListeJoueurs();
-			JoueurPartie joueurPartie = new JoueurPartie(joueur, partie, liste.size()+1);
 			partie.getListeJoueurs().add(joueurPartie);
 			mettreAJour(partie);
 		} catch (Exception e) {
