@@ -140,7 +140,7 @@ public class GestionPartiesImpl implements GestionParties {
 		List<JoueurPartie> liste = partieDao.listerJoueursPartie(partie);
 		List<Joueur> joueurs = new ArrayList<>();
 		for (JoueurPartie joueurPartie : liste) {
-			Joueur joueur = joueurDaoImpl.rechercher(joueurPartie.getJoueurId());
+			Joueur joueur = joueurDaoImpl.rechercher(joueurPartie.getJoueur().getId());
 			joueurs.add(joueur);
 		}
 		return joueurs;

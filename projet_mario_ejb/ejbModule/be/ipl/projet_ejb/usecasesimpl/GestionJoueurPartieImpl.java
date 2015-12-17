@@ -62,7 +62,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible);
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
 		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
-			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueurId()));
+			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
 		}
 	}
 
@@ -109,7 +109,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(partie);
 		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
 		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
-			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueurId()));
+			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
 		}
 	}
 
@@ -118,8 +118,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkPositiveOrZero(nbDes);
 		Util.checkObject(partie);
 		for (int i = 0; i < nbDes; i++) {
-			if (joueurPartieDao.retirerDe(partie.getJoueur_courant().getJoueurId(), partie) == 0) {
-				partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueurId()));
+			if (joueurPartieDao.retirerDe(partie.getJoueur_courant().getJoueur().getId(), partie) == 0) {
+				partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
 			}
 		}
 	}
