@@ -61,8 +61,6 @@ public class GestionPartiesImpl implements GestionParties {
 					throw new PasAssezDeJoueursException("Pas assez de joueurs dans la partie.");
 				}
 				partie.setEtat(EN_COURS);
-				gpi.initialiserPioche();
-				gpi.initialiserMainCartes();
 				return true;
 			}
 		},
@@ -104,24 +102,6 @@ public class GestionPartiesImpl implements GestionParties {
 		System.out.println("ID PARTIE " + partie.getId());
 		partie.getEtat().ajouterJoueur(createur, partie, this);
 		return partie;
-	}
-
-	protected void initialiserMainCartes() {
-		List<Carte> cartes = initDB.getWazabi().getCarte();
-		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(getPartieCourante());
-		for (JoueurPartie joueurPartie : joueurs) {
-			for (int i = 0; i < 3; i++) {
-				Random random = new Random();
-				Carte carte = cartes.remove(random.nextInt(cartes.size()) + 1);
-				joueurPartie.getMainsCarte().add(carte);
-			}
-		}
-	}
-
-	protected void initialiserPioche() {
-		List<Carte> pioche = partieDao.getPartieInitiale().getPioche();
-		List<Carte> cartes = initDB.getWazabi().getCarte();
-		pioche.addAll(cartes);
 	}
 
 	@Override
@@ -182,6 +162,30 @@ public class GestionPartiesImpl implements GestionParties {
 	@Override
 	public Partie getPartieCourante() {
 		return partieDao.getPartieInitiale();
+	}
+
+	@Override
+	public Partie initialiserMainsCartes() {
+		List<Carte> cartes = initDB.getWazabi().getCarte();
+		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(getPartieCourante());
+		for (JoueurPartie joueurPartie : joueurs) {
+			for (int i = 0; i < 3; i++) {
+				Random random = new Random();
+				Carte carte = cartes.remove(random.nextInt(cartes.size()) + 1);
+				joueurPartie.getMainsCarte().add(carte);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Partie initialiserPioche() {
+		Partie partie = partieDao.getPartieInitiale();
+		List<Carte> pioche = partieDao.getPartieInitiale().getPioche();
+		List<Carte> cartes = initDB.getWazabi().getCarte();
+		pioche.addAll(cartes);
+		partie = partieDao.mettreAJour(partie);
+		return partie;
 	}
 
 }

@@ -87,4 +87,9 @@ public interface GestionParties {
 	 * @return
 	 */
 	Partie getPartieCourante();
+	
+	Partie initialiserPioche();
+	
+	Partie initialiserMainsCartes();
+	
 }
