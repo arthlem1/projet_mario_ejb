@@ -176,7 +176,7 @@ public class GestionPartiesImpl implements GestionParties {
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 3; i++) {
 				Random random = new Random();
-				Carte carte = cartes.remove(random.nextInt(cartes.size()) + 1);
+				Carte carte = cartes.remove(random.nextInt(cartes.size()));
 				joueurPartie.getMainsCarte().add(carte);
 			}
 		}
