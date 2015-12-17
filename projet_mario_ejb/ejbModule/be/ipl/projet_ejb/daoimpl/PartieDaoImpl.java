@@ -94,6 +94,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		try {
 			partie = recharger(partie.getNom());
 			partie.getListeJoueurs().add(joueurPartie);
+			//partie.setNbJoueur((partie.getNbJoueur()+1));
 			mettreAJour(partie);
 		} catch (Exception e) {
 			return false;
