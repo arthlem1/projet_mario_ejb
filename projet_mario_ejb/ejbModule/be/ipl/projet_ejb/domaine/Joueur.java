@@ -88,4 +88,12 @@ public class Joueur implements Serializable {
 	public int getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "Joueur [id=" + id + ", prenom=" + prenom + ", pseudo=" + pseudo + ", joueurParties=" + joueurParties
+				+ "]";
+	}
+	
+	
 }

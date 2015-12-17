@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
@@ -65,7 +65,7 @@ public class Partie implements Serializable {
 	//@NotNull
 	//private int nbJoueur=0;
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "PARTIE_CARTE", schema = "mario_ejb", joinColumns = { @JoinColumn(name = "PARTIE_ID") })
 	private List<Carte> pioche = new ArrayList<>();
 
@@ -168,4 +168,13 @@ public class Partie implements Serializable {
 	public void setVainqueur(Joueur vainqueur) {
 		this.vainqueur = vainqueur;
 	}
+
+	@Override
+	public String toString() {
+		return "Partie [id=" + id + ", nom=" + nom + ", clockwise=" + clockwise + ", started=" + started + ", etat="
+				+ etat + ", dateHeureCreation=" + dateHeureCreation + ", listeJoueurs=" + listeJoueurs + ", vainqueur="
+				+ vainqueur + ", pioche=" + pioche + ", joueur_courant=" + joueur_courant + "]";
+	}
+	
+	
 }

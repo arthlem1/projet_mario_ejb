@@ -305,4 +305,11 @@ public class Carte implements Serializable, Cloneable {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Carte [id=" + id + ", codeEffet=" + codeEffet + ", cout=" + cout + "]";
+	}
+	
+	
+
 }

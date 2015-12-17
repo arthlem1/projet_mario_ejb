@@ -189,4 +189,11 @@ public class De implements Serializable {
 		this.nbTotalDes = value;
 	}
 
+	@Override
+	public String toString() {
+		return "De [id=" + id + ", valeur=" + valeur + "]";
+	}
+	
+	
+
 }
