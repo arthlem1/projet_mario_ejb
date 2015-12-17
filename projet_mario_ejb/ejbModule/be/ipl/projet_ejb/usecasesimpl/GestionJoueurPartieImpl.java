@@ -102,6 +102,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(partie);
 		List<Face> faces = new ArrayList<>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
+		System.out.println("Main Dés: "+jp.getMainsDe().size());
 		De de = jp.getMainsDe().get(0);
 		int nbDesJoueur = nbDe(joueur, partie);
 		for (int i = 0; i < nbDesJoueur; i++) {

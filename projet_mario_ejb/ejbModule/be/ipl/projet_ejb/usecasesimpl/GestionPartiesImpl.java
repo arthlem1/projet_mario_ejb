@@ -22,6 +22,8 @@ import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
+import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
+import be.ipl.projet_ejb.domaine.De;
 
 @Singleton
 @Startup
@@ -37,6 +39,8 @@ public class GestionPartiesImpl implements GestionParties {
 	private JoueurPartieDaoImpl joueurPartieDaoImpl;
 	@EJB
 	private InitDB initDB;
+	@EJB
+	private DeDaoImpl deDao;
 	
 	private static int ordreJoueur = 1; 
 
@@ -185,6 +189,8 @@ public class GestionPartiesImpl implements GestionParties {
 		return partieDao.mettreAJour(partie);
 	}
 
+	
+	
 	@Override
 	public Partie initialiserPioche(Partie partie) {
 	
@@ -200,6 +206,20 @@ public class GestionPartiesImpl implements GestionParties {
 	@Override
 	public Partie getPartieInitiale() {
 		return partieDao.getPartieInitiale();
+	}
+
+	@Override
+	public Partie initialiserMainsDes(Partie partie) {
+		partie = partieDao.rechercher(partie.getNom());
+		List<De> des = deDao.lister();
+		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
+		for (JoueurPartie joueurPartie : joueurs) {
+			for (int i = 0; i < 4; i++) {
+				De de = des.remove(0);
+				joueurPartie.getMainsDe().add(de);
+			}
+		}
+		return partieDao.mettreAJour(partie);
 	}
 
 }
