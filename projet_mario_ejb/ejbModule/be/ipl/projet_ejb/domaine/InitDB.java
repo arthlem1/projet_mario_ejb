@@ -17,30 +17,29 @@ import javax.xml.transform.stream.StreamSource;
 import be.ipl.projet_ejb.daoimpl.CarteDaoImpl;
 import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
 
-//j'ai mis @Startup en commentaire pour que ca ne bug pas toute l'application
-//apparement il y a un soucis de path, on demandera au prof demain (laeti)
 
 @Singleton
- @Startup
+@Startup
 public class InitDB {
 
-	//private CarteDaoImpl carteDao;
-@EJB CarteDaoImpl carteDao;
-@EJB DeDaoImpl deDao;
-Wazabi wazabi;
-	//private DeDaoImpl deDao;
+	@EJB
+	CarteDaoImpl carteDao;
+	@EJB
+	DeDaoImpl deDao;
+	Wazabi wazabi;
 
 	public Wazabi getWazabi() {
-	return wazabi;
-}
+		return wazabi;
+	}
 
 	@PostConstruct
 	public void go() throws JAXBException, IOException {
 		System.out.println("Initialisation de la DB");
 		// création de l’InputStream à adapter selon votre jar.
-		InputStream is = new FileInputStream("../standalone/deployments/projet_mario_EAR.ear/projet_mario_ejb.jar/META-INF/wazabi.xml");
+		InputStream is = new FileInputStream(
+				"../standalone/deployments/projet_mario_EAR.ear/projet_mario_ejb.jar/META-INF/wazabi.xml");
 
-		 wazabi = fromStream(Wazabi.class, is);
+		wazabi = fromStream(Wazabi.class, is);
 
 		// enregistrement des dés
 		for (int i = 0; i < wazabi.getDe().getNbTotalDes(); i++) {
@@ -55,7 +54,7 @@ Wazabi wazabi;
 			for (int i = 0; i < nbCartesDeCeType; i++) {
 				cartes[i] = (Carte) carte.clone();
 				carteDao.enregistrer(cartes[i]);
-			} 
+			}
 		}
 	}
 

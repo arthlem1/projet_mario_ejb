@@ -57,7 +57,7 @@ public class Wazabi {
     @XmlElement(required = true)
     protected De de;
     @XmlElement(required = true)
-    protected List<Carte> carte;
+    protected List<Carte> carte = new ArrayList<Carte>();
     @XmlAttribute(name = "but")
     protected String but;
     @XmlAttribute(name = "nbCartesParJoueur", required = true)
@@ -116,9 +116,6 @@ public class Wazabi {
      * 
      */
     public List<Carte> getCarte() {
-        if (carte == null) {
-            carte = new ArrayList<Carte>();
-        }
         return this.carte;
     }
 
