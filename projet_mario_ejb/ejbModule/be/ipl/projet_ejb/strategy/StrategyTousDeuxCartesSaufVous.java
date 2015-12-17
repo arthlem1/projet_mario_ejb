@@ -20,7 +20,7 @@ public class StrategyTousDeuxCartesSaufVous implements Strategy {
 			if(joueurPartie.getJoueur().getId()!=joueur.getId()){
 				List<Carte> cartesDuJoueur = joueurPartie.getMainsCarte();
 				while(cartesDuJoueur.size() > 2){
-					cartesDuJoueur.remove(0);
+					partie.getPioche().add(cartesDuJoueur.remove(0));
 				}
 			}
 		}

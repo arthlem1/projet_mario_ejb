@@ -17,6 +17,7 @@ import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.strategy.Strategy;
@@ -39,6 +40,12 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
+	public void jouerTourCarte(Joueur j, Partie p, boolean play){
+		if(!play){
+			partieDao.passerAuJoueurSuivant(p);
+		}
+	}
+	
 	@Override
 	public void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
 		Util.checkObject(joueur);
@@ -58,6 +65,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		Util.checkObject(carte);
+		partieDao.passerAuJoueurSuivant(partie);
 		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible);
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
 		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {

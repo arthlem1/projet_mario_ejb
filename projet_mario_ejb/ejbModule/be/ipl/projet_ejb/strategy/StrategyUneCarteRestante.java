@@ -15,9 +15,8 @@ public class StrategyUneCarteRestante implements Strategy {
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible) {
 		List<Carte> liste = joueurPartieDao.getCartes(cible, partie);
-		Carte unique = liste.remove(0);
-		liste.clear();
-		liste.add(unique);
+		while(liste.size() > 1){
+			partie.getPioche().add(liste.remove(0));
+		}
 	}
-
 }

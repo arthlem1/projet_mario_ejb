@@ -11,7 +11,7 @@ public class StrategyRejoueEtChangeSens implements Strategy {
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible) {
-		partieDao.passerAuJoueurSuivant(partie);
+		partieDao.setJoueurSuivant(partie,joueur);
 		partieDao.changerSens(partie);
 	}
 
