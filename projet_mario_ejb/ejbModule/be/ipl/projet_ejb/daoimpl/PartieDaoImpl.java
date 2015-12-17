@@ -52,7 +52,22 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return lesJoueurs.get(nb);
 	}
 	
-	public Partie passerAuJoueurSuivant(Partie partie, JoueurPartie suivant){
+	public Partie passerAuJoueurSuivant(Partie partie){
+		JoueurPartie suivant;
+		JoueurPartie current=partie.getJoueur_courant();
+		if(partie.isClockwise()){
+			if(current.getOrdreJoueurs()==(partie.getListeJoueurs().size()+1)){
+				suivant=partie.getListeJoueurs().get(0);
+			}else{
+				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()+1));
+			}
+		}else{
+			if(current.getOrdreJoueurs()==1){
+				suivant=partie.getListeJoueurs().get((partie.getListeJoueurs().size()+1));
+			}else{
+				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()-1));
+			}
+		}
 		String query = "SELECT p FROM Partie p "
 				+ "WHERE p.joueur_id = ?1";
 		Partie p = recherche(query, suivant.getJoueur().getId());
