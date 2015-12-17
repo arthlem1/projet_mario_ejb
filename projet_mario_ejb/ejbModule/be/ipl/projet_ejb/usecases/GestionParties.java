@@ -30,12 +30,6 @@ public interface GestionParties {
 	 */
 	Partie rechercherPartie(String nom);
 	
-	/**
-	 * Ajouter le joueur dans la partie courante.
-	 * @param joueur
-	 * @return True si le joueur a pu être ajouté, false sinon.
-	 */
-	boolean ajouterJoueur(Joueur joueur);
 	
 	/**
 	 * Lancer la partie. Le joueur qui commence est tiré au hasard.

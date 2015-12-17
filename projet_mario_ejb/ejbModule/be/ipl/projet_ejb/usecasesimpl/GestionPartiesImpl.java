@@ -117,21 +117,26 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public boolean ajouterJoueur(Partie partie, Joueur joueur) throws MaxJoueursException {
+		Util.checkObject(partie);
+		Util.checkObject(joueur);
 		return partie.getEtat().ajouterJoueur(joueur, partie, this);
 	}
 
 	@Override
 	public boolean commencerPartie(Partie partie) {
+		Util.checkObject(partie);
 		return partie.getEtat().commencerPartie(partie, this);
 	}
 
 	@Override
 	public Joueur afficherVainqueur(Partie partie) {
+		Util.checkObject(partie);
 		return partie.getEtat().afficherVainqueur(partie, this);
 	}
 
 	@Override
 	public List<Joueur> listeJoueursPartie(Partie partie) {
+		Util.checkObject(partie);
 		List<JoueurPartie> liste = partieDao.listerJoueursPartie(partie);
 		List<Joueur> joueurs = new ArrayList<>();
 		for (JoueurPartie joueurPartie : liste) {
@@ -139,11 +144,6 @@ public class GestionPartiesImpl implements GestionParties {
 			joueurs.add(joueur);
 		}
 		return joueurs;
-	}
-
-	@Override
-	public boolean ajouterJoueur(Joueur joueur) {
-		return false;
 	}
 
 }

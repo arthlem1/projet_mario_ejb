@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -21,10 +22,19 @@ import javax.validation.constraints.NotNull;
 
 public class JoueurPartie implements Serializable {
 
-	@EmbeddedId
+	/*@EmbeddedId
 	@Column(name = "JOUEUR_PARTIE_ID")
 	private JoueurPartiePK joueurPartiePK;
-
+*/
+	
+	@ManyToOne
+	@JoinColumn(name = "JOUEUR_ID")
+	private Joueur joueur;
+	
+	@ManyToOne
+	@JoinColumn(name = "PARTIE_ID")
+	private Partie partie;
+	
 	@NotNull
 	@Min(1)
 	@Max(6)
@@ -45,17 +55,25 @@ public class JoueurPartie implements Serializable {
 
 	public JoueurPartie(Joueur joueur, Partie partie, int ordreJoueurs) {
 		super();
-		this.joueurPartiePK = new JoueurPartiePK(joueur.getId(), partie.getId());
 		this.ordreJoueurs = ordreJoueurs;
 		this.mainsDe = new ArrayList<>();
 		this.mainsCarte = new ArrayList<>();
+	}
+
+	public Joueur getJoueur() {
+		return joueur;
+	}
+
+	public Partie getPartie() {
+		return partie;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((joueurPartiePK == null) ? 0 : joueurPartiePK.hashCode());
+		result = prime * result + ((joueur == null) ? 0 : joueur.hashCode());
+		result = prime * result + ((partie == null) ? 0 : partie.hashCode());
 		return result;
 	}
 
@@ -68,24 +86,17 @@ public class JoueurPartie implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		JoueurPartie other = (JoueurPartie) obj;
-		if (joueurPartiePK == null) {
-			if (other.joueurPartiePK != null)
+		if (joueur == null) {
+			if (other.joueur != null)
 				return false;
-		} else if (!joueurPartiePK.equals(other.joueurPartiePK))
+		} else if (!joueur.equals(other.joueur))
+			return false;
+		if (partie == null) {
+			if (other.partie != null)
+				return false;
+		} else if (!partie.equals(other.partie))
 			return false;
 		return true;
-	}
-
-	public JoueurPartiePK getJoueurPartiePK() {
-		return joueurPartiePK;
-	}
-
-	public int getJoueurId() {
-		return joueurPartiePK.getJoueur_id();
-	}
-
-	public int getPartieId() {
-		return joueurPartiePK.getPartie_id();
 	}
 
 	public int getOrdreJoueurs() {
