@@ -97,12 +97,10 @@ public class GestionPartiesImpl implements GestionParties {
 		Partie partie = partieDao.rechercher(nom);
 		if (partie != null && partie.getEtat() == Etat.EN_COURS) {
 			throw new PartieDejaEnCoursException("Impossible de cr�er une partie, une autre est d�j� en cours");
-		} else if (partie.getEtat() == Etat.FINI)
-			partie = partieDao.creerPartie(nom, createur);
-		else {
-			System.out.println("ID PARTIE " + partie.getId());
-			partie.getEtat().ajouterJoueur(createur, partie, this);
 		}
+		partie = partieDao.creerPartie(nom, createur);
+		System.out.println("ID PARTIE " + partie.getId());
+		partie.getEtat().ajouterJoueur(createur, partie, this);
 		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
