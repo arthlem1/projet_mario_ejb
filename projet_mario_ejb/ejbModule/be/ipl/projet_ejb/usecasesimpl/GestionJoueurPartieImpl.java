@@ -17,6 +17,7 @@ import be.ipl.projet_ejb.domaine.De;
 import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
@@ -100,7 +101,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		List<Face> faces = new ArrayList<>();
-		De de = initDB.getWazabi().getDe();
+		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
+		De de = jp.getMainsDe().get(0);
 		int nbDesJoueur = joueurPartieDao.getNbDe(joueur, partie);
 		for (int i = 0; i < nbDesJoueur; i++) {
 			Random random = new Random();
