@@ -20,7 +20,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 
 	public int getNbDe(Joueur j, Partie p) {
-		int i = getPlayer(j.getId(), p.getId()).getMainsCarte().size();
+		int i = getPlayer(j.getId(), p.getId()).getMainsDe().size();
 		return i;
 
 	}
