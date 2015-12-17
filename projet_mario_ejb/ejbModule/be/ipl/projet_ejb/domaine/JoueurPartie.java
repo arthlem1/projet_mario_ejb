@@ -37,6 +37,9 @@ public class JoueurPartie implements Serializable {
 	private Partie partie;
 	
 	@NotNull
+	private int blocked;
+	
+	@NotNull
 	@Min(1)
 	@Max(6)
 	private int ordreJoueurs;
@@ -61,6 +64,19 @@ public class JoueurPartie implements Serializable {
 		this.partie = partie;
 		this.mainsDe = new ArrayList<>();
 		this.mainsCarte = new ArrayList<>();
+		this.blocked=0;
+	}
+	
+	public boolean isBlocked(){
+		int i= blocked;
+		if(blocked>0){
+			blocked--;
+		}
+		return i!=0;
+	}
+	
+	public void setBlocked(){
+		blocked++;
 	}
  
 	public Joueur getJoueur() {

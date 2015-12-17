@@ -26,6 +26,14 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		
 	}
 	
+	public boolean isBlocked(Joueur j, Partie p){
+		return getPlayer(j.getId(), p.getId()).isBlocked();
+	}
+	
+	public void setBlocked(Joueur j, Partie p){
+		getPlayer(j.getId(), p.getId()).setBlocked();
+	}
+	
 	public List<Carte> getCartes(Joueur j,Partie p){
 		JoueurPartie jp= getPlayer(j.getId(),p.getId());
 		List<Carte> retour = jp.getMainsCarte();
