@@ -53,11 +53,11 @@ public class JoueurPartie implements Serializable {
 	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name = "JOUEUR_PARTIE_DES", schema = "mario_ejb",
 			inverseJoinColumns={@JoinColumn(name="MAIN_DE_ID")})
-	private List<De> mainsDe;
+	private List<De> mainsDe = new ArrayList<>();
 	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 	@JoinTable(name="JOUEUR_PARTIE_CARTES",schema = "mario_ejb",
 			inverseJoinColumns={@JoinColumn(name="MAIN_CARTE_ID")})
-	private List<Carte> mainsCarte;
+	private List<Carte> mainsCarte = new ArrayList<>();
 	
 	protected JoueurPartie() {
 		super();
@@ -68,8 +68,6 @@ public class JoueurPartie implements Serializable {
 		this.ordreJoueurs = ordreJoueurs;
 		this.joueur = joueur;
 		this.partie = partie;
-		this.mainsDe = new ArrayList<>();
-		this.mainsCarte = new ArrayList<>();
 		this.blocked=0;
 	}
 	
