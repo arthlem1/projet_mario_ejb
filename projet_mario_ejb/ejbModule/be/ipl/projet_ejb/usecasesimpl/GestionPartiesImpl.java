@@ -100,10 +100,9 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie joueurSuivant(Partie partie, JoueurPartie suivant) {
-		Util.checkObject(suivant);
+	public Partie joueurSuivant(Partie partie) {
 		Util.checkObject(partie);
-		return partieDao.passerAuJoueurSuivant(partie, suivant);
+		return partieDao.passerAuJoueurSuivant(partie);
 	}
 
 	@Override

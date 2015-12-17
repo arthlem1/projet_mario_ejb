@@ -44,7 +44,7 @@ public interface GestionParties {
 	 * @param suivant
 	 * @return Partie MAJ
 	 */
-	Partie joueurSuivant(Partie partie, JoueurPartie suivant);
+	Partie joueurSuivant(Partie partie);
 	
 	/**
 	 * Changer le sens du tour de la partie
