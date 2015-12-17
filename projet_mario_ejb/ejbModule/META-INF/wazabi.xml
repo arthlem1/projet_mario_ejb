@@ -14,7 +14,7 @@
 		Le dé est retiré de la partie.On ne peut pas jouer cette carte si on
 		obtient dans le même tour 2 figures
 		<figure ref="d" />
-		ou plus avec ses dés.
+		ou plus avec ses dés. 
 	</carte>
 	<carte cout="2" effet="Changez de sens" src="images/" codeEffet="2"
 		nb="3">

@@ -3,7 +3,7 @@
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:element name="wazabi">
 		<xs:complexType>
-			<xs:sequence>
+			<xs:sequence> 
 				<xs:element ref="de" />
 				<xs:element ref="carte" minOccurs="1" maxOccurs="24"/>
 			</xs:sequence>
