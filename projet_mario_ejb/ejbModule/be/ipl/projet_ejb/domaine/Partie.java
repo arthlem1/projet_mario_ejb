@@ -80,7 +80,7 @@ public class Partie implements Serializable {
 		Util.checkString(nom);
 		this.nom = nom;
 		this.dateHeureCreation = Calendar.getInstance();
-		listeJoueurs.add(new JoueurPartie(joueur, this, listeJoueurs.size() + 1));
+		listeJoueurs.add(new JoueurPartie(joueur, this, 1));
 	}
 
 	@Override
