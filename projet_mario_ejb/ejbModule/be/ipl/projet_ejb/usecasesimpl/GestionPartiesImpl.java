@@ -55,9 +55,9 @@ public class GestionPartiesImpl implements GestionParties {
 			}
 
 			public boolean commencerPartie(Partie partie, GestionPartiesImpl gpi) throws PasAssezDeJoueursException {
+				partie = gpi.rechercherPartie(partie.getNom());
 				if(partie.getListeJoueurs().size()==1){
 					partie.setEtat(FINI);
-					partie = gpi.rechercherPartie(partie.getNom());
 					throw new PasAssezDeJoueursException("Pas assez de joueurs dans la partie.");
 				}
 				partie.setEtat(EN_COURS);
