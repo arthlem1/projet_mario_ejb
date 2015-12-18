@@ -59,8 +59,6 @@ public class GestionPartiesImpl implements GestionParties {
 					e.printStackTrace();
 					throw new MaxJoueursException("Max joueurs atteint!");
 				}
-				Util.checkObject(joueur);
-				Util.checkObject(partie);
 				return gpi.partieDao.ajouterJoueur(partie, jp);
 			}
 
@@ -129,9 +127,10 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public void changerSens(Partie partie) {
+	public Partie changerSens(Partie partie) {
 		Util.checkObject(partie);
 		partieDao.changerSens(partie);
+		return partie;
 	}
 
 	@Override
@@ -225,6 +224,6 @@ public class GestionPartiesImpl implements GestionParties {
 			}
 		}
 
-		return partieDao.mettreAJour(partie);
+		return partie;
 	}
 }

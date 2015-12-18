@@ -66,6 +66,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		//// * pioche, prendre une carte dans la main d'un autre
 		//// */
 		//// }
+		partie = partieDao.rechercher(partie.getNom());
 		Carte carte = partieDao.piocher(partie);// premiere carte
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		joueurPartieDao.rajouterCarte(joueurPartie, carte);
@@ -188,11 +189,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public void supprimerJoueurPartie(Joueur joueur, Partie partie) throws PasAssezDeJoueursException{
+	public void supprimerJoueurPartie(Joueur joueur, Partie partie){
 		joueurPartieDao.supprimerJoueurPartie(joueur.getId(), partie.getId());
 		if(partieDao.listerJoueursPartie(partie).size()==1){
 			partieDao.getPartieEnCours().setEtat(Etat.FINI);
-			throw new PasAssezDeJoueursException("Plus assez de joueurs dans la partie!");
 		}
 	}
 }

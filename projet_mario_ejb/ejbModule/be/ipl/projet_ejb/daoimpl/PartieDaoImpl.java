@@ -104,7 +104,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	public Partie changerSens(Partie partie){
 		boolean avantSet = partie.isClockwise();
 		partie.setClockwise(!avantSet);
-		return mettreAJour(partie);
+		return partie;
 	}
 
 	public List<Partie> listerPartiesJouees(Joueur joueur){
@@ -141,12 +141,13 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	}	
 	
 	public void setJoueurSuivant(Partie p, JoueurPartie suivant) throws JoueurNonTrouveException {
+		
 		if(p.getListeJoueurs().contains(suivant)){
 			p.setJoueur_courant(suivant);
 		}else{
 			throw new JoueurNonTrouveException();
 		}
-		mettreAJour(p);		
+		//mettreAJour(p);		
 	}	
 	
 	public Partie getPartieInitiale(){
