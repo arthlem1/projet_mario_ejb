@@ -110,7 +110,7 @@ public class GestionPartiesImpl implements GestionParties {
 		partie = partieDao.creerPartie(nom, createur);
 		System.out.println("ID PARTIE " + partie.getId());
 		// partie.getEtat().ajouterJoueur(createur, partie, this);
-		partie = partieDao.mettreAJour(partie);
+		//partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
 
@@ -190,7 +190,7 @@ public class GestionPartiesImpl implements GestionParties {
 			}
 		}
 
-		return partieDao.mettreAJour(partie);
+		return partie;
 	}
 
 	@Override
@@ -220,7 +220,7 @@ public class GestionPartiesImpl implements GestionParties {
 			for (int i = 0; i < 4; i++) {
 				De de = des.remove(0);
 				joueurPartie.getMainsDe().add(de);
-				joueurPartieDaoImpl.mettreAJour(joueurPartie);
+				//joueurPartieDaoImpl.mettreAJour(joueurPartie);
 			}
 		}
 
