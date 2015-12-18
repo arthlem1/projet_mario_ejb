@@ -41,7 +41,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "face" })
+//@XmlType(name = "", propOrder = { "face" })
+@XmlType(name="")
 @XmlRootElement(name = "de")
 @Entity
 @Table(name = "DES", schema = "mario_ejb")
