@@ -98,4 +98,8 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		return getPlayer(id, id2).isBlocked();
 	}
 	
+	public void supprimerJoueurPartie(int joueur, int partie){
+		super.supprimer(getPlayer(joueur, partie).getId());
+	}
+	
 }

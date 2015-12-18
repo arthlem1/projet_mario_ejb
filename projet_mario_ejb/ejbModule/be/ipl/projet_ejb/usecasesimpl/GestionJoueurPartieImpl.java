@@ -21,9 +21,11 @@ import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
+import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
+import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl.Etat;
 import be.ipl.projet_ejb.util.Util;
 
 @Stateless
@@ -182,5 +184,14 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public boolean besoinCible(Carte carte) {
 		int besoinCible = carte.getCodeEffet();
 		return (besoinCible >= 4 && besoinCible <= 6) || besoinCible == 9;
+	}
+
+	@Override
+	public void supprimerJoueurPartie(Joueur joueur, Partie partie) throws PasAssezDeJoueursException{
+		joueurPartieDao.supprimerJoueurPartie(joueur.getId(), partie.getId());
+		if(partieDao.listerJoueursPartie(partie).size()==1){
+			partieDao.getPartieEnCours().setEtat(Etat.FINI);
+			throw new PasAssezDeJoueursException("Plus assez de joueurs dans la partie!");
+		}
 	}
 }

@@ -152,6 +152,8 @@ public class JoueurPartie implements Serializable {
 				+ ", ordreJoueurs=" + ordreJoueurs + ", mainsDe=" + mainsDe + ", mainsCarte=" + mainsCarte + "]";
 	}
 	
-	
+	public int getId() {
+		return id;
+	}
 
 }

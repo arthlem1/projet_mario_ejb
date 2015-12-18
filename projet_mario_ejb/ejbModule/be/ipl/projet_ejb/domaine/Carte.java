@@ -100,7 +100,7 @@ public class Carte implements Serializable, Cloneable {
 	public Carte(int codeEffet, int cout) {
 		super();
 		Util.checkPositive(codeEffet);
-		Util.checkPositive(cout);
+		Util.checkPositiveOrZero(cout);
 		this.codeEffet = codeEffet;
 		this.cout = cout;
 	}
