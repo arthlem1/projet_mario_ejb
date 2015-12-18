@@ -1,7 +1,6 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -181,11 +180,9 @@ public class GestionPartiesImpl implements GestionParties {
 		partie = partieDao.rechercher(partie.getNom());
 		//List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
-		Iterator<JoueurPartie> ite= joueurs.iterator();
-		while (ite.hasNext()) {
-			JoueurPartie joueurPartie = ite.next();
+		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 3; i++) {
-					joueurPartie.getMainsCarte().add(partieDao.piocher(partie));
+					joueurPartieDaoImpl.rajouterCarte(joueurPartie.getJoueur(),partie,partieDao.piocher(partie));
 			}
 		}
 		return partieDao.mettreAJour(partie);
@@ -217,8 +214,6 @@ public class GestionPartiesImpl implements GestionParties {
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 4; i++) {
 				De de = des.remove(0);
-				de = deDao.initFaces(de);
-				System.out.println("faces du dé "+de.getId()+": "+de.getValeur()); 
 				joueurPartie.getMainsDe().add(de);
 				joueurPartieDaoImpl.mettreAJour(joueurPartie);
 			}
