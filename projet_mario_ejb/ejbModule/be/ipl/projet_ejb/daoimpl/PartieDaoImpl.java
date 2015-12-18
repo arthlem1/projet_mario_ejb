@@ -54,6 +54,8 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			partie.setStarted(true);
 			mettreAJour(partie);
 		} catch (Exception e) {
+			System.out.println("dans commencer partie");
+			e.printStackTrace();
 			return false;
 		}
 		return true;		
@@ -62,8 +64,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	private JoueurPartie tirerJoueurAuHasard(Partie partie) {
 		List<JoueurPartie> lesJoueurs = partie.getListeJoueurs();
 		Random random = new Random();
-		int nb = random.nextInt(lesJoueurs.size()) + 1;
-		
+		int nb = random.nextInt(lesJoueurs.size()) -1;
 		return lesJoueurs.get(nb);
 	}
 	
