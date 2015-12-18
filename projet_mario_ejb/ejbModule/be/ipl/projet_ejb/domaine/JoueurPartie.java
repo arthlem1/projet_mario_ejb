@@ -149,7 +149,7 @@ public class JoueurPartie implements Serializable {
 	@Override
 	public String toString() {
 		return "JoueurPartie [id=" + id + ", joueur=" + joueur + ", partie=" + partie + ", blocked=" + blocked
-				+ ", ordreJoueurs=" + ordreJoueurs + ", mainsDe=" + mainsDe + ", mainsCarte=" + mainsCarte + "]";
+				+ ", ordreJoueurs=" + ordreJoueurs +  "]";
 	}
 	
 	public int getId() {

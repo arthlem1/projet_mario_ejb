@@ -6,6 +6,8 @@ import java.util.Random;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
@@ -22,9 +24,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		super(Partie.class);
 	}
 	
-	public PartieDaoImpl(Class<Partie> entityClass) {
-		super(entityClass);
-	}
+
 
 	public Partie rechercher(String nom) {
 		String queryString = "select p from Partie p where p.nom = ?1";
@@ -37,12 +37,15 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 
 	public Carte piocher(Partie p) throws PiocheVideException{
 		List<Carte> pioche = p.getPioche();
+		System.out.println("-------------------------"+pioche.size());
 		if (pioche.size() == 0) {
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
 		}
-		Random random = new Random();
-		Carte c = pioche.remove(random.nextInt(pioche.size()));
-		mettreAJour(p);
+		
+		java.util.Collections.shuffle(pioche);
+		Carte c = pioche.remove(0);
+		System.out.println("-------------------------"+c.getId());
+		//mettreAJour(p);
 		return c;		
 	}
 	
@@ -52,7 +55,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			JoueurPartie courant = tirerJoueurAuHasard(partie);
 			partie.setJoueur_courant(courant);
 			partie.setStarted(true);
-			mettreAJour(partie);
+			//mettreAJour(partie);
 		} catch (Exception e) {
 			System.out.println("dans commencer partie");
 			e.printStackTrace();
@@ -69,8 +72,11 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	}
 	
 	public Partie passerAuJoueurSuivant(Partie partie){
+		
+		partie=mettreAJour(partie);
 		JoueurPartie suivant;
 		JoueurPartie current=partie.getJoueur_courant();
+		
 		if(partie.isClockwise()){
 			if(current.getOrdreJoueurs()==(partie.getListeJoueurs().size())){
 				suivant=partie.getListeJoueurs().get(0);
@@ -84,11 +90,15 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()-2));
 			}
 		}
-		Partie p = getPartieInitiale();
-		if(p.getListeJoueurs().contains(suivant)){
-			p.setJoueur_courant(suivant);
+	
+		partie.getListeJoueurs().size();
+		System.out.println("////////////////COURANT : "+partie.getJoueur_courant().getId());
+		System.out.println("////////////////SUIVANT : "+suivant.getId());
+		if(partie.getListeJoueurs().contains(suivant)){
+			partie.setJoueur_courant(suivant);
 		}
-		return mettreAJour(p);
+		System.out.println("////////////////"+partie.getListeJoueurs().size());
+		return mettreAJour(partie);
 	}
 
 	public Partie changerSens(Partie partie){
@@ -99,9 +109,9 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 
 	public List<Partie> listerPartiesJouees(Joueur joueur){
 		String query = "SELECT p FROM JoueurPartie jp, Partie p, Joueur j "
-				+ "WHERE j.id = ?1 "
-				+ "AND j.id = jp.joueur AND p.id = jp.partie";
-		return liste(query, joueur.getId());
+				+ "WHERE j = ?1 "
+				+ "AND j = jp.joueur AND p = jp.partie";
+		return liste(query, joueur);
 	}
 
 	public boolean ajouterJoueur(Partie partie, JoueurPartie joueurPartie) {
@@ -119,14 +129,14 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	}
 	
 	public Joueur afficherVainqueurPartie(Partie partie){
-		String query = "SELECT p.vainqueur FROM Partie p WHERE p.id = ?1";
-		Partie p=recherche(query, partie.getId());
+		String query = "SELECT p.vainqueur FROM Partie p WHERE p = ?1";
+		Partie p=recherche(query, partie);
 		return p.getVainqueur(); 
 	}
 	
 	public List<JoueurPartie> listerJoueursPartie(Partie partie){
-		String query = "SELECT p FROM Partie p WHERE p.id = ?1";
-		Partie p = recherche(query, partie.getId());
+		String query = "SELECT p FROM Partie p WHERE p = ?1";
+		Partie p = recherche(query, partie);
 		return p.getListeJoueurs(); 
 	}	
 	

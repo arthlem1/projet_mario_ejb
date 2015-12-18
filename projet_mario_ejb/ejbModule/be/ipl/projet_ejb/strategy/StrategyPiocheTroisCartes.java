@@ -7,6 +7,7 @@ import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 
@@ -24,7 +25,8 @@ public class StrategyPiocheTroisCartes implements Strategy {
 	 			pioche, prendre une carte dans la main d'un autre*/
 			}
 			Carte carte = pioche.remove(0);// premiere carte
-			joueurPartieDao.rajouterCarte(joueur, partie, carte);
+			JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
+			joueurPartieDao.rajouterCarte(joueurPartie, carte);
 		}
 	}
 

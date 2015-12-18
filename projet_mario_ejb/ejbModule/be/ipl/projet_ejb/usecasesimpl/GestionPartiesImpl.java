@@ -42,8 +42,8 @@ public class GestionPartiesImpl implements GestionParties {
 	private InitDB initDB;
 	@EJB
 	private DeDaoImpl deDao;
-	
-	private static int ordreJoueur = 2; 
+
+	private static int ordreJoueur = 2;
 
 	public enum Etat {
 		INITIAL {
@@ -111,7 +111,7 @@ public class GestionPartiesImpl implements GestionParties {
 		}
 		partie = partieDao.creerPartie(nom, createur);
 		System.out.println("ID PARTIE " + partie.getId());
-		//partie.getEtat().ajouterJoueur(createur, partie, this);
+		// partie.getEtat().ajouterJoueur(createur, partie, this);
 		partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
@@ -177,16 +177,20 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie initialiserMainsCartes(Partie partie) throws PiocheVideException{
+	public Partie initialiserMainsCartes(Partie partie) throws PiocheVideException {
 		partie = partieDao.rechercher(partie.getNom());
-		//List<Carte> cartes = carteDao.lister();
+		// List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
-		int nbJoueur=joueurs.size();
-		for (int y=0;y<nbJoueur;y++) {
+		int nbJoueur = joueurs.size();
+		System.out.println("********"+nbJoueur);
+		for (JoueurPartie joueurPartie : joueurs) {
+			System.out.println("ajouter carte joueur "+joueurPartie.getJoueur().getPseudo());
 			for (int i = 0; i < 3; i++) {
-					joueurPartieDaoImpl.rajouterCarte(joueurs.get(y).getJoueur(),partie,partieDao.piocher(partie));
+				Carte carte =partieDao.piocher(partie);
+				//joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
 			}
-		} 
+		}
+
 		return partieDao.mettreAJour(partie);
 	}
 
@@ -203,14 +207,14 @@ public class GestionPartiesImpl implements GestionParties {
 	public Partie getPartieInitiale() {
 		return partieDao.getPartieInitiale();
 	}
-	
+
 	@Override
 	public Partie initialiserMainsDes(Partie partie) {
 		System.out.println("InitialiserMainDe");
 		partie = partieDao.rechercher(partie.getNom());
 		List<De> des = deDao.lister();
 		for (De de : des) {
-			System.out.println("ICI id dé "+de.getId());
+			System.out.println("ICI id dé " + de.getId());
 		}
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
@@ -220,7 +224,7 @@ public class GestionPartiesImpl implements GestionParties {
 				joueurPartieDaoImpl.mettreAJour(joueurPartie);
 			}
 		}
-		
+
 		return partieDao.mettreAJour(partie);
 	}
 }

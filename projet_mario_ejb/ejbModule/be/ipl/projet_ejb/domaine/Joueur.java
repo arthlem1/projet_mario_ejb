@@ -92,7 +92,7 @@ public class Joueur implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Joueur [id=" + id + ", prenom=" + prenom + ", pseudo=" + pseudo + ", joueurParties=" + joueurParties
+		return "Joueur [id=" + id + ", prenom=" + prenom + ", pseudo=" + pseudo 
 				+ "]";
 	}
 	

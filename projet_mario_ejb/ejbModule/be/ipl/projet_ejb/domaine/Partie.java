@@ -171,9 +171,7 @@ public class Partie implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Partie [id=" + id + ", nom=" + nom + ", clockwise=" + clockwise + ", started=" + started + ", etat="
-				+ etat + ", dateHeureCreation=" + dateHeureCreation + ", listeJoueurs=" + listeJoueurs + ", vainqueur="
-				+ vainqueur + ", pioche=" + pioche + ", joueur_courant=" + joueur_courant + "]";
+		return "Partie [id=" + id + ", nom=" + nom +" ]";
 	}
 	
 	

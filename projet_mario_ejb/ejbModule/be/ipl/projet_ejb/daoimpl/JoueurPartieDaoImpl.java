@@ -80,12 +80,12 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		return true;
 	}
 
-	public boolean rajouterCarte(Joueur j, Partie p, Carte c) {
-		JoueurPartie jp = getPlayer(j.getId(), p.getId());
-		if (jp.getMainsCarte().contains(c))
+	public boolean rajouterCarte(JoueurPartie joueurPartie, Carte c) {
+		joueurPartie = mettreAJour(joueurPartie);
+		if (joueurPartie.getMainsCarte().contains(c))
 			return false;
-		jp.getMainsCarte().add(c);
-		mettreAJour(jp);
+		joueurPartie.getMainsCarte().add(c);
+		joueurPartie = mettreAJour(joueurPartie);
 		return true;
 	}
 
