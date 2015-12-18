@@ -196,7 +196,7 @@ public class GestionPartiesImpl implements GestionParties {
 		List<Carte> pioche = partie.getPioche();
 		List<Carte> cartes = carteDao.lister();
 		pioche.addAll(cartes);
-		return partieDao.mettreAJour(partie);
+		return partie;
 	}
 
 	@Override
