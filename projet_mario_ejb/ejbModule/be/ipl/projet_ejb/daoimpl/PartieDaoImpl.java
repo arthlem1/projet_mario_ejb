@@ -72,7 +72,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		JoueurPartie suivant;
 		JoueurPartie current=partie.getJoueur_courant();
 		if(partie.isClockwise()){
-			if(current.getOrdreJoueurs()==(partie.getListeJoueurs().size()+1)){
+			if(current.getOrdreJoueurs()==(partie.getListeJoueurs().size())){
 				suivant=partie.getListeJoueurs().get(0);
 			}else{
 				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()));
