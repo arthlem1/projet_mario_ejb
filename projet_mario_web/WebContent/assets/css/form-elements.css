@@ -130,6 +130,18 @@ button.btn:active:focus, button.btn.active:focus {
   display:block;
 }
 
+.menu-container2{
+	position: absolute;
+  	margin: auto;
+ 	width:350px;
+ 	height:350px;
+  	top: 310px;
+ 	right: 0;
+ 	
+ 	left: 0;
+  display:block;
+}
+
 .menu-btn{
 	margin:20px;
 	width:100%;

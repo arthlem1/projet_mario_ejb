@@ -1,17 +1,9 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import be.ipl.projet_ejb.domaine.Joueur;
@@ -69,6 +62,29 @@ public class WaitingPlayerList extends HttpServlet {
 
 		JSONArray jsonArray = new JSONArray();
 
+		JSONArray listeJoueursJson = new JSONArray();
+
+		JSONObject etatPartie = new JSONObject();
+
+		try {
+			Partie p = gestionPartie.getPartieInitiale();
+			if (p == null) {
+				p = gestionPartie.getPartieEnCours();
+
+				if (p == null) {
+					etatPartie.put("etat", "FINI");
+				} else {
+					etatPartie.put("etat", "EN COURS");
+					
+				}
+			} else {
+				etatPartie.put("etat", p.getEtat());
+			}
+
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		listeJoueurs.forEach(joueur -> {
 			JSONObject part = new JSONObject();
 			try {
@@ -76,8 +92,11 @@ public class WaitingPlayerList extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			jsonArray.put(part);
+			listeJoueursJson.put(part);
 		});
+
+		jsonArray.put(etatPartie);
+		jsonArray.put(listeJoueursJson);
 
 		response.setContentType("application/json");
 		System.out.println(jsonArray.toString());

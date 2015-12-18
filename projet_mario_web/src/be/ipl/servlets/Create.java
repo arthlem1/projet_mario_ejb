@@ -1,13 +1,10 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.ejb.EJB;
-import javax.json.Json;
-import javax.json.JsonBuilderFactory;
-import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import be.ipl.projet_ejb.domaine.Joueur;
-import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.MaxJoueursException;
 import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
-
-
+import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
+import be.ipl.projet_ejb.usecases.GestionParties;
 
 /**
  * Servlet implementation class Create
@@ -30,62 +30,88 @@ import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 public class Create extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private static final int TEMPS = 30000;
+
 	@EJB
 	private GestionParties gestionPartie;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Create() {
-        super();
-    }
+	private Partie partie = null;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public Create() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String nom = request.getParameter("nom");
-		
-		Map<String, Object> config = new HashMap<String, Object>();
-		config.put("javax.json.stream.JsonGenerator.prettyPrinting", Boolean.valueOf(true));
-		JsonBuilderFactory factory = Json.createBuilderFactory(config);
-		JsonObject value;
-		
+
 		HttpSession session = request.getSession();
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
+
+		JSONObject jsonObject = new JSONObject();
+
 		
-		Partie partie = null;
-		
+
 		try {
 			partie = gestionPartie.creerPartie(nom, joueur);
-			value = factory.createObjectBuilder().add("success", "1").build();
+			try {
+				jsonObject.put("success", "1");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			session.setAttribute("partie", partie);
-		} catch (PartieDejaEnCoursException e) {
-			value = factory.createObjectBuilder().add("success", "0").add("message", e.getMessage()).build();
-		} catch (MaxJoueursException e) {
-			value = factory.createObjectBuilder().add("success", "0").add("message", e.getMessage()).build();
+
+			Timer timer = new Timer();
+			TimerTask task = new TimerTask() {
+
+				@Override
+				public void run() {
+					
+					try {
+						gestionPartie.commencerPartie(partie);
+						partie = gestionPartie.initialiserPioche(partie);
+						try {
+							partie = gestionPartie.initialiserMainsCartes(partie);
+						} catch (PiocheVideException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						partie = gestionPartie.initialiserMainsDes(partie);
+					} catch (PasAssezDeJoueursException e) {
+						
+						System.out.println("pas assez de joueurs");
+					}
+					
+				}
+			};
+			timer.schedule(task, TEMPS);
+
+		} catch (PartieDejaEnCoursException | MaxJoueursException e) {
+			try {
+				jsonObject.put("success", "0").put("message", e.getMessage());
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
 		}
-		
-		
-//		if((partie = gestionPartie.creerPartie(nom, joueur)) != null){
-//			session.setAttribute("partie", partie);
-//			
-//			value = factory.createObjectBuilder().add("success", "1").build();
-//		}else{
-//			value = factory.createObjectBuilder().add("success", "0").add("message", "Une partie est déjà en cours...").build();
-//		}
-		
+
 		response.setContentType("application/json");
-		response.getWriter().write(value.toString());
-		
-		
+		response.getWriter().write(jsonObject.toString());
+
 	}
 
 }
