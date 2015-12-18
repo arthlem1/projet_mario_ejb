@@ -37,7 +37,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 
 	public int retirerDe(int joueurId, Partie p) {
 		JoueurPartie jp = getPlayer(joueurId, p.getId());
-		jp.getMainsDe().remove(jp.getMainsDe().size());
+		jp.getMainsDe().remove(jp.getMainsDe().size()-1);
 		//mettreAJour(jp);
 		return jp.getMainsDe().size();
 	}
