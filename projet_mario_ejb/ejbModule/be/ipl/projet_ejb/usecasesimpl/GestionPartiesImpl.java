@@ -218,8 +218,10 @@ public class GestionPartiesImpl implements GestionParties {
 				de = deDao.initFaces(de);
 				//System.out.println("faces: "+de.getFace().size()); OK
 				joueurPartie.getMainsDe().add(de);
+				joueurPartieDaoImpl.mettreAJour(joueurPartie);
 			}
 		}
+		
 		return partieDao.mettreAJour(partie);
 	}
 }
