@@ -36,7 +36,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	}
 
 	public Carte piocher(Partie p) throws PiocheVideException{
-		p=recharger(p.getId());
+		//p=recharger(p.getId());
 		List<Carte> pioche = p.getPioche();
 		System.out.println("-------------------------"+pioche.size());
 		if (pioche.size() == 0) {
