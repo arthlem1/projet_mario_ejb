@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.ejb.EJB;
+import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
 import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
@@ -29,6 +30,7 @@ import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl.Etat;
 import be.ipl.projet_ejb.util.Util;
 
 @Stateless
+@Startup
 public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	@EJB
@@ -48,6 +50,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	Map<String, Integer> faces; 
 
 	public void jouerTourCarte(Joueur j, Partie p, boolean play) {
+		p = partieDao.recharger(p.getId());
+		j = joueurDaoImpl.recharger(j.getId());
 		if (!play) {
 			partieDao.passerAuJoueurSuivant(p);
 		}
@@ -66,7 +70,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		//// * pioche, prendre une carte dans la main d'un autre
 		//// */
 		//// }
-		partie = partieDao.rechercher(partie.getNom());
+		partie = partieDao.recharger(partie.getId());
+		joueur = joueurDaoImpl.recharger(joueur.getId());
 		Carte carte = partieDao.piocher(partie);// premiere carte
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		joueurPartieDao.rajouterCarte(joueurPartie, carte);
@@ -77,6 +82,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		Util.checkObject(carte);
+		partie = partieDao.recharger(partie.getId());
+		joueur = joueurDaoImpl.recharger(joueur.getId());
+		cible = joueurDaoImpl.recharger(cible.getId());
 		partieDao.passerAuJoueurSuivant(partie);
 		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible);
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
@@ -89,6 +97,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public List<Carte> listerCartesUtilisables(int nbWasabi, Partie partie) {
 		Util.checkPositiveOrZero(nbWasabi);
 		Util.checkObject(partie);
+		partie = partieDao.recharger(partie.getId());
 		List<Carte> utilisable = new ArrayList<Carte>();
 		List<Carte> main = partie.getJoueur_courant().getMainsCarte();
 		for (Carte carte : main) {
@@ -104,6 +113,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public List<Carte> listerCartes(Joueur joueur, Partie partie) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
+		partie = partieDao.recharger(partie.getId());
+		joueur = joueurDaoImpl.recharger(joueur.getId());
 		return joueurPartieDao.getCartes(joueur, partie);
 	}
 
@@ -111,11 +122,13 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public Map<String, Integer> lancerDes(Joueur joueur, Partie partie, int nbDes) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
+		partie = partieDao.recharger(partie.getId());
+		joueur = joueurDaoImpl.recharger(joueur.getId());
 		faceW = 0; faceD = 0; faceC = 0;
 		faces = new HashMap<String, Integer>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		System.out.println("Main Dés: " + jp.getMainsDe().size());
-		De de = deDao.rechercher(jp.getMainsDe().get(0).getId());
+		De de = deDao.recharger(jp.getMainsDe().get(0).getId());
 		Random random = new Random();
 		for (int i = 0; i < nbDes; i++) {
 			int val = random.nextInt(6)+1;
@@ -146,6 +159,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(receveur);
 		Util.checkPositiveOrZero(nbDes);
 		Util.checkObject(partie);
+		partie = partieDao.recharger(partie.getId());
+		donneur = joueurDaoImpl.recharger(donneur.getId());
+		receveur = joueurDaoImpl.recharger(receveur.getId());
 		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
 //		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
 //			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
@@ -156,6 +172,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public void supprimerDe(int nbDes, Partie partie) {
 		Util.checkPositiveOrZero(nbDes);
 		Util.checkObject(partie);
+		partie = partieDao.recharger(partie.getId());
 		for (int i = 0; i < nbDes; i++) {
 			if (joueurPartieDao.retirerDe(partie.getJoueur_courant().getJoueur().getId(), partie) == 0) {
 				partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
@@ -165,9 +182,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	@Override
 	public boolean lancerTour(Joueur j, Partie p) {
-		j = joueurDaoImpl.rechercher(j.getId());
+		p = partieDao.recharger(p.getId());
+		j = joueurDaoImpl.recharger(j.getId());
 		System.out.println("id j " + j.getId());
-		p = partieDao.rechercher(p.getNom());
+		//p = partieDao.rechercher(p.getNom());
 		System.out.println("id p " + p.getId());
 		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
 	}
@@ -179,6 +197,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	@Override
 	public int nbDe(Joueur j, Partie p) {
+		p = partieDao.recharger(p.getId());
+		j = joueurDaoImpl.recharger(j.getId());
 		return joueurPartieDao.getNbDe(j, p);
 	}
 
@@ -190,6 +210,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	@Override
 	public void supprimerJoueurPartie(Joueur joueur, Partie partie){
+		partie = partieDao.recharger(partie.getId());
+		joueur = joueurDaoImpl.recharger(joueur.getId());
 		joueurPartieDao.supprimerJoueurPartie(joueur.getId(), partie.getId());
 		if(partieDao.listerJoueursPartie(partie).size()==1){
 			partieDao.getPartieEnCours().setEtat(Etat.FINI);

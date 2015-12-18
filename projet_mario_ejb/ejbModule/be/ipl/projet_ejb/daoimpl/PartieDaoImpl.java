@@ -18,7 +18,7 @@ import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
 
 @LocalBean
 @Stateless
-public class PartieDaoImpl extends DaoImpl<String, Partie> {
+public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	
 	public PartieDaoImpl(){
 		super(Partie.class);
@@ -116,7 +116,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 
 	public boolean ajouterJoueur(Partie partie, JoueurPartie joueurPartie) {
 		try {
-			partie = recharger(partie.getNom());
+			partie = recharger(partie.getId());
 			partie.getListeJoueurs().add(joueurPartie);
 			//partie.setNbJoueur((partie.getNbJoueur()+1));
 			

@@ -8,7 +8,7 @@ import be.ipl.projet_ejb.util.Util;
 
 @Stateless
 @LocalBean
-public class JoueurDaoImpl extends DaoImpl<String, Joueur> {
+public class JoueurDaoImpl extends DaoImpl<Integer, Joueur> {
 	public JoueurDaoImpl() {
 		super(Joueur.class);
 	}

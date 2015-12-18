@@ -5,13 +5,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateless;
 
 import be.ipl.projet_ejb.daoimpl.CarteDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.usecases.GestionCartes;
 import be.ipl.projet_ejb.util.Util;
-@Singleton
+@Stateless
 @Startup
 public class GestionCartesImpl implements GestionCartes {
 

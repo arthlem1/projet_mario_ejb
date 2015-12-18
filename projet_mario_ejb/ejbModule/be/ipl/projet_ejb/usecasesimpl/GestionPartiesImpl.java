@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateless;
 
 import be.ipl.projet_ejb.daoimpl.CarteDaoImpl;
 import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
@@ -26,7 +27,7 @@ import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
 
-@Singleton
+@Stateless
 @Startup
 public class GestionPartiesImpl implements GestionParties {
 
@@ -186,7 +187,7 @@ public class GestionPartiesImpl implements GestionParties {
 			System.out.println("ajouter carte joueur "+joueurPartie.getJoueur().getPseudo());
 			for (int i = 0; i < 3; i++) {
 				Carte carte =partieDao.piocher(partie);
-				//joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
+				joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
 			}
 		}
 
@@ -210,7 +211,7 @@ public class GestionPartiesImpl implements GestionParties {
 	@Override
 	public Partie initialiserMainsDes(Partie partie) {
 		System.out.println("InitialiserMainDe");
-		partie = partieDao.rechercher(partie.getNom());
+		partie = partieDao.recharger(partie.getId());
 		List<De> des = deDao.lister();
 		for (De de : des) {
 			System.out.println("ICI id dé " + de.getId());
