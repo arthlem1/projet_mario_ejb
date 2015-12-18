@@ -42,7 +42,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
 		}
 		Random random = new Random();
-		Carte c = pioche.get(random.nextInt(pioche.size()));
+		Carte c = pioche.remove(random.nextInt(pioche.size()));
 		mettreAJour(p);
 		return c;		
 	}
