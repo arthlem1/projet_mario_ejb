@@ -1,6 +1,7 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -96,15 +97,19 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public String lancerDes(Joueur joueur, Partie partie) {
+	public List<String> lancerDes(Joueur joueur, Partie partie, int nbDes) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		System.out.println("Main Dés: "+jp.getMainsDe().size());
 		De de = deDao.rechercher(jp.getMainsDe().get(0));
 		Random random = new Random();
-		int val = random.nextInt(7);
-		return valeurFace(de, val);
+		List<String> faces = new ArrayList<String>();
+		for (int i = 0; i < nbDes; i++) {
+			int val = random.nextInt(7);
+			faces.add(valeurFace(de, val));
+		}
+		return Collections.unmodifiableList(faces);
 	}
 
 	private String valeurFace(De de, int val) {

@@ -53,7 +53,7 @@ public interface GestionJoueurPartie {
 	 * 
 	 * @return liste des dés lancés.
 	 */
-	String lancerDes(Joueur joueur, Partie partie);
+	List<String> lancerDes(Joueur joueur, Partie partie, int nbDes);
 
 	/**
 	 * Méthode qui permet à un joueur (donneur) de donner ses dés à un autre
