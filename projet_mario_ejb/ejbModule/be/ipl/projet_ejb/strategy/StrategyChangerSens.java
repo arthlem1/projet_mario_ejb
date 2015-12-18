@@ -12,6 +12,9 @@ public class StrategyChangerSens implements Strategy {
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible) {
 		partieDao.changerSens(partie);
+		
+		// iterate over list on
+		
 	}
 
 }

@@ -12,8 +12,8 @@ public class StrategySupprDeuxDe implements Strategy {
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
-		if (!partie.getListeJoueurs().contains(joueur))
-			throw new JoueurNonTrouveException();
+//		if (!partie.getListeJoueurs().contains(joueur))
+//			throw new JoueurNonTrouveException();
 		joueurPartieDao.retirerDe(joueur.getId(), partie);
 		joueurPartieDao.retirerDe(joueur.getId(), partie);
 	}
