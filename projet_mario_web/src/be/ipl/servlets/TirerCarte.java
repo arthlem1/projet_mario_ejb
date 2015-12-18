@@ -15,24 +15,31 @@ import org.json.JSONObject;
 
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
-import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
+import be.ipl.projet_ejb.usecases.GestionCartes;
+import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 import be.ipl.projet_ejb.usecases.GestionParties;
 
 /**
- * Servlet implementation class Join
+ * Servlet implementation class TirerCarte
  */
-@WebServlet("/Join")
-public class Join extends HttpServlet {
+@WebServlet("/TirerCarte")
+public class TirerCarte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
+	private GestionJoueurPartie gestionJoueurPartie;
+	@EJB
 	private GestionParties gestionParties;
+	@EJB
+	private GestionCartes gestionCartes;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Join() {
+	public TirerCarte() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -50,58 +57,35 @@ public class Join extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
 
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
 
-		JSONObject jsonObject = new JSONObject();
+		Partie partieEnCours = gestionParties.getPartieEnCours();
 
-		Partie partie = gestionParties.getPartieInitiale();
+		JSONObject resultat = new JSONObject();
 
-		if (partie != null) {
+		try {
+			gestionJoueurPartie.tirerUneCarte(partieEnCours, joueur);
+			int ordre = gestionJoueurPartie.ordreJoueur(joueur.getId(), partieEnCours.getId());
+			System.out.println("NB_CARTES " + partieEnCours.getListeJoueurs().get(ordre - 1).getMainsCarte().size());
 
 			try {
-				if (gestionParties.ajouterJoueur(partie, joueur)) {
-					try {
-						session.setAttribute("partie", partie);
-						jsonObject.put("success", "1");
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						jsonObject.put("success", "0");
-						jsonObject.put("message", "Impossible de rejoindre la partie");
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			} catch (MaxJoueursException e) {
-
-				try {
-					jsonObject.put("success", "0");
-					jsonObject.put("message", e.getMessage());
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			}
-
-		} else {
-			try {
-				jsonObject.put("success", "2");
-				jsonObject.put("message", "Aucune partie en cours.");
+				resultat.put("success", "1");
 			} catch (JSONException e) {
-
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+		} catch (PiocheVideException e) {
+			try {
+				resultat.put("success", "0").put("message", e.getMessage());
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		response.setContentType("application/json");
-		response.getWriter().write(jsonObject.toString());
-
+		response.getWriter().write(resultat.toString());
 	}
 
 }

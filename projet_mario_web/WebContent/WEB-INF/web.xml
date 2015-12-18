@@ -52,16 +52,20 @@
     <url-pattern>/refresh.html</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>plateau</servlet-name>
-    <jsp-file>/restreint/plateau.jsp</jsp-file>
-  </servlet>
-  <servlet>
     <servlet-name>plateau.html</servlet-name>
-    <jsp-file>/WEB-INF/jspf/plateau.jspf</jsp-file>
+    <jsp-file>/restreint/plateau.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>plateau.html</servlet-name>
     <url-pattern>/plateau.html</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>test.html</servlet-name>
+    <jsp-file>/WEB-INF/jsp/test.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test.html</servlet-name>
+    <url-pattern>/test.html</url-pattern>
   </servlet-mapping>
   <session-config>
     <cookie-config>

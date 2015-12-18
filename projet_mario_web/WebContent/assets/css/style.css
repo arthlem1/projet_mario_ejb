@@ -333,3 +333,13 @@ footer a:hover, footer a:focus {
 		font-size: 32px;
 	}
 }
+
+#result{
+	position:relative;
+	width : 100%;
+	
+	background:white;
+	border-radius:3px;
+	padding:20px;
+	color:black;
+}

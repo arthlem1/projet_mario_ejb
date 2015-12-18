@@ -1,0 +1,137 @@
+body {
+	background: black;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.plateau {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+	background: #000;
+	padding: 20px;
+}
+
+.container-joueur-left {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+.container-joueur-top-left {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 10%;
+	top: 20px;
+}
+
+.container-joueur-top {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	top: 0;
+}
+
+.container-joueur-top-right {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	right: 10%;
+	top: 20px;
+}
+
+.container-joueur-right {
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	margin: auto;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.mes-cartes {
+	width: 100px;
+	height: 150px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+}
+
+.mes-des {
+	position: absolute;
+	height: 100px;
+	bottom: 0;
+	right: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	vertical-align: center;
+	flex-wrap: wrap;
+	align-content: center;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.center-plateau {
+	background: green;
+	position: absolute;
+	width: 300px;
+	height: 250px;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.pioche {
+	position: relative;
+	margin: auto;
+	left: 0;
+	right: 0;
+	width: 80px;
+	height: 130px;
+	background: yellow;
+}
+
+.result-de {
+	width: 300px;
+	height: 100px;
+	position: relative;
+	margin-top: 20px;
+	background: blue;
+}
+
+.dice {
+	position: relative;
+	margin: 5px;
+	padding: 2px;
+	background-color: #e7e7e7;
+	width: 50px;
+	height: 50px;
+	object-fit: contain;
+	box-shadow: inset 0 3px white, inset 0 -3px #bbb, inset 3px 0 #d7d7d7,
+		inset -3px 0 #d7d7d7;
+	border-radius: 10%;
+}
+
+.face_pause {
+	display: block;
+	width: 25px;
+	height: 25px;
+	margin: auto;
+	vertical-align: middle;
+	background: url("../img/backgrounds/mini-coin.png") center center
+		no-repeat;
+}

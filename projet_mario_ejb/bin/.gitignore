@@ -1,7 +1,3 @@
 /build/
-/.classpath
-/.gitignore
-/.project
-/.settings/
-/META-INF/
+/projet_mario_ejb/
 /be/

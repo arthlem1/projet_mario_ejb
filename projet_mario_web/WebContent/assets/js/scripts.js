@@ -147,15 +147,31 @@ jQuery(document).ready(function() {
     	}
     });
     
+    $("#join-btn").click(function(){
+    	$.ajax({
+    		url:"Join"
+    	}).done(function(data){
+    		if(data.success == 1){
+    			//Join success
+    			window.location.href = "attente.html";
+    		}else if (data.success == 2){
+    			//Doit créer une partie
+    			//Affichage du formulaire créer partie
+    			$.notiny({text: data.message, theme: 'error'});
+    		}else{
+    			$.notiny({text: data.message, theme: 'error'});
+    		}
+    	}).fail(function(jqXHR, textStatus, errorThrown){
+			alert(errorThrown);
+		});
+    });
+    
     var show_sub_menu = function(id){
     	
     	$("#menu").slideToggle("fast");
     	switch(id){
     	case "create-btn":
     		$("#create").slideToggle("slow");
-    		break;
-    	case "join-btn":
-    		$("#join").slideToggle("slow");
     		break;
     	case "list-btn":
     		$("#list").slideToggle("slow");
