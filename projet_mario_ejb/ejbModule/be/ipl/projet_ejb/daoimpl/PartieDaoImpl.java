@@ -19,12 +19,10 @@ import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
 @LocalBean
 @Stateless
 public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
-	
-	public PartieDaoImpl(){
+
+	public PartieDaoImpl() {
 		super(Partie.class);
 	}
-	
-
 
 	public Partie rechercher(String nom) {
 		String queryString = "select p from Partie p where p.nom = ?1";
@@ -35,85 +33,84 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		return enregistrer(new Partie(nom, createur));
 	}
 
-	public Carte piocher(Partie p) throws PiocheVideException{
-		//p=recharger(p.getId());
+	public Carte piocher(Partie p) throws PiocheVideException {
+		// p=recharger(p.getId());
 		List<Carte> pioche = p.getPioche();
-		System.out.println("-------------------------"+pioche.size());
+		System.out.println("-------------------------" + pioche.size());
 		if (pioche.size() == 0) {
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
 		}
-		
+
 		java.util.Collections.shuffle(pioche);
 		Carte c = pioche.remove(0);
-		System.out.println("-------------------------"+c.getId());
-		//mettreAJour(p);
-		return c;		
+		System.out.println("-------------------------" + c.getId());
+		// mettreAJour(p);
+		return c;
 	}
-	
+
 	public boolean commencerPartie(Partie partie) {
-		partie=recharger(partie.getId());
+		partie = recharger(partie.getId());
 		try {
 			partie = rechercher(partie.getNom());
 			JoueurPartie courant = tirerJoueurAuHasard(partie);
 			partie.setJoueur_courant(courant);
 			partie.setStarted(true);
-			//mettreAJour(partie);
+			// mettreAJour(partie);
 		} catch (Exception e) {
 			System.out.println("dans commencer partie");
 			e.printStackTrace();
 			return false;
 		}
-		return true;		
+		return true;
 	}
 
 	private JoueurPartie tirerJoueurAuHasard(Partie partie) {
-		partie=recharger(partie.getId());
+		partie = recharger(partie.getId());
 		List<JoueurPartie> lesJoueurs = partie.getListeJoueurs();
 		Random random = new Random();
-		int nb = random.nextInt(lesJoueurs.size()-1);
+		int nb = random.nextInt(lesJoueurs.size() - 1);
 		return lesJoueurs.get(nb);
 	}
-	
-	public Partie passerAuJoueurSuivant(Partie partie){
-		
-		partie=mettreAJour(partie);
+
+	public Partie passerAuJoueurSuivant(Partie partie) {
+
+		partie = mettreAJour(partie);
 		JoueurPartie suivant;
-		JoueurPartie current=partie.getJoueur_courant();
-		
-		if(partie.isClockwise()){
-			if(current.getOrdreJoueurs()==(partie.getListeJoueurs().size())){
-				suivant=partie.getListeJoueurs().get(0);
-			}else{
-				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()));
+		JoueurPartie current = partie.getJoueur_courant();
+
+		if (partie.isClockwise()) {
+			if (current.getOrdreJoueurs() == (partie.getListeJoueurs().size())) {
+				suivant = partie.getListeJoueurs().get(0);
+			} else {
+				suivant = partie.getListeJoueurs().get((current.getOrdreJoueurs()));
 			}
-		}else{
-			if(current.getOrdreJoueurs()==1){
-				suivant=partie.getListeJoueurs().get((partie.getListeJoueurs().size()-1));
-			}else{
-				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()-2));
+		} else {
+			if (current.getOrdreJoueurs() == 1) {
+				suivant = partie.getListeJoueurs().get((partie.getListeJoueurs().size() - 1));
+			} else {
+				suivant = partie.getListeJoueurs().get((current.getOrdreJoueurs() - 2));
 			}
 		}
-	
+
 		partie.getListeJoueurs().size();
-		System.out.println("////////////////COURANT : "+partie.getJoueur_courant().getId());
-		System.out.println("////////////////SUIVANT : "+suivant.getId());
-		if(partie.getListeJoueurs().contains(suivant)){
+		System.out.println("////////////////COURANT : " + partie.getJoueur_courant().getId());
+		System.out.println("////////////////SUIVANT : " + suivant.getId());
+		if (partie.getListeJoueurs().contains(suivant)) {
 			partie.setJoueur_courant(suivant);
 		}
-		System.out.println("////////////////"+partie.getListeJoueurs().size());
+		System.out.println("////////////////" + partie.getListeJoueurs().size());
 		return partie;
 	}
 
-	public Partie changerSens(Partie partie){
-		partie=recharger(partie.getId());
+	public Partie changerSens(Partie partie) {
+		partie = recharger(partie.getId());
 		boolean avantSet = partie.isClockwise();
 		partie.setClockwise(!avantSet);
 		return partie;
 	}
 
-	public List<Partie> listerPartiesJouees(Joueur joueur){
-		String query = "SELECT p FROM JoueurPartie jp, Partie p, Joueur j "
-				+ "WHERE j = ?1 "
+	public List<Partie> listerPartiesJouees(Joueur joueur) {
+		String query = "SELECT p FROM JoueurPartie jp, Partie p, Joueur j " + "WHERE j = ?1 "
 				+ "AND j = jp.joueur AND p = jp.partie";
 		return liste(query, joueur);
 	}
@@ -122,8 +119,8 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		try {
 			partie = recharger(partie.getId());
 			partie.getListeJoueurs().add(joueurPartie);
-			//partie.setNbJoueur((partie.getNbJoueur()+1));
-			
+			// partie.setNbJoueur((partie.getNbJoueur()+1));
+
 		} catch (Exception e) {
 			System.out.println("fail ajouterJoueur");
 			e.printStackTrace();
@@ -131,41 +128,42 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		}
 		return true;
 	}
-	
-	public Joueur afficherVainqueurPartie(Partie partie){
-		partie=recharger(partie.getId());
+
+	public Joueur afficherVainqueurPartie(Partie partie) {
+		partie = recharger(partie.getId());
 		String query = "SELECT p.vainqueur FROM Partie p WHERE p = ?1";
-		Partie p=recherche(query, partie);
-		return p.getVainqueur(); 
+		Partie p = recherche(query, partie);
+		return p.getVainqueur();
 	}
-	
-	public List<JoueurPartie> listerJoueursPartie(Partie partie){
-		partie=recharger(partie.getId());
+
+	public List<JoueurPartie> listerJoueursPartie(Partie partie) {
+		partie = recharger(partie.getId());
 		String query = "SELECT p FROM Partie p WHERE p = ?1";
 		Partie p = recherche(query, partie);
-		return p.getListeJoueurs(); 
-	}	
-	
+		return p.getListeJoueurs();
+	}
+
 	public void setJoueurSuivant(Partie p, JoueurPartie suivant) throws JoueurNonTrouveException {
-		p=recharger(p.getId());
-		
-		if(p.getListeJoueurs().contains(suivant)){
+		p = recharger(p.getId());
+
+		if (p.getListeJoueurs().contains(suivant)) {
 			p.setJoueur_courant(suivant);
-		}else{
+		} else {
 			throw new JoueurNonTrouveException();
 		}
-		//mettreAJour(p);		
-	}	
-	
-	public Partie getPartieInitiale(){
+		// mettreAJour(p);
+	}
+
+	public Partie getPartieInitiale() {
 		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
 		Partie p = recherche(query, GestionPartiesImpl.Etat.INITIAL);
 		return p;
 	}
-	
-	public Partie getPartieEnCours(){
+
+	public Partie getPartieEnCours() {
 		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
 		Partie p = recherche(query, GestionPartiesImpl.Etat.EN_COURS);
+		p = recharger(p.getId());
 		return p;
 	}
 }
