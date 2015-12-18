@@ -36,6 +36,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	}
 
 	public Carte piocher(Partie p) throws PiocheVideException{
+		p=recharger(p.getId());
 		List<Carte> pioche = p.getPioche();
 		System.out.println("-------------------------"+pioche.size());
 		if (pioche.size() == 0) {
@@ -50,6 +51,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	}
 	
 	public boolean commencerPartie(Partie partie) {
+		partie=recharger(partie.getId());
 		try {
 			partie = rechercher(partie.getNom());
 			JoueurPartie courant = tirerJoueurAuHasard(partie);
@@ -65,6 +67,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	}
 
 	private JoueurPartie tirerJoueurAuHasard(Partie partie) {
+		partie=recharger(partie.getId());
 		List<JoueurPartie> lesJoueurs = partie.getListeJoueurs();
 		Random random = new Random();
 		int nb = random.nextInt(lesJoueurs.size()-1);
@@ -102,6 +105,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	}
 
 	public Partie changerSens(Partie partie){
+		partie=recharger(partie.getId());
 		boolean avantSet = partie.isClockwise();
 		partie.setClockwise(!avantSet);
 		return partie;
@@ -129,18 +133,21 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	}
 	
 	public Joueur afficherVainqueurPartie(Partie partie){
+		partie=recharger(partie.getId());
 		String query = "SELECT p.vainqueur FROM Partie p WHERE p = ?1";
 		Partie p=recherche(query, partie);
 		return p.getVainqueur(); 
 	}
 	
 	public List<JoueurPartie> listerJoueursPartie(Partie partie){
+		partie=recharger(partie.getId());
 		String query = "SELECT p FROM Partie p WHERE p = ?1";
 		Partie p = recherche(query, partie);
 		return p.getListeJoueurs(); 
 	}	
 	
 	public void setJoueurSuivant(Partie p, JoueurPartie suivant) throws JoueurNonTrouveException {
+		p=recharger(p.getId());
 		
 		if(p.getListeJoueurs().contains(suivant)){
 			p.setJoueur_courant(suivant);
