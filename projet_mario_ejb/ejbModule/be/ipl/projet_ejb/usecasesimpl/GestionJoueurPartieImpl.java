@@ -93,6 +93,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		}
 		return utilisable;
 	}
+	
+	
 
 	@Override
 	public List<Carte> listerCartes(Joueur joueur, Partie partie) {
@@ -141,9 +143,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkPositiveOrZero(nbDes);
 		Util.checkObject(partie);
 		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
-		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
-			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
-		}
+//		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
+//			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
+//		}
 	}
 
 	@Override
@@ -174,5 +176,11 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	@Override
 	public int nbDe(Joueur j, Partie p) {
 		return joueurPartieDao.getNbDe(j, p);
+	}
+
+	@Override
+	public boolean besoinCible(Carte carte) {
+		int besoinCible = carte.getCodeEffet();
+		return (besoinCible >= 4 && besoinCible <= 6) || besoinCible == 9;
 	}
 }

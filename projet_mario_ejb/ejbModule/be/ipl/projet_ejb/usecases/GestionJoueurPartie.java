@@ -39,6 +39,8 @@ public interface GestionJoueurPartie {
 	 * @return liste de toutes les cartes
 	 */
 	List<Carte> listerCartesUtilisables(int nbWasabi, Partie partie);
+	
+	boolean besoinCible(Carte carte);
 
 	/**
 	 * lister toutes les cartes de ce joueur

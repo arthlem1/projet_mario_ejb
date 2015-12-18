@@ -52,7 +52,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	public int transfererDe(Joueur donnant, Joueur recevant, int nb, Partie p) {
 		JoueurPartie recever = getPlayer(recevant.getId(), p.getId());
 		JoueurPartie giver = getPlayer(donnant.getId(), p.getId());
-		recever.getMainsDe().add(giver.getMainsDe().remove(giver.getMainsDe().size()));
+		recever.getMainsDe().add(giver.getMainsDe().remove(giver.getMainsDe().size()-1));
 		mettreAJour(giver);
 		mettreAJour(recever);
 		return giver.getMainsDe().size();
