@@ -210,6 +210,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	@Override
 	public int supprimerJoueurPartie(Joueur joueur, Partie partie){
+
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDao.recharger(joueur.getId());
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());

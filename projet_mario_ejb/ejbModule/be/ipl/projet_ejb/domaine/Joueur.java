@@ -92,13 +92,11 @@ public class Joueur implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Joueur [id=" + id + ", prenom=" + prenom + ", pseudo=" + pseudo 
-				+ "]";
+		return "Joueur [id=" + id + ", prenom=" + prenom + ", pseudo=" + pseudo + "]";
 	}
 
 	public boolean supprimer(JoueurPartie joueurPartie) {
 		return this.joueurParties.remove(joueurPartie);
 		
 	}
-
 }

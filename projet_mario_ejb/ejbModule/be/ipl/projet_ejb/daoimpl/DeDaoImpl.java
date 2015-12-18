@@ -9,9 +9,8 @@ import be.ipl.projet_ejb.domaine.De;
 @LocalBean
 public class DeDaoImpl extends DaoImpl<Integer, De> {
 
-	public DeDaoImpl(){
+	public DeDaoImpl() {
 		super(De.class);
 	}
-	
 
 }

@@ -1,7 +1,6 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
@@ -14,7 +13,8 @@ import be.ipl.projet_ejb.util.Util;
 @Startup
 public class GestionDesImpl implements GestionDes {
 
-	@EJB DeDaoImpl	deDao;
+	@EJB
+	DeDaoImpl deDao;
 
 	@Override
 	public De recherche(De de) {

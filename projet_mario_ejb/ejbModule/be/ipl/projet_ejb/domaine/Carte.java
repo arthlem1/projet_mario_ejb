@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import be.ipl.projet_ejb.util.Util;
- 
+
 /**
  * <p>
  * Java class for anonymous complex type.
@@ -67,7 +67,7 @@ import be.ipl.projet_ejb.util.Util;
 @Entity
 @Table(name = "CARTES", schema = "mario_ejb")
 public class Carte implements Serializable, Cloneable {
-	@Id 
+	@Id
 	@XmlTransient
 	@Column(name = "CARTE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -92,11 +92,11 @@ public class Carte implements Serializable, Cloneable {
 	@Transient
 	@XmlAttribute(name = "src")
 	protected String src;
-	
+
 	protected Carte() {
 		super();
 	}
-	
+
 	public Carte(int codeEffet, int cout) {
 		super();
 		Util.checkPositive(codeEffet);
@@ -309,7 +309,5 @@ public class Carte implements Serializable, Cloneable {
 	public String toString() {
 		return "Carte [id=" + id + ", codeEffet=" + codeEffet + ", cout=" + cout + "]";
 	}
-	
-	
 
 }

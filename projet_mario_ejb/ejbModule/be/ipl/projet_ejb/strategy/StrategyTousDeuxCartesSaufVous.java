@@ -15,14 +15,14 @@ public class StrategyTousDeuxCartesSaufVous implements Strategy {
 
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
-			Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
-		if(!partie.getListeJoueurs().contains(joueur))
-			throw new JoueurNonTrouveException();
+			Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException {
+//		if (!partie.getListeJoueurs().contains(joueur))
+//			throw new JoueurNonTrouveException();
 		List<JoueurPartie> liste = partie.getListeJoueurs();
 		for (JoueurPartie joueurPartie : liste) {
-			if(joueurPartie.getJoueur().getId()!=joueur.getId()){
+			if (joueurPartie.getJoueur().getId() != joueur.getId()) {
 				List<Carte> cartesDuJoueur = joueurPartie.getMainsCarte();
-				while(cartesDuJoueur.size() > 2){
+				while (cartesDuJoueur.size() > 2) {
 					partie.getPioche().add(cartesDuJoueur.remove(0));
 				}
 			}

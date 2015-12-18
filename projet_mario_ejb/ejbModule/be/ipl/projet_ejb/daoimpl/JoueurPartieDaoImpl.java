@@ -64,7 +64,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		if (!jp.getMainsCarte().contains(c))
 			return false;
 		jp.getMainsCarte().remove(c);
-		//mettreAJour(jp);
+		// mettreAJour(jp);
 		return true;
 	}
 

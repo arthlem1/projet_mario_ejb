@@ -1,7 +1,6 @@
 package be.ipl.projet_ejb.usecasesimpl;
 
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
@@ -25,7 +24,7 @@ public class GestionJoueursImpl implements GestionJoueurs {
 		mdp = Util.getMD5(mdp);
 		Util.checkString(prenom);
 		Joueur joueur = joueurDao.rechercher(pseudo);
-		if(joueur!=null)
+		if (joueur != null)
 			throw new JoueurDejaExistantException("Ce pseudo est déjà pris!");
 		joueur = new Joueur(prenom, pseudo, mdp);
 		return joueurDao.enregistrer(joueur);

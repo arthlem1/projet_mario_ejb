@@ -26,10 +26,11 @@ import javax.validation.constraints.NotNull;
 
 public class JoueurPartie implements Serializable {
 
-	/*@EmbeddedId
-	@Column(name = "JOUEUR_PARTIE_ID")
-	private JoueurPartiePK joueurPartiePK;
-*/
+	/*
+	 * @EmbeddedId
+	 * 
+	 * @Column(name = "JOUEUR_PARTIE_ID") private JoueurPartiePK joueurPartiePK;
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "JOUEUR_PARTIE_ID")
@@ -37,28 +38,28 @@ public class JoueurPartie implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "JOUEUR_ID")
 	private Joueur joueur;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "PARTIE_ID")
 	private Partie partie;
-	
+
 	@NotNull
 	private int blocked;
-	
+
 	@NotNull
 	@Min(1)
 	@Max(6)
 	private int ordreJoueurs;
 
-	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinTable(name = "JOUEUR_PARTIE_DES", schema = "mario_ejb",
-			inverseJoinColumns={@JoinColumn(name="MAIN_DE_ID")})
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "JOUEUR_PARTIE_DES", schema = "mario_ejb", inverseJoinColumns = {
+			@JoinColumn(name = "MAIN_DE_ID") })
 	private List<De> mainsDe = new ArrayList<>();
-	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
-	@JoinTable(name="JOUEUR_PARTIE_CARTES",schema = "mario_ejb",
-			inverseJoinColumns={@JoinColumn(name="MAIN_CARTE_ID")})
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+	@JoinTable(name = "JOUEUR_PARTIE_CARTES", schema = "mario_ejb", inverseJoinColumns = {
+			@JoinColumn(name = "MAIN_CARTE_ID") })
 	private List<Carte> mainsCarte = new ArrayList<>();
-	
+
 	protected JoueurPartie() {
 		super();
 	}
@@ -68,21 +69,21 @@ public class JoueurPartie implements Serializable {
 		this.ordreJoueurs = ordreJoueurs;
 		this.joueur = joueur;
 		this.partie = partie;
-		this.blocked=0;
+		this.blocked = 0;
 	}
-	
-	public boolean isBlocked(){
-		int i= blocked;
-		if(blocked>0){
+
+	public boolean isBlocked() {
+		int i = blocked;
+		if (blocked > 0) {
 			blocked--;
 		}
-		return i!=0;
+		return i != 0;
 	}
-	
-	public void setBlocked(){
+
+	public void setBlocked() {
 		blocked++;
 	}
- 
+
 	public Joueur getJoueur() {
 		return joueur;
 	}
@@ -149,9 +150,9 @@ public class JoueurPartie implements Serializable {
 	@Override
 	public String toString() {
 		return "JoueurPartie [id=" + id + ", joueur=" + joueur + ", partie=" + partie + ", blocked=" + blocked
-				+ ", ordreJoueurs=" + ordreJoueurs +  "]";
+				+ ", ordreJoueurs=" + ordreJoueurs + "]";
 	}
-	
+
 	public int getId() {
 		return id;
 	}

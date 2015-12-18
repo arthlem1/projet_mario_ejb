@@ -4,26 +4,29 @@ import javax.ejb.Remote;
 
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.exceptions.JoueurDejaExistantException;
+
 @Remote
 public interface GestionJoueurs {
 
 	/**
-	 * Créer un nouveau joueur dans la base de données. Le mot de passe
-	 * est crypté dans la DB.
+	 * Créer un nouveau joueur dans la base de données. Le mot de passe est
+	 * crypté dans la DB.
+	 * 
 	 * @param prenom
 	 * @param pseudo
 	 * @param mdp
 	 * @return joueur créé dans la DB
-	 * @throws JoueurDejaExistantException 
+	 * @throws JoueurDejaExistantException
 	 */
-	Joueur creerJoueur(String prenom,String pseudo, String mdp) throws JoueurDejaExistantException;
-	
+	Joueur creerJoueur(String prenom, String pseudo, String mdp) throws JoueurDejaExistantException;
+
 	/**
-	 * @param pseudo du joueur à trouver
+	 * @param pseudo
+	 *            du joueur à trouver
 	 * @return joueur trouvé dans la DB
 	 */
 	Joueur rechercher(String pseudo);
-	
+
 	/**
 	 * @param pseudo
 	 * @param mdp
