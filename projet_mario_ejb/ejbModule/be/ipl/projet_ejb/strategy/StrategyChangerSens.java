@@ -10,7 +10,7 @@ public class StrategyChangerSens implements Strategy {
 
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
-			Joueur joueur, Joueur cible) {
+			Joueur joueur, Joueur cible, boolean clockwize) {
 		partieDao.changerSens(partie);
 		
 		// iterate over list on

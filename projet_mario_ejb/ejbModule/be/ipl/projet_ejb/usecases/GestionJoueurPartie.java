@@ -29,7 +29,7 @@ public interface GestionJoueurPartie {
 	 * @param carte.//idem
 	 * @throws JoueurNonTrouveException
 	 */
-	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible) throws JoueurNonTrouveException;
+	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException;
 
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de Wasabis

@@ -14,7 +14,7 @@ public class StrategyUneCarteRestante implements Strategy {
 
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
-			Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
+			Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException {
 //		if (!partie.getListeJoueurs().contains(cible))
 //			throw new JoueurNonTrouveException();
 		List<Carte> liste = joueurPartieDao.getCartes(cible, partie);

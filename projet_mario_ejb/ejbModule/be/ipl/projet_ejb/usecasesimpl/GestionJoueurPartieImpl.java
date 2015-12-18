@@ -77,7 +77,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
+	public void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		Util.checkObject(carte);
@@ -85,7 +85,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		joueur = joueurDaoImpl.recharger(joueur.getId());
 		cible = joueurDaoImpl.recharger(cible.getId());
 		partieDao.passerAuJoueurSuivant(partie);
-		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible);
+		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible,clockwize);
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
 		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
 			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
