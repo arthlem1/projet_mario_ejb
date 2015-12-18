@@ -13,16 +13,5 @@ public class DeDaoImpl extends DaoImpl<Integer, De> {
 		super(De.class);
 	}
 	
-	public DeDaoImpl(Class<De> entityClass) {
-		super(entityClass);
-	}
-	
-	public void supprimer(De entite) {
-		super.supprimer(entite.getId());
-	}
-	
-	public De rechercher(De entite) {
-		return super.rechercher(entite.getId());
-	}
-	
+
 }

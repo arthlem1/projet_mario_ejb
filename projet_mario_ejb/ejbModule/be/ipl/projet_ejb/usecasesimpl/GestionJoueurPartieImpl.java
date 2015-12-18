@@ -67,7 +67,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		//// */
 		//// }
 		Carte carte = partieDao.piocher(partie);// premiere carte
-		joueurPartieDao.rajouterCarte(joueur, partie, carte);
+		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
+		joueurPartieDao.rajouterCarte(joueurPartie, carte);
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		faces = new HashMap<String, Integer>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		System.out.println("Main Dés: " + jp.getMainsDe().size());
-		De de = deDao.rechercher(jp.getMainsDe().get(0));
+		De de = deDao.rechercher(jp.getMainsDe().get(0).getId());
 		Random random = new Random();
 		for (int i = 0; i < nbDes; i++) {
 			int val = random.nextInt(6)+1;

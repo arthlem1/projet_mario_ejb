@@ -18,6 +18,6 @@ public class GestionDesImpl implements GestionDes {
 	@Override
 	public De recherche(De de) {
 		Util.checkObject(de);
-		return deDao.rechercher(de);
+		return deDao.rechercher(de.getId());
 	}
 }
