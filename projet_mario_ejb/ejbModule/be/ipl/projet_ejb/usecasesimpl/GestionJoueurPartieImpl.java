@@ -2,6 +2,7 @@ package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -41,6 +42,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
+	int faceW = 0, faceD = 0, faceC = 0;
+	Map<String, Integer> faces; 
+
 	public void jouerTourCarte(Joueur j, Partie p, boolean play) {
 		if (!play) {
 			partieDao.passerAuJoueurSuivant(p);
@@ -51,14 +55,15 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
-//		List<Carte> pioche = partie.getPioche();
-////		if (pioche.size() == 0) {
-////			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
-////			/*
-////			 * TODO à discuter. Selon les consignes, si plus de carte dans la
-////			 * pioche, prendre une carte dans la main d'un autre
-////			 */
-////		}
+		// List<Carte> pioche = partie.getPioche();
+		//// if (pioche.size() == 0) {
+		//// throw new PiocheVideException("Il n'y a plus de cartes dans la
+		// pioche");
+		//// /*
+		//// * TODO à discuter. Selon les consignes, si plus de carte dans la
+		//// * pioche, prendre une carte dans la main d'un autre
+		//// */
+		//// }
 		Carte carte = partieDao.piocher(partie);// premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);
 	}
@@ -97,32 +102,37 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public List<String> lancerDes(Joueur joueur, Partie partie, int nbDes) {
+	public Map<String, Integer> lancerDes(Joueur joueur, Partie partie, int nbDes) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
+		faceW = 0; faceD = 0; faceC = 0;
+		faces = new HashMap<String, Integer>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
-		System.out.println("Main Dés: "+jp.getMainsDe().size());
+		System.out.println("Main Dés: " + jp.getMainsDe().size());
 		De de = deDao.rechercher(jp.getMainsDe().get(0));
 		Random random = new Random();
-		List<String> faces = new ArrayList<String>();
 		for (int i = 0; i < nbDes; i++) {
-			int val = random.nextInt(7);
-			faces.add(valeurFace(de, val));
+			int val = random.nextInt(6)+1;
+			valeurFace(de, val);
 		}
-		return Collections.unmodifiableList(faces);
+		faces.put("w", faceW);
+		faces.put("d", faceD);
+		faces.put("c", faceC);
+		return Collections.unmodifiableMap(faces);
 	}
 
-	private String valeurFace(De de, int val) {
-		if(val <= 2){
+	private void valeurFace(De de, int val) {
+		if (val <= 2) {
 			de.setValeur("w");
-		}else if(val == 6){
+			faceW++;
+		} else if (val == 6) {
 			de.setValeur("d");
-		}else
+			faceD++;
+		} else {
 			de.setValeur("c");
-		return de.getValeur();
+			faceC++;
+		}
 	}
-	
-	
 
 	@Override
 	public void donnerDe(Joueur donneur, Joueur receveur, int nbDes, Partie partie) {
@@ -150,9 +160,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	@Override
 	public boolean lancerTour(Joueur j, Partie p) {
 		j = joueurDaoImpl.rechercher(j.getId());
-		System.out.println("id j "+j.getId());
+		System.out.println("id j " + j.getId());
 		p = partieDao.rechercher(p.getNom());
-		System.out.println("id p "+p.getId());
+		System.out.println("id p " + p.getId());
 		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
 	}
 

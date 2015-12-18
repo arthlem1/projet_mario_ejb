@@ -1,6 +1,7 @@
 package be.ipl.projet_ejb.usecases;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.Remote;
 
@@ -53,7 +54,7 @@ public interface GestionJoueurPartie {
 	 * 
 	 * @return liste des dés lancés.
 	 */
-	List<String> lancerDes(Joueur joueur, Partie partie, int nbDes);
+	Map<String,Integer> lancerDes(Joueur joueur, Partie partie, int nbDes);
 
 	/**
 	 * Méthode qui permet à un joueur (donneur) de donner ses dés à un autre
