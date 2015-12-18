@@ -157,7 +157,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	public Partie getPartieInitiale() {
 		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
 		Partie p = recherche(query, GestionPartiesImpl.Etat.INITIAL);
-		p = recharger(p.getId());
+		//p = recharger(p.getId());
 		return p;
 	}
 
