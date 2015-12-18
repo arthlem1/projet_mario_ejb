@@ -22,7 +22,7 @@ public class StrategyPrendUneCarte implements Strategy {
 //		if (!partie.getListeJoueurs().contains(cible))
 //			throw new JoueurNonTrouveException();
 		List<Carte> listeCartes = joueurPartieDao.getCartes(cible, partie);
-		Carte carte = listeCartes.get(random.nextInt(listeCartes.size() + 1));
+		Carte carte = listeCartes.get(random.nextInt(listeCartes.size() - 1));
 		joueurPartieDao.transfererCarte(cible, joueur, partie, carte);
 	}
 
