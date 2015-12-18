@@ -59,6 +59,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 			 * pioche, prendre une carte dans la main d'un autre
 			 */
 		}
+		//TODO randomized?
 		Carte carte = pioche.remove(0);// premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);
 	}
