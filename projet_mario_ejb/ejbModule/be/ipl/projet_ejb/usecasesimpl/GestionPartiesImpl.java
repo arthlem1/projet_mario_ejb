@@ -180,20 +180,16 @@ public class GestionPartiesImpl implements GestionParties {
 		partie = partieDao.rechercher(partie.getNom());
 		//List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
-		for (JoueurPartie joueurPartie : joueurs) {
+		for (int y=0; y<joueurs.size();y++) {
 			for (int i = 0; i < 3; i++) {
-					joueurPartie.getMainsCarte().add(partieDao.piocher(partie));
+					joueurs.get(y).getMainsCarte().add(partieDao.piocher(partie));
 			}
 		}
 		return partieDao.mettreAJour(partie);
 	}
 
-	
-	
 	@Override
 	public Partie initialiserPioche(Partie partie) {
-	
-		
 		partie = partieDao.rechercher(partie.getNom());
 		List<Carte> pioche = partie.getPioche();
 		List<Carte> cartes = carteDao.lister();
