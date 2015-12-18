@@ -178,7 +178,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserMainsCartes(Partie partie) throws PiocheVideException {
-		partie = partieDao.rechercher(partie.getNom());
+		partie = partieDao.recharger(partie.getId());
 		// List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		int nbJoueur = joueurs.size();
