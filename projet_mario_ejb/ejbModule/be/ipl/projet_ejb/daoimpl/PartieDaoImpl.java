@@ -98,7 +98,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			partie.setJoueur_courant(suivant);
 		}
 		System.out.println("////////////////"+partie.getListeJoueurs().size());
-		return mettreAJour(partie);
+		return partie;
 	}
 
 	public Partie changerSens(Partie partie){
@@ -119,7 +119,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			partie = recharger(partie.getNom());
 			partie.getListeJoueurs().add(joueurPartie);
 			//partie.setNbJoueur((partie.getNbJoueur()+1));
-			mettreAJour(partie);
+			
 		} catch (Exception e) {
 			System.out.println("fail ajouterJoueur");
 			e.printStackTrace();
