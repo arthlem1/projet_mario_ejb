@@ -9,7 +9,6 @@ import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
-import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 
 @Remote
@@ -103,5 +102,5 @@ public interface GestionJoueurPartie {
 	 */
 	public int nbDe(Joueur j, Partie p);
 	
-	void supprimerJoueurPartie(Joueur joueur, Partie partie)throws PasAssezDeJoueursException;
+	void supprimerJoueurPartie(Joueur joueur, Partie partie);
 }

@@ -52,7 +52,7 @@ public interface GestionParties {
 	 * Changer le sens du tour de la partie
 	 * @param partie
 	 */
-	void changerSens(Partie partie);
+	Partie changerSens(Partie partie);
 	
 	/**
 	 * Lister l'ensemble des parties jouees par le joueur.
