@@ -12,7 +12,7 @@ public class CarteDaoImpl extends DaoImpl<Integer, Carte> {
 	public CarteDaoImpl() {
 		super(Carte.class);
 	}
-	
+
 	public Carte rechercher(int id) {
 		String queryString = "select c from Carte c where c.id = ?1";
 		return recherche(queryString, id);

@@ -17,7 +17,6 @@ import javax.xml.transform.stream.StreamSource;
 import be.ipl.projet_ejb.daoimpl.CarteDaoImpl;
 import be.ipl.projet_ejb.daoimpl.DeDaoImpl;
 
-
 @Singleton
 @Startup
 public class InitDB {

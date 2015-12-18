@@ -14,5 +14,4 @@ public class StrategyChangerSens implements Strategy {
 		partieDao.changerSens(partie);
 	}
 
-
 }

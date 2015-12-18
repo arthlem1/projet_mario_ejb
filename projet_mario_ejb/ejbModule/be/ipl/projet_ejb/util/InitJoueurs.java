@@ -14,14 +14,14 @@ public class InitJoueurs {
 
 	@EJB
 	JoueurDaoImpl joueurdao;
-	
-	@PostConstruct 
+
+	@PostConstruct
 	public void init() {
 		String mdp = Util.getMD5("em");
 		joueurdao.enregistrer(new Joueur("em", "em", mdp));
-		mdp= Util.getMD5("mi");
+		mdp = Util.getMD5("mi");
 		joueurdao.enregistrer(new Joueur("mi", "mi", mdp));
-		mdp= Util.getMD5("ol");
+		mdp = Util.getMD5("ol");
 		joueurdao.enregistrer(new Joueur("ol", "ol", mdp));
 		System.out.println("j'ai enregistre les joueurs");
 	}

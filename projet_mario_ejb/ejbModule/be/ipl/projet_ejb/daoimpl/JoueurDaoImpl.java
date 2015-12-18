@@ -17,17 +17,17 @@ public class JoueurDaoImpl extends DaoImpl<Integer, Joueur> {
 		String queryString = "select j from Joueur j where j.pseudo = ?1";
 		return recherche(queryString, pseudo);
 	}
- 
-	public Joueur rechercher(int id){
+
+	public Joueur rechercher(int id) {
 		String queryString = "select j from Joueur j where j.id = ?1";
 		return recherche(queryString, id);
 	}
-	
+
 	public Joueur login(String pseudo, String mdp) {
 		Joueur joueurDB = rechercher(pseudo);
-		
-		mdp = Util.getMD5(mdp);	
-		
+
+		mdp = Util.getMD5(mdp);
+
 		if (joueurDB == null)
 			return null;
 		else if (joueurDB.getMdp().equals(mdp))

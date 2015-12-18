@@ -22,7 +22,6 @@ import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
-import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
@@ -47,7 +46,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	private Map<Integer, Strategy> effetCarte = Strategy.initialiser();
 
 	int faceW = 0, faceD = 0, faceC = 0;
-	Map<String, Integer> faces; 
+	Map<String, Integer> faces;
 
 	public void jouerTourCarte(Joueur j, Partie p, boolean play) {
 		p = partieDao.recharger(p.getId());
@@ -106,8 +105,6 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		}
 		return utilisable;
 	}
-	
-	
 
 	@Override
 	public List<Carte> listerCartes(Joueur joueur, Partie partie) {
@@ -124,14 +121,16 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(partie);
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDaoImpl.recharger(joueur.getId());
-		faceW = 0; faceD = 0; faceC = 0;
+		faceW = 0;
+		faceD = 0;
+		faceC = 0;
 		faces = new HashMap<String, Integer>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		System.out.println("Main Dés: " + jp.getMainsDe().size());
 		De de = deDao.recharger(jp.getMainsDe().get(0).getId());
 		Random random = new Random();
 		for (int i = 0; i < nbDes; i++) {
-			int val = random.nextInt(6)+1;
+			int val = random.nextInt(6) + 1;
 			valeurFace(de, val);
 		}
 		faces.put("w", faceW);
@@ -163,9 +162,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		donneur = joueurDaoImpl.recharger(donneur.getId());
 		receveur = joueurDaoImpl.recharger(receveur.getId());
 		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
-//		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
-//			partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
-//		}
+		// if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
+		// partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
+		// }
 	}
 
 	@Override
@@ -185,7 +184,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		p = partieDao.recharger(p.getId());
 		j = joueurDaoImpl.recharger(j.getId());
 		System.out.println("id j " + j.getId());
-		//p = partieDao.rechercher(p.getNom());
+		// p = partieDao.rechercher(p.getNom());
 		System.out.println("id p " + p.getId());
 		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
 	}
@@ -209,11 +208,11 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public void supprimerJoueurPartie(Joueur joueur, Partie partie){
+	public void supprimerJoueurPartie(Joueur joueur, Partie partie) {
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDaoImpl.recharger(joueur.getId());
 		joueurPartieDao.supprimerJoueurPartie(joueur.getId(), partie.getId());
-		if(partieDao.listerJoueursPartie(partie).size()==1){
+		if (partieDao.listerJoueursPartie(partie).size() == 1) {
 			partieDao.getPartieEnCours().setEtat(Etat.FINI);
 		}
 	}

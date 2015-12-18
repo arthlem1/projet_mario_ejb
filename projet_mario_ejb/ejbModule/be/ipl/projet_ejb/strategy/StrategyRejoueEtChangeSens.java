@@ -12,9 +12,8 @@ public class StrategyRejoueEtChangeSens implements Strategy {
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
-		partieDao.setJoueurSuivant(partie,joueurPartieDao.getPlayer(joueur.getId(), partie.getId()));
+		partieDao.setJoueurSuivant(partie, joueurPartieDao.getPlayer(joueur.getId(), partie.getId()));
 		partieDao.changerSens(partie);
 	}
-
 
 }

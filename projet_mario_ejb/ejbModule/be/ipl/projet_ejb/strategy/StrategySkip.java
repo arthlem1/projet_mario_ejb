@@ -12,10 +12,9 @@ public class StrategySkip implements Strategy {
 	@Override
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible) throws JoueurNonTrouveException {
-		if(!partie.getListeJoueurs().contains(cible))
+		if (!partie.getListeJoueurs().contains(cible))
 			throw new JoueurNonTrouveException();
 		joueurPartieDao.setBlocked(cible, partie);
 	}
-
 
 }

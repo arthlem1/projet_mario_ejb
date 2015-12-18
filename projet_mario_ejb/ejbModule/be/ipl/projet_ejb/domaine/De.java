@@ -41,8 +41,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-//@XmlType(name = "", propOrder = { "face" })
-@XmlType(name="")
+// @XmlType(name = "", propOrder = { "face" })
+@XmlType(name = "")
 @XmlRootElement(name = "de")
 @Entity
 @Table(name = "DES", schema = "mario_ejb")
@@ -71,7 +71,8 @@ public class De implements Serializable {
 	@XmlAttribute(name = "nbTotalDes", required = true)
 	protected int nbTotalDes;
 	@XmlTransient
-	private String valeur ;
+	private String valeur;
+
 	protected De() {
 	}
 
@@ -178,7 +179,5 @@ public class De implements Serializable {
 	public String toString() {
 		return "De [id=" + id + ", valeur=" + valeur + "]";
 	}
-	
-	
 
 }

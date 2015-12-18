@@ -2,10 +2,8 @@ package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
