@@ -70,6 +70,7 @@ public class GestionPartiesImpl implements GestionParties {
 					partie.setEtat(FINI);
 					throw new PasAssezDeJoueursException("Pas assez de joueurs dans la partie.");
 				}
+				gpi.partieDao.commencerPartie(partie);
 				partie.setEtat(EN_COURS);
 				return true;
 			}

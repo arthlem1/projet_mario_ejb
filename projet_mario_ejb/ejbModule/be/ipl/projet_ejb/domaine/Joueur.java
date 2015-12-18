@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class Joueur implements Serializable {
 	@NotNull
 	private String mdp;
 	
-	@OneToMany(mappedBy = "joueur")
+	@OneToMany(mappedBy = "joueur", fetch = FetchType.EAGER)
 	private List<JoueurPartie> joueurParties = new ArrayList<>();
 	
 	protected Joueur() {
