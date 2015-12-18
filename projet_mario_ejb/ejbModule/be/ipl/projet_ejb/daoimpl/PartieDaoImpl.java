@@ -6,14 +6,13 @@ import java.util.Random;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
-import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
-import be.ipl.projet_ejb.domaine.Carte;
-import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
+import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
 
 @LocalBean
 @Stateless

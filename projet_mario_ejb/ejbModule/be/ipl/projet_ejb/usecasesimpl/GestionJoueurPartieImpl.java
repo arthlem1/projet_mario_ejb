@@ -14,7 +14,6 @@ import be.ipl.projet_ejb.daoimpl.JoueurPartieDaoImpl;
 import be.ipl.projet_ejb.daoimpl.PartieDaoImpl;
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.De;
-import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.InitDB;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
@@ -97,27 +96,25 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public List<Face> lancerDes(Joueur joueur, Partie partie) {
+	public String lancerDes(Joueur joueur, Partie partie) {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
 		System.out.println("Main Dés: "+jp.getMainsDe().size());
 		De de = deDao.rechercher(jp.getMainsDe().get(0));
-		List<Face> faces = de.getFace();
-		for (Face face : faces) {
-			System.out.println("faces : "+face.getFigure());
-		}
-		//List<Face> faces = initDB.getWazabi().getDe().getFace();
-		System.out.println("faces du dés: "+faces.size());
-		List<Face> lancers = new ArrayList<Face>();
-		int nbDesJoueur = nbDe(joueur, partie);
-		for (int i = 0; i < nbDesJoueur; i++) {
-			Random random = new Random();
-			Face face = faces.get(random.nextInt(5));
-			System.out.println(face.getIdentif());
-			lancers.add(face);
-		}
-		return lancers;
+		Random random = new Random();
+		int val = random.nextInt(7);
+		return valeurFace(de, val);
+	}
+
+	private String valeurFace(De de, int val) {
+		if(val <= 2){
+			de.setValeur("w");
+		}else if(val == 6){
+			de.setValeur("d");
+		}else
+			de.setValeur("c");
+		return de.getValeur();
 	}
 	
 	
@@ -143,39 +140,6 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 				partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
 			}
 		}
-	}
-
-	@Override
-	public int nbFaceDons(List<Face> liste) {
-		Util.checkObject(liste);
-		int compteur = 0;
-		for (Face face : liste) {
-			if (face.getIdentif() == "d")
-				compteur++;
-		}
-		return compteur;
-	}
-
-	@Override
-	public int nbFaceCartes(List<Face> liste) {
-		Util.checkObject(liste);
-		int compteur = 0;
-		for (Face face : liste) {
-			if (face.getIdentif() == "c")
-				compteur++;
-		}
-		return compteur;
-	}
-
-	@Override
-	public int nbFaceWasabi(List<Face> liste) {
-		Util.checkObject(liste);
-		int compteur = 0;
-		for (Face face : liste) {
-			if (face.getIdentif() == "w")
-				compteur++;
-		}
-		return compteur;
 	}
 
 	@Override

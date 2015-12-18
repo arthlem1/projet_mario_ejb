@@ -60,14 +60,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Face }
-     * 
-     */
-    public Face createFace() {
-        return new Face();
-    }
-
-    /**
      * Create an instance of {@link Carte.Figure }
      * 
      */

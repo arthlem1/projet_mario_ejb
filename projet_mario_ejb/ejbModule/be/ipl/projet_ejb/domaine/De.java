@@ -1,8 +1,6 @@
 package be.ipl.projet_ejb.domaine;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +12,6 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -66,9 +63,6 @@ public class De implements Serializable {
 	// @Enumerated
 	// private Face valeur = Face.MARIO;
 	//
-	@Transient
-	@XmlElement(required = true)
-	protected List<Face> face = new ArrayList<Face>();
 	@Transient
 	@XmlAttribute(name = "nbParJoueur", required = true)
 	protected int nbParJoueur;
@@ -146,13 +140,6 @@ public class De implements Serializable {
 	 * 
 	 * 
 	 */
-	public List<Face> getFace() {
-		return this.face;
-	}
-	
-	public void setFace(List<Face> face) {
-		this.face = face;
-	}
 
 	/**
 	 * Gets the value of the nbParJoueur property.

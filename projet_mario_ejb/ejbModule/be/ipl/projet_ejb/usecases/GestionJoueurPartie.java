@@ -5,9 +5,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 import be.ipl.projet_ejb.domaine.Carte;
-import be.ipl.projet_ejb.domaine.Face;
 import be.ipl.projet_ejb.domaine.Joueur;
-import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
@@ -55,7 +53,7 @@ public interface GestionJoueurPartie {
 	 * 
 	 * @return liste des dés lancés.
 	 */
-	List<Face> lancerDes(Joueur joueur, Partie partie);
+	String lancerDes(Joueur joueur, Partie partie);
 
 	/**
 	 * Méthode qui permet à un joueur (donneur) de donner ses dés à un autre
@@ -65,27 +63,6 @@ public interface GestionJoueurPartie {
 	 * @param receveur
 	 */
 	void donnerDe(Joueur donneur, Joueur receveur, int nbDes, Partie partie);
-
-	/**
-	 * @param liste
-	 *            des dés lancés par le joueur.
-	 * @return nombre de dés pouvant être donnés.
-	 */
-	int nbFaceDons(List<Face> liste);
-
-	/**
-	 * @param liste
-	 *            des dés lancés par le joueur.
-	 * @return nombre de dés pouvant permettre le tirage d'une carte.
-	 */
-	int nbFaceCartes(List<Face> liste);
-
-	/**
-	 * @param liste
-	 *            des dés lancés par le joueur
-	 * @return nombre de dés permettant l'utilisation d'une carte
-	 */
-	int nbFaceWasabi(List<Face> liste);
 
 	/**
 	 * Suppresion de dés pour le joueur
