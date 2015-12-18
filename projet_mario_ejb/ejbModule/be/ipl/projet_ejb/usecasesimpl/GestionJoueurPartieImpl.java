@@ -51,16 +51,15 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
-		List<Carte> pioche = partie.getPioche();
-		if (pioche.size() == 0) {
-			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
-			/*
-			 * TODO à discuter. Selon les consignes, si plus de carte dans la
-			 * pioche, prendre une carte dans la main d'un autre
-			 */
-		}
-		//TODO randomized?
-		Carte carte = pioche.remove(0);// premiere carte
+//		List<Carte> pioche = partie.getPioche();
+////		if (pioche.size() == 0) {
+////			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
+////			/*
+////			 * TODO à discuter. Selon les consignes, si plus de carte dans la
+////			 * pioche, prendre une carte dans la main d'un autre
+////			 */
+////		}
+		Carte carte = partieDao.piocher(partie);// premiere carte
 		joueurPartieDao.rajouterCarte(joueur, partie, carte);
 	}
 

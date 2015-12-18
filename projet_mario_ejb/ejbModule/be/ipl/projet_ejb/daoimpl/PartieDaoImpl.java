@@ -11,6 +11,9 @@ import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl;
+import be.ipl.projet_ejb.domaine.Carte;
+import be.ipl.projet_ejb.domaine.Face;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
 
 @LocalBean
 @Stateless
@@ -33,6 +36,17 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 		return enregistrer(new Partie(nom, createur));
 	}
 
+	public Carte piocher(Partie p) throws PiocheVideException{
+		List<Carte> pioche = p.getPioche();
+		if (pioche.size() == 0) {
+			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
+		}
+		Random random = new Random();
+		Carte c = pioche.get(random.nextInt(pioche.size()));
+		mettreAJour(p);
+		return c;		
+	}
+	
 	public boolean commencerPartie(Partie partie) {
 		try {
 			partie = rechercher(partie.getNom());
