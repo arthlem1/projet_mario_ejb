@@ -34,10 +34,10 @@ public class Joueur implements Serializable {
 	private String pseudo;
 	@NotNull
 	private String mdp;
-	
+
 	@OneToMany(mappedBy = "joueur", fetch = FetchType.EAGER)
 	private List<JoueurPartie> joueurParties = new ArrayList<>();
-	
+
 	protected Joueur() {
 
 	}
@@ -77,11 +77,11 @@ public class Joueur implements Serializable {
 	public String getPrenom() {
 		return prenom;
 	}
-	
+
 	public String getPseudo() {
 		return pseudo;
 	}
- 
+
 	public String getMdp() {
 		return mdp;
 	}
@@ -95,6 +95,10 @@ public class Joueur implements Serializable {
 		return "Joueur [id=" + id + ", prenom=" + prenom + ", pseudo=" + pseudo 
 				+ "]";
 	}
-	
-	
+
+	public boolean supprimer(JoueurPartie joueurPartie) {
+		return this.joueurParties.remove(joueurPartie);
+		
+	}
+
 }

@@ -36,7 +36,7 @@ public class Partie implements Serializable {
 	@Column(name = "PARTIE_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
- 
+
 	@NotNull
 	@Column(unique = true)
 	private String nom;
@@ -55,17 +55,17 @@ public class Partie implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dateHeureCreation;
 
-	@OneToMany(mappedBy = "partie", cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "partie", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	private List<JoueurPartie> listeJoueurs = new ArrayList<>();
 
 	@ManyToOne
 	@JoinColumn(name = "VAINQUEUR")
 	private Joueur vainqueur;
 
-	//@NotNull
-	//private int nbJoueur=0;
-	
-	@ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+	// @NotNull
+	// private int nbJoueur=0;
+
+	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = "PARTIE_CARTE", schema = "mario_ejb", joinColumns = { @JoinColumn(name = "PARTIE_ID") })
 	private List<Carte> pioche = new ArrayList<>();
 
@@ -105,14 +105,14 @@ public class Partie implements Serializable {
 		return true;
 	}
 
-	//public int getNbJoueur(){
-	//	return nbJoueur;
-	//}
-	
-	//public void setNbJoueur(int nb){
-	//	nbJoueur=nb;
-	//}
-	
+	// public int getNbJoueur(){
+	// return nbJoueur;
+	// }
+
+	// public void setNbJoueur(int nb){
+	// nbJoueur=nb;
+	// }
+
 	public int getId() {
 		return id;
 	}
@@ -139,7 +139,7 @@ public class Partie implements Serializable {
 
 	public List<Carte> getPioche() {
 		return pioche;
-	} 
+	}
 
 	public void setClockwise(boolean clockwise) {
 		this.clockwise = clockwise;
@@ -171,8 +171,10 @@ public class Partie implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Partie [id=" + id + ", nom=" + nom +" ]";
+		return "Partie [id=" + id + ", nom=" + nom + " ]";
 	}
 	
-	
+	public boolean supprimer(JoueurPartie joueurPartie){
+		return this.listeJoueurs.remove(joueurPartie);
+	}
 }

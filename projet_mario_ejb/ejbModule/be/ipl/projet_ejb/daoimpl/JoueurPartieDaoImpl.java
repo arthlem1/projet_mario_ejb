@@ -37,7 +37,8 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 
 	public int retirerDe(int joueurId, Partie p) {
 		JoueurPartie jp = getPlayer(joueurId, p.getId());
-		jp.getMainsDe().remove(jp.getMainsDe().size());
+		jp = recharger(jp.getId());
+		jp.getMainsDe().remove(0);
 		//mettreAJour(jp);
 		return jp.getMainsDe().size();
 	}
@@ -99,7 +100,10 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 	
 	public void supprimerJoueurPartie(int joueur, int partie){
-		super.supprimer(getPlayer(joueur, partie).getId());
+		JoueurPartie joueurPartie = getPlayer(joueur, partie);
+		joueurPartie = recharger(joueurPartie.getId());
+		supprimer(joueurPartie.getId());
+		
 	}
 	
 }

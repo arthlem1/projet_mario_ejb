@@ -29,7 +29,7 @@ public interface GestionJoueurPartie {
 	 * @param carte.//idem
 	 * @throws JoueurNonTrouveException
 	 */
-	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible) throws JoueurNonTrouveException;
+	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException;
 
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de Wasabis
@@ -39,7 +39,7 @@ public interface GestionJoueurPartie {
 	 * @return liste de toutes les cartes
 	 */
 	List<Carte> listerCartesUtilisables(int nbWasabi, Partie partie);
-	
+
 	boolean besoinCible(Carte carte);
 
 	/**
@@ -56,7 +56,7 @@ public interface GestionJoueurPartie {
 	 * 
 	 * @return liste des dés lancés.
 	 */
-	Map<String,Integer> lancerDes(Joueur joueur, Partie partie, int nbDes);
+	Map<String, Integer> lancerDes(Joueur joueur, Partie partie, int nbDes);
 
 	/**
 	 * Méthode qui permet à un joueur (donneur) de donner ses dés à un autre
@@ -88,19 +88,23 @@ public interface GestionJoueurPartie {
 
 	/**
 	 * Renvoie l'ordre du joueur
+	 * 
 	 * @param idJoueur
 	 * @param idPartie
 	 * @return
 	 */
 	public int ordreJoueur(int idJoueur, int idPartie);
-	
+
 	/**
 	 * récupère le nombre de dés que le joueur a dans sa main
-	 * @param j joueur
-	 * @param p partie
+	 * 
+	 * @param j
+	 *            joueur
+	 * @param p
+	 *            partie
 	 * @return nombre de dés dans sa main
 	 */
 	public int nbDe(Joueur j, Partie p);
-	
-	void supprimerJoueurPartie(Joueur joueur, Partie partie);
+
+	int supprimerJoueurPartie(Joueur joueur, Partie partie);
 }

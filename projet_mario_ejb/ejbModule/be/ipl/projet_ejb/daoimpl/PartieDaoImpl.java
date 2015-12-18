@@ -6,8 +6,6 @@ import java.util.Random;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import be.ipl.projet_ejb.domaine.Carte;
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.JoueurPartie;
@@ -157,7 +155,7 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 	public Partie getPartieInitiale() {
 		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
 		Partie p = recherche(query, GestionPartiesImpl.Etat.INITIAL);
-		p = recharger(p.getId());
+		//p = recharger(p.getId());
 		return p;
 	}
 

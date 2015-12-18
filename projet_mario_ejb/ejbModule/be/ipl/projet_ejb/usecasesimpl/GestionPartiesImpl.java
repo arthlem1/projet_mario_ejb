@@ -2,10 +2,8 @@ package be.ipl.projet_ejb.usecasesimpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.ejb.EJB;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
@@ -130,6 +128,7 @@ public class GestionPartiesImpl implements GestionParties {
 	@Override
 	public Partie changerSens(Partie partie) {
 		Util.checkObject(partie);
+		partie = partieDao.recharger(partie.getId());
 		partieDao.changerSens(partie);
 		return partie;
 	}
