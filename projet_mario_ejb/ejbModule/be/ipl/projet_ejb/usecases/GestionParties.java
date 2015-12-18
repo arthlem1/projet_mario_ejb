@@ -9,6 +9,7 @@ import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.MaxJoueursException;
 import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
 
 @Remote
 public interface GestionParties {
@@ -106,7 +107,7 @@ public interface GestionParties {
 	 * @param partie
 	 * @return
 	 */
-	Partie initialiserMainsCartes(Partie partie);
+	Partie initialiserMainsCartes(Partie partie) throws PiocheVideException;
 	
 	/**
 	 * initialise la main de dés des joueurs avec valeur du XML

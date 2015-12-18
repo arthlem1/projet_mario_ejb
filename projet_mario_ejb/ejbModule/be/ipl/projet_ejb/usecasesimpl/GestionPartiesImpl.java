@@ -22,6 +22,7 @@ import be.ipl.projet_ejb.domaine.Partie;
 import be.ipl.projet_ejb.exceptions.MaxJoueursException;
 import be.ipl.projet_ejb.exceptions.PartieDejaEnCoursException;
 import be.ipl.projet_ejb.exceptions.PasAssezDeJoueursException;
+import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.util.Util;
 
@@ -175,15 +176,13 @@ public class GestionPartiesImpl implements GestionParties {
 	}
 
 	@Override
-	public Partie initialiserMainsCartes(Partie partie) {
+	public Partie initialiserMainsCartes(Partie partie) throws PiocheVideException{
 		partie = partieDao.rechercher(partie.getNom());
-		List<Carte> cartes = carteDao.lister();
+		//List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 3; i++) {
-				Random random = new Random();
-				Carte carte = cartes.remove(random.nextInt(cartes.size()));
-				joueurPartie.getMainsCarte().add(carte);
+					joueurPartie.getMainsCarte().add(partieDao.piocher(partie));
 			}
 		}
 		return partieDao.mettreAJour(partie);
@@ -209,14 +208,18 @@ public class GestionPartiesImpl implements GestionParties {
 	
 	@Override
 	public Partie initialiserMainsDes(Partie partie) {
+		System.out.println("InitialiserMainDe");
 		partie = partieDao.rechercher(partie.getNom());
 		List<De> des = deDao.lister();
+		for (De de : des) {
+			System.out.println("ICI id dé "+de.getId());
+		}
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 4; i++) {
 				De de = des.remove(0);
 				de = deDao.initFaces(de);
-				//System.out.println("faces: "+de.getFace().size()); OK
+				System.out.println("faces du dé "+de.getId()+": "+de.getValeur()); 
 				joueurPartie.getMainsDe().add(de);
 				joueurPartieDaoImpl.mettreAJour(joueurPartie);
 			}
