@@ -64,7 +64,7 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 	private JoueurPartie tirerJoueurAuHasard(Partie partie) {
 		List<JoueurPartie> lesJoueurs = partie.getListeJoueurs();
 		Random random = new Random();
-		int nb = random.nextInt(lesJoueurs.size()) -1;
+		int nb = random.nextInt(lesJoueurs.size()-1);
 		return lesJoueurs.get(nb);
 	}
 	
@@ -75,13 +75,13 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			if(current.getOrdreJoueurs()==(partie.getListeJoueurs().size()+1)){
 				suivant=partie.getListeJoueurs().get(0);
 			}else{
-				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()+1));
+				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()));
 			}
 		}else{
 			if(current.getOrdreJoueurs()==1){
-				suivant=partie.getListeJoueurs().get((partie.getListeJoueurs().size()+1));
+				suivant=partie.getListeJoueurs().get((partie.getListeJoueurs().size()-1));
 			}else{
-				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()-1));
+				suivant=partie.getListeJoueurs().get((current.getOrdreJoueurs()-2));
 			}
 		}
 		Partie p = getPartieInitiale();
@@ -111,6 +111,8 @@ public class PartieDaoImpl extends DaoImpl<String, Partie> {
 			//partie.setNbJoueur((partie.getNbJoueur()+1));
 			mettreAJour(partie);
 		} catch (Exception e) {
+			System.out.println("fail ajouterJoueur");
+			e.printStackTrace();
 			return false;
 		}
 		return true;
