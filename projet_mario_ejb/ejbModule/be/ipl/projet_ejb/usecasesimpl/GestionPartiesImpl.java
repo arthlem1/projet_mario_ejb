@@ -180,9 +180,10 @@ public class GestionPartiesImpl implements GestionParties {
 		partie = partieDao.rechercher(partie.getNom());
 		//List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
-		for (JoueurPartie joueurPartie : joueurs) {
+		int nbJoueur=joueurs.size();
+		for (int y=0;y<nbJoueur;y++) {
 			for (int i = 0; i < 3; i++) {
-					joueurPartieDaoImpl.rajouterCarte(joueurPartie.getJoueur(),partie,partieDao.piocher(partie));
+					joueurPartieDaoImpl.rajouterCarte(joueurs.get(y).getJoueur(),partie,partieDao.piocher(partie));
 			}
 		} 
 		return partieDao.mettreAJour(partie);
