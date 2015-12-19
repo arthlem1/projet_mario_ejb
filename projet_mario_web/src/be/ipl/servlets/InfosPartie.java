@@ -14,26 +14,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import be.ipl.projet_ejb.domaine.Joueur;
+import be.ipl.projet_ejb.domaine.JoueurPartie;
 import be.ipl.projet_ejb.domaine.Partie;
-import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 import be.ipl.projet_ejb.usecases.GestionParties;
 import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl.Etat;
 
 /**
- * Servlet implementation class Join
+ * Servlet implementation class InfosPartie
  */
-@WebServlet("/Join")
-public class Join extends HttpServlet {
+@WebServlet("/InfosPartie")
+public class InfosPartie extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private GestionParties gestionParties;
+	@EJB
+	private GestionJoueurPartie gestionJoueurPartie;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Join() {
+	public InfosPartie() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -51,59 +55,61 @@ public class Join extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
 
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
 
+		Partie partieEnCours = gestionParties.getPartieEnCours();
+		
 		JSONObject jsonObject = new JSONObject();
 
-		Partie partie = gestionParties.getPartieInitiale();
+		if (partieEnCours != null) {
 
-		if (partie != null) {
+			JoueurPartie joueurCourant = partieEnCours.getJoueur_courant();
 
-			try {
-				if (gestionParties.ajouterJoueur(partie, joueur)) {
-					try {
-						session.setAttribute("partie", partie);
-						jsonObject.put("success", "1");
-						partie.setEtat(Etat.EN_COURS);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
+			boolean ton_tour = false;
+
+			if (joueur.getId() == joueurCourant.getJoueur().getId()) {
+
+				if (gestionJoueurPartie.lancerTour(joueur, partieEnCours)) {
+					// C'est à son tour
+					ton_tour = true;
 				} else {
+					ton_tour = false;
 					try {
-						jsonObject.put("success", "0");
-						jsonObject.put("message", "Impossible de rejoindre la partie");
+						jsonObject.put("message", "Vous avez été bloqué, vous ne pouvez pas jouer ce tour");
 					} catch (JSONException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					gestionParties.joueurSuivant(partieEnCours);
 				}
-			} catch (MaxJoueursException e) {
-
-				try {
-					jsonObject.put("success", "0");
-					jsonObject.put("message", e.getMessage());
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
 			}
 
-		} else {
 			try {
-				jsonObject.put("success", "2");
-				jsonObject.put("message", "Aucune partie en cours.");
+				jsonObject.put("joueur_courant", partieEnCours.getJoueur_courant().getOrdreJoueurs());
+				jsonObject.put("ton_tour", ton_tour);
+				jsonObject.put("etat", partieEnCours.getEtat());
+				if (partieEnCours.getEtat() == Etat.FINI) {
+					jsonObject.put("vainqueur", partieEnCours.getVainqueur().getPseudo());
+				}
 			} catch (JSONException e) {
-
 				e.printStackTrace();
 			}
-
+			
+			
+		}else{
+			try {
+				jsonObject.put("etat", "FINI");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		response.setContentType("application/json");
 		response.getWriter().write(jsonObject.toString());
-
+		
 	}
 
 }

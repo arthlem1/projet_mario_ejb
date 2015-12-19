@@ -1,6 +1,7 @@
 package be.ipl.servlets;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -15,25 +16,27 @@ import org.json.JSONObject;
 
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
-import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 import be.ipl.projet_ejb.usecases.GestionParties;
-import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl.Etat;
 
 /**
- * Servlet implementation class Join
+ * Servlet implementation class Lancer_des
  */
-@WebServlet("/Join")
-public class Join extends HttpServlet {
+@WebServlet("/Lancer_des")
+public class Lancer_des extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	@EJB
+	private GestionJoueurPartie gestionJoueurPartie;
 	@EJB
 	private GestionParties gestionParties;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Join() {
+	public Lancer_des() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -51,59 +54,35 @@ public class Join extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		HttpSession session = request.getSession();
 
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
 
-		JSONObject jsonObject = new JSONObject();
+		Partie partieEnCours = gestionParties.getPartieEnCours();
 
-		Partie partie = gestionParties.getPartieInitiale();
+		int ordre = gestionJoueurPartie.ordreJoueur(joueur.getId(), partieEnCours.getId());
 
-		if (partie != null) {
+		int nbDes = partieEnCours.getListeJoueurs().get(ordre-1).getMainsDe().size();
 
-			try {
-				if (gestionParties.ajouterJoueur(partie, joueur)) {
-					try {
-						session.setAttribute("partie", partie);
-						jsonObject.put("success", "1");
-						partie.setEtat(Etat.EN_COURS);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						jsonObject.put("success", "0");
-						jsonObject.put("message", "Impossible de rejoindre la partie");
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			} catch (MaxJoueursException e) {
+		Map<String, Integer> map = gestionJoueurPartie.lancerDes(joueur, partieEnCours, nbDes);
+		
+		session.setAttribute("nb_w", map.get("w"));
 
-				try {
-					jsonObject.put("success", "0");
-					jsonObject.put("message", e.getMessage());
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			}
+		JSONObject resultat = new JSONObject();
+		
+		System.out.println("passage de la lancer dés");
 
-		} else {
-			try {
-				jsonObject.put("success", "2");
-				jsonObject.put("message", "Aucune partie en cours.");
-			} catch (JSONException e) {
-
-				e.printStackTrace();
-			}
-
+		try {
+			resultat.put("nb_w", map.get("w"));
+			resultat.put("nb_d", map.get("d"));
+			resultat.put("nb_c", map.get("c"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		response.setContentType("application/json");
-		response.getWriter().write(jsonObject.toString());
-
+		response.getWriter().write(resultat.toString());
 	}
 
 }

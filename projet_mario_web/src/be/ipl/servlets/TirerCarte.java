@@ -19,6 +19,7 @@ import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.usecases.GestionCartes;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
 import be.ipl.projet_ejb.usecases.GestionParties;
+import be.ipl.projet_ejb.domaine.Carte;
 
 /**
  * Servlet implementation class TirerCarte
@@ -66,12 +67,22 @@ public class TirerCarte extends HttpServlet {
 		JSONObject resultat = new JSONObject();
 
 		try {
-			gestionJoueurPartie.tirerUneCarte(partieEnCours, joueur);
+			partieEnCours = gestionJoueurPartie.tirerUneCarte(partieEnCours, joueur);
 			int ordre = gestionJoueurPartie.ordreJoueur(joueur.getId(), partieEnCours.getId());
 			System.out.println("NB_CARTES " + partieEnCours.getListeJoueurs().get(ordre - 1).getMainsCarte().size());
 
+			JSONObject carte = new JSONObject();
+
 			try {
 				resultat.put("success", "1");
+				Carte tmpCarte = partieEnCours.getJoueur_courant().getMainsCarte()
+						.get(partieEnCours.getJoueur_courant().getMainsCarte().size() - 1);
+				carte.put("id", tmpCarte.getId());
+				carte.put("interaction", gestionJoueurPartie.besoinCible(tmpCarte));
+				carte.put("codeEffet", tmpCarte.getCodeEffet());
+				carte.put("description", gestionCartes.descriptionCarte(tmpCarte.getCodeEffet()));
+				carte.put("cout", tmpCarte.getCout());
+				resultat.put("carte", carte);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

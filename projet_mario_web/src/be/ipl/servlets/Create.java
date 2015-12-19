@@ -29,8 +29,8 @@ import be.ipl.projet_ejb.usecases.GestionParties;
 @WebServlet("/Create")
 public class Create extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private static final int TEMPS = 30000;
+
+	private static final int TEMPS = 15000;
 
 	@EJB
 	private GestionParties gestionPartie;
@@ -65,8 +65,6 @@ public class Create extends HttpServlet {
 
 		JSONObject jsonObject = new JSONObject();
 
-		
-
 		try {
 			partie = gestionPartie.creerPartie(nom, joueur);
 			try {
@@ -81,10 +79,11 @@ public class Create extends HttpServlet {
 
 				@Override
 				public void run() {
-					
+
 					try {
 						gestionPartie.commencerPartie(partie);
 						partie = gestionPartie.initialiserPioche(partie);
+						System.out.println("SIZE PIOCHE " + partie.getPioche().size());
 						try {
 							partie = gestionPartie.initialiserMainsCartes(partie);
 						} catch (PiocheVideException e) {
@@ -93,10 +92,10 @@ public class Create extends HttpServlet {
 						}
 						partie = gestionPartie.initialiserMainsDes(partie);
 					} catch (PasAssezDeJoueursException e) {
-						
+
 						System.out.println("pas assez de joueurs");
 					}
-					
+
 				}
 			};
 			timer.schedule(task, TEMPS);

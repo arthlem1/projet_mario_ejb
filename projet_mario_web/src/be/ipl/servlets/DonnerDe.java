@@ -15,25 +15,30 @@ import org.json.JSONObject;
 
 import be.ipl.projet_ejb.domaine.Joueur;
 import be.ipl.projet_ejb.domaine.Partie;
-import be.ipl.projet_ejb.exceptions.MaxJoueursException;
+import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
+import be.ipl.projet_ejb.usecases.GestionJoueurs;
 import be.ipl.projet_ejb.usecases.GestionParties;
-import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl.Etat;
 
 /**
- * Servlet implementation class Join
+ * Servlet implementation class DonnerDe
  */
-@WebServlet("/Join")
-public class Join extends HttpServlet {
+@WebServlet("/DonnerDe")
+public class DonnerDe extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
+	private GestionJoueurPartie gestionJoueurPartie;
+	@EJB
 	private GestionParties gestionParties;
+	@EJB
+	private GestionJoueurs gestionJoueurs;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Join() {
+	public DonnerDe() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -56,53 +61,32 @@ public class Join extends HttpServlet {
 
 		Joueur joueur = (Joueur) session.getAttribute("joueur");
 
-		JSONObject jsonObject = new JSONObject();
+		Partie partieEnCours = gestionParties.getPartieEnCours();
 
-		Partie partie = gestionParties.getPartieInitiale();
+		String pseudo = request.getParameter("pseudo");
 
-		if (partie != null) {
-
+		Joueur receveur = gestionJoueurs.rechercher(pseudo);
+		JSONObject resultat = new JSONObject();
+		
+		if (receveur != null) {
+			gestionJoueurPartie.donnerDe(joueur, receveur, 1, partieEnCours);
 			try {
-				if (gestionParties.ajouterJoueur(partie, joueur)) {
-					try {
-						session.setAttribute("partie", partie);
-						jsonObject.put("success", "1");
-						partie.setEtat(Etat.EN_COURS);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						jsonObject.put("success", "0");
-						jsonObject.put("message", "Impossible de rejoindre la partie");
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			} catch (MaxJoueursException e) {
-
-				try {
-					jsonObject.put("success", "0");
-					jsonObject.put("message", e.getMessage());
-				} catch (JSONException e1) {
-					e1.printStackTrace();
-				}
-				e.printStackTrace();
-			}
-
-		} else {
-			try {
-				jsonObject.put("success", "2");
-				jsonObject.put("message", "Aucune partie en cours.");
+				resultat.put("success", 1);
 			} catch (JSONException e) {
-
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+		}else{
+			try {
+				resultat.put("success", 0).put("message", "joueur inexistant");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
+		
 		response.setContentType("application/json");
-		response.getWriter().write(jsonObject.toString());
+		response.getWriter().write(resultat.toString());
 
 	}
 

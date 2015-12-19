@@ -66,11 +66,32 @@ public class Init_partie extends HttpServlet {
 		JSONObject partie = new JSONObject();
 
 		JSONArray mes_cartes = new JSONArray();
+		JSONArray joueurs = new JSONArray();
+		
+		partieEnCours.getListeJoueurs().forEach(j->{
+			if(j.getJoueur().getId() != joueur.getId()){
+				JSONObject jo = new JSONObject();
+				try {
+					jo.put("id", j.getJoueur().getId());
+					jo.put("pseudo", j.getJoueur().getPseudo());
+					jo.put("ordre", j.getOrdreJoueurs());
+					jo.put("nb_de", j.getMainsDe().size());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				joueurs.put(jo);
+				
+			}
+		});
 
+		partieEnCours = gestionParties.getPartieEnCours();
+		
 		try {
+			System.out.println("TAILLE PIOCHE " + partieEnCours.getPioche().size());
 			partie.put("pioche", partieEnCours.getPioche().size());
 			partie.put("nb_joueur", partieEnCours.getListeJoueurs().size());
-
+			partie.put("joueurs", joueurs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,7 +102,9 @@ public class Init_partie extends HttpServlet {
 			JSONObject card = new JSONObject();
 			try {
 				card.put("id", carte.getId());
-				card.put("codeEffet", gestionCartes.descriptionCarte(carte.getCodeEffet()));
+				card.put("interaction", gestionJoueurPartie.besoinCible(carte));
+				card.put("codeEffet", carte.getCodeEffet());
+				card.put("description", gestionCartes.descriptionCarte(carte.getCodeEffet()));
 				card.put("cout", carte.getCout());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -111,7 +134,7 @@ public class Init_partie extends HttpServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		
+
 		response.setContentType("application/json");
 		response.getWriter().write(partie.toString());
 
