@@ -128,4 +128,6 @@ public interface GestionParties {
 	 * @return
 	 */
 	Partie initialiserMainsDes(Partie partie);
+	
+	String recupererVainqueurDernierePartie();
 }

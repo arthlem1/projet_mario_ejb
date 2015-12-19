@@ -223,4 +223,9 @@ public class GestionPartiesImpl implements GestionParties {
 
 		return partie;
 	}
+
+	@Override
+	public String recupererVainqueurDernierePartie() {
+		return partieDao.getVainqueurDernierePartie();
+	}
 }

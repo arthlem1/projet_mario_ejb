@@ -147,6 +147,14 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 			p = recharger(p.getId());
 		return p;
 	}
+	
+	public String getVainqueurDernierePartie(){
+		String query = "SELECT MAX(p.id) FROM Partie p WHERE p.etat = ?1";
+		Partie p = recherche(query, GestionPartiesImpl.Etat.FINI);
+		if(p != null)
+			p = recharger(p.getId());
+		return p.getVainqueur().getPseudo();
+	}
 
 	public Carte piocher(JoueurPartie joueurPartie) throws PiocheVideException {
 		List<Carte> pioche = joueurPartie.getPartie().getPioche();
