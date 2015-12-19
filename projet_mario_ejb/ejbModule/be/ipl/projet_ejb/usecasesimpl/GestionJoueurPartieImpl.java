@@ -173,6 +173,7 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 			JoueurPartie joueurCourant = joueurPartieDao.recharger(partie.getJoueur_courant().getId());
 			if (joueurPartieDao.retirerDe(joueurCourant.getJoueur().getId(), partie) == 0) {
 				partie.setVainqueur(joueurDao.rechercher(partie.getJoueur_courant().getJoueur().getId()));
+				partie.setEtat(GestionPartiesImpl.Etat.FINI);
 			}
 		}
 	}
