@@ -39,4 +39,15 @@ jQuery(document).ready(function() {
 		});
 	}
 	
+	$("#quitter").click(function(){
+		console.log("ici");
+		$.ajax({
+			url:"Quitter_salle_attente"
+		}).done(function(data){
+			window.location.href ="menu.html";
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			alert("error : " + errorThrown);
+		});
+	});
+	
 });

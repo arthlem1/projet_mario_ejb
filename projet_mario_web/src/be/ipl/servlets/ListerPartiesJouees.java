@@ -59,19 +59,28 @@ public class ListerPartiesJouees extends HttpServlet {
 		JSONArray jsonArray = new JSONArray();
 
 		if (parties != null) {
+
 			parties.forEach(partie -> {
 				JSONObject jsonObject = new JSONObject();
+				String pseudo = "Néant";
+				if (partie.getVainqueur() != null) {
+					pseudo = partie.getVainqueur().getPseudo();
+				}
+				int nb = 0;
+				if (partie.getListeJoueurs() != null) {
+					nb = partie.getListeJoueurs().size();
+				}
+
 				try {
 					jsonObject.put("nom", partie.getNom());
-					jsonObject.put("vainqueur", partie.getVainqueur().getPseudo());
-					jsonObject.put("nb_joueur", partie.getListeJoueurs().size());
-					jsonObject.put("date", partie.getDateHeureCreation().toString());
+					jsonObject.put("vainqueur", pseudo);
+					jsonObject.put("nb_joueur", nb);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				System.out.println(jsonObject.toString());
 				jsonArray.put(jsonObject);
-				
+
 			});
 			response.setContentType("application/json");
 			System.out.println(jsonArray.toString());

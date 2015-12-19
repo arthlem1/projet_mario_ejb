@@ -1,13 +1,25 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/plateau.js"></script>
+<script src="assets/js/notiny.min.js"></script>
 <link rel="stylesheet" href="assets/css/plateau.css">
 <link rel="stylesheet" href="assets/css/cards.css">
 <title>Plateau de jeu</title>
 </head>
 <body>
+
+<div class="zone_selection">
+
+</div>
+
+<div class="menu_plateau">
+<button id="quit" class="btn btn-danger">Quitter la partie</button>
+<button id="lancer_des" class="lancer_des btn btn-primary">Lancer dés</button>
+<button id="passer_tour" class="btn btn-success">Passer le tour</button>
+</div>
+
 	<div class="plateau">
 
-		<div id="1" class="container-joueur-left">
+		<div id="j1" class="container-joueur-left">
 			<div class="playingCards ">
 				<ul class="hand">
 					
@@ -15,7 +27,7 @@
 			</div>
 		</div>
 
-		<div id="2" class="container-joueur-top-left">
+		<div id="j2" class="container-joueur-top-left">
 			<div class="playingCards ">
 				<ul class="hand">
 					
@@ -23,7 +35,7 @@
 			</div>
 		</div>
 
-		<div id="3" class="container-joueur-top">
+		<div id="j3" class="container-joueur-top">
 			<div class="playingCards ">
 				<ul class="hand">
 					
@@ -31,7 +43,7 @@
 			</div>
 		</div>
 
-		<div id="4" class="container-joueur-top-right">
+		<div id="j4" class="container-joueur-top-right">
 			<div class="playingCards ">
 				<ul class="hand">
 					
@@ -39,7 +51,7 @@
 			</div>
 		</div>
 
-		<div id="5" class="container-joueur-right">
+		<div id="j5" class="container-joueur-right">
 			<div class="playingCards ">
 				<ul class="hand">
 					
@@ -62,7 +74,9 @@
 				</div>
 			</div>
 
-			<div class="result-de">résultat dés</div>
+			<div id="result_de" class="result-de"></div>
 		</div>
+		
+		
 
 	</div>

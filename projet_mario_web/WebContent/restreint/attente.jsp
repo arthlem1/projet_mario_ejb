@@ -20,6 +20,8 @@
 				<div id="result">
 					<ol id="liste_joueur"></ol>
 				</div>
+				
+				<button id="quitter" class="btn menu-btn btn-danger">Quitter la salle d'attente</button>
 
 			</div>
 		</div>

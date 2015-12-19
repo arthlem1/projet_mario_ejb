@@ -172,6 +172,7 @@ jQuery(document).ready(function() {
     	switch(id){
     	case "create-btn":
     		$("#create").slideToggle("slow");
+    		$('#form-game-name').focus();
     		break;
     	case "list-btn":
     		$("#list").slideToggle("slow");
@@ -180,10 +181,13 @@ jQuery(document).ready(function() {
     		}).done(function(data){
     			var liste = $("#parties-results");
     			liste.empty();
+    			var table = $('<table class="table"></table>');
+    			table.append("<tr><td>Nom</td><td>Vainqueur</td><td>Nombre joueurs</td></tr>");
     			jQuery.each(data, function(index, item){
-    				console.log(item.nom);
-    				liste.append("<p>"+item.nom+"</p>");
+    				var ligne = $('<tr><td>'+item.nom+'</td><td>'+item.vainqueur+'</td><td>'+item.nb_joueur+'</td></tr>');
+    				table.append(ligne);
     			});
+    			liste.append(table);
     		}).fail(function(jqXHR, textStatus, errorThrown){
     			alert(errorThrown);
     		});

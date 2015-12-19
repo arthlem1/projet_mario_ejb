@@ -67,76 +67,77 @@ public class Init_partie extends HttpServlet {
 
 		JSONArray mes_cartes = new JSONArray();
 		JSONArray joueurs = new JSONArray();
-		
-		partieEnCours.getListeJoueurs().forEach(j->{
-			if(j.getJoueur().getId() != joueur.getId()){
-				JSONObject jo = new JSONObject();
-				try {
-					jo.put("id", j.getJoueur().getId());
-					jo.put("pseudo", j.getJoueur().getPseudo());
-					jo.put("ordre", j.getOrdreJoueurs());
-					jo.put("nb_de", j.getMainsDe().size());
-				} catch (Exception e) {
-					e.printStackTrace();
+		if (partieEnCours != null) {
+			partieEnCours.getListeJoueurs().forEach(j -> {
+				if (j.getJoueur().getId() != joueur.getId()) {
+					JSONObject jo = new JSONObject();
+					try {
+						jo.put("id", j.getJoueur().getId());
+						jo.put("pseudo", j.getJoueur().getPseudo());
+						jo.put("ordre", j.getOrdreJoueurs());
+						jo.put("nb_de", j.getMainsDe().size());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+					joueurs.put(jo);
+
 				}
-				
-				joueurs.put(jo);
-				
-			}
-		});
+			});
 
-		partieEnCours = gestionParties.getPartieEnCours();
-		
-		try {
-			System.out.println("TAILLE PIOCHE " + partieEnCours.getPioche().size());
-			partie.put("pioche", partieEnCours.getPioche().size());
-			partie.put("nb_joueur", partieEnCours.getListeJoueurs().size());
-			partie.put("joueurs", joueurs);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			partieEnCours = gestionParties.getPartieEnCours();
 
-		int ordre = gestionJoueurPartie.ordreJoueur(joueur.getId(), partieEnCours.getId());
-
-		partieEnCours.getListeJoueurs().get(ordre - 1).getMainsCarte().forEach(carte -> {
-			JSONObject card = new JSONObject();
 			try {
-				card.put("id", carte.getId());
-				card.put("interaction", gestionJoueurPartie.besoinCible(carte));
-				card.put("codeEffet", carte.getCodeEffet());
-				card.put("description", gestionCartes.descriptionCarte(carte.getCodeEffet()));
-				card.put("cout", carte.getCout());
+				System.out.println("TAILLE PIOCHE " + partieEnCours.getPioche().size());
+				partie.put("pioche", partieEnCours.getPioche().size());
+				partie.put("nb_joueur", partieEnCours.getListeJoueurs().size());
+				partie.put("joueurs", joueurs);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			mes_cartes.put(card);
-		});
 
-		JSONArray nombreCarteAutresJoueurs = new JSONArray();
+			int ordre = gestionJoueurPartie.ordreJoueur(joueur.getId(), partieEnCours.getId());
 
-		partieEnCours.getListeJoueurs().forEach(joueurpartie -> {
-			if (joueurpartie.getJoueur().getId() != joueur.getId()) {
-				JSONObject jsonObject = new JSONObject();
+			partieEnCours.getListeJoueurs().get(ordre - 1).getMainsCarte().forEach(carte -> {
+				JSONObject card = new JSONObject();
 				try {
-					jsonObject.put("nb_cartes", joueurpartie.getMainsCarte().size());
-					nombreCarteAutresJoueurs.put(jsonObject);
+					card.put("id", carte.getId());
+					card.put("interaction", gestionJoueurPartie.besoinCible(carte));
+					card.put("codeEffet", carte.getCodeEffet());
+					card.put("description", gestionCartes.descriptionCarte(carte.getCodeEffet()));
+					card.put("cout", carte.getCout());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				mes_cartes.put(card);
+			});
 
+			JSONArray nombreCarteAutresJoueurs = new JSONArray();
+
+			partieEnCours.getListeJoueurs().forEach(joueurpartie -> {
+				if (joueurpartie.getJoueur().getId() != joueur.getId()) {
+					JSONObject jsonObject = new JSONObject();
+					try {
+						jsonObject.put("nb_cartes", joueurpartie.getMainsCarte().size());
+						nombreCarteAutresJoueurs.put(jsonObject);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			});
+
+			try {
+				partie.put("nb_des", gestionJoueurPartie.nbDe(joueur, partieEnCours));
+				partie.put("mes_cartes", mes_cartes);
+				partie.put("nb_cartes_autres", nombreCarteAutresJoueurs);
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		});
 
-		try {
-			partie.put("nb_des", gestionJoueurPartie.nbDe(joueur, partieEnCours));
-			partie.put("mes_cartes", mes_cartes);
-			partie.put("nb_cartes_autres", nombreCarteAutresJoueurs);
-		} catch (JSONException e) {
-			e.printStackTrace();
+			response.setContentType("application/json");
+			response.getWriter().write(partie.toString());
 		}
-
-		response.setContentType("application/json");
-		response.getWriter().write(partie.toString());
 
 	}
 

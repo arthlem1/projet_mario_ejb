@@ -2,7 +2,7 @@
 </head>
 <body>
 
-	<button id="deconnexion" class="btn deco">Se déconnecter</button>
+	<button id="deconnexion" class="btn btn-warning deco">Se déconnecter</button>
 
 	<div id="menu" class="menu-container">
 
@@ -14,13 +14,13 @@
 			</div>
 			<div class="form-bottom">
 
-				<button id="create-btn" class="btn menu-btn show_sub_menu">Créer une partie</button>
+				<button id="create-btn" class="btn btn-primary menu-btn show_sub_menu">Créer une partie</button>
 				<br />
 				<br />
-				<button id="join-btn" class="btn menu-btn">Rejoindre une partie</button>
+				<button id="join-btn" class="btn btn-primary menu-btn">Rejoindre une partie</button>
 				<br />
 				<br />
-				<button id="list-btn" class="btn menu-btn show_sub_menu">Historique des parties</button>
+				<button id="list-btn" class="btn btn-primary menu-btn show_sub_menu">Historique des parties</button>
 			</div>
 		</div>
 
@@ -44,7 +44,7 @@
 						type="text" name="form-game-name" placeholder="Nom de la partie..."
 						class="form-game-name form-control" id="form-game-name">
 				</div>
-				<button id="create_game" class="btn menu-btn">Créer une partie</button>
+				<button id="create_game" class="btn btn-primary menu-btn">Créer une partie</button>
 
 			</div>
 		</div>

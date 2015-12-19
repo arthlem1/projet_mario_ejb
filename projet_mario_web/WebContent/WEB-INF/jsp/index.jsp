@@ -34,7 +34,7 @@
 											placeholder="Mot de passe..."
 											class="form-password form-control" id="form-password">
 									</div>
-									<button type="submit" class="btn">Se connecter!</button>
+									<button type="submit" class="btn btn-primary">Se connecter!</button>
 
 
 								</form>
@@ -81,7 +81,7 @@
 											id="form-password-register">
 									</div>
 
-									<button type="submit" class="btn">S'inscrire!</button>
+									<button type="submit" class="btn btn-primary">S'inscrire!</button>
 
 
 								</form>

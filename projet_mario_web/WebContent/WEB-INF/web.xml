@@ -59,13 +59,14 @@
     <servlet-name>plateau.html</servlet-name>
     <url-pattern>/plateau.html</url-pattern>
   </servlet-mapping>
+  
   <servlet>
-    <servlet-name>test.html</servlet-name>
-    <jsp-file>/WEB-INF/jsp/test.jsp</jsp-file>
+    <servlet-name>partieterminee.html</servlet-name>
+    <jsp-file>/restreint/partieterminee.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
-    <servlet-name>test.html</servlet-name>
-    <url-pattern>/test.html</url-pattern>
+    <servlet-name>partieterminee.html</servlet-name>
+    <url-pattern>/partieterminee.html</url-pattern>
   </servlet-mapping>
   <session-config>
     <cookie-config>
