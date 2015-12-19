@@ -42,7 +42,7 @@ public class GestionPartiesImpl implements GestionParties {
 	@EJB
 	private DeDaoImpl deDao;
 
-	private static int ordreJoueur = 2;
+	private static int ordreJoueur;
 
 	public enum Etat {
 		INITIAL {
@@ -106,6 +106,7 @@ public class GestionPartiesImpl implements GestionParties {
 		if (partie != null && partie.getEtat() == Etat.EN_COURS) {
 			throw new PartieDejaEnCoursException("Impossible de cr�er une partie, une autre est d�j� en cours");
 		}
+		ordreJoueur = 2;
 		partie = partieDao.creerPartie(nom, createur);
 		System.out.println("ID PARTIE " + partie.getId());
 		// partie.getEtat().ajouterJoueur(createur, partie, this);
