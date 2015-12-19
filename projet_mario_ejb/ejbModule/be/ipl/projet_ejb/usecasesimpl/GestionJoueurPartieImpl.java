@@ -158,9 +158,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		donneur = joueurDao.recharger(donneur.getId());
 		receveur = joueurDao.recharger(receveur.getId());
 		joueurPartieDao.transfererDe(donneur, receveur, nbDes, partie);
-		// if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
-		// partie.setVainqueur(joueurDaoImpl.rechercher(partie.getJoueur_courant().getJoueur().getId()));
-		// }
+		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
+			partie.setVainqueur(joueurDao.rechercher(partie.getJoueur_courant().getJoueur().getId()));
+			partie.setEtat(GestionPartiesImpl.Etat.FINI);
+		}
 	}
 
 	@Override
