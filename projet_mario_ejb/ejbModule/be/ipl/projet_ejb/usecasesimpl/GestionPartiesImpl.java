@@ -183,7 +183,7 @@ public class GestionPartiesImpl implements GestionParties {
 		for (JoueurPartie joueurPartie : joueurs) {
 			System.out.println("ajouter carte joueur "+joueurPartie.getJoueur().getPseudo());
 			for (int i = 0; i < 3; i++) {
-				Carte carte =partieDao.piocher(partie);
+				Carte carte =partieDao.piocher(joueurPartie);
 				joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
 			}
 		}

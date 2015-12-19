@@ -145,9 +145,8 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		return p;
 	}
 
-	public Carte piocher(Partie p) throws PiocheVideException {
-		p=recharger(p.getId());
-		List<Carte> pioche = p.getPioche();
+	public Carte piocher(JoueurPartie joueurPartie) throws PiocheVideException {
+		List<Carte> pioche = joueurPartie.getPartie().getPioche();
 		if (pioche.size() == 0) {
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
 		}

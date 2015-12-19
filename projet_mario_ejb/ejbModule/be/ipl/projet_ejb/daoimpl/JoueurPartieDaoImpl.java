@@ -75,7 +75,7 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	}
 
 	public boolean rajouterCarte(JoueurPartie joueurPartie, Carte c) {
-		joueurPartie = rechercher(joueurPartie.getId());
+		//joueurPartie = rechercher(joueurPartie.getId());
 		if (joueurPartie.getMainsCarte().contains(c))
 			return false;
 		joueurPartie.getMainsCarte().add(c);

@@ -61,8 +61,8 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(partie);
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDao.recharger(joueur.getId());
-		Carte carte = partieDao.piocher(partie);// premiere carte
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
+		Carte carte = partieDao.piocher(joueurPartie);
 		joueurPartieDao.rajouterCarte(joueurPartie, carte);
 		return partie;
 	}
