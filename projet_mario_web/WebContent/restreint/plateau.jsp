@@ -17,7 +17,8 @@
 <button id="passer_tour" class="btn btn-success">Passer le tour</button>
 </div>
 
-	<div class="plateau">
+
+<div class="info"></div>
 
 		<div id="j1" class="container-joueur-left">
 			<div class="playingCards ">
@@ -78,5 +79,3 @@
 		</div>
 		
 		
-
-	</div>

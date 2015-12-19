@@ -83,7 +83,6 @@ public class ListerPartiesJouees extends HttpServlet {
 
 			});
 			response.setContentType("application/json");
-			System.out.println(jsonArray.toString());
 			response.getWriter().write(jsonArray.toString());
 			return;
 		} else {

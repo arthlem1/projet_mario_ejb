@@ -99,7 +99,6 @@ public class WaitingPlayerList extends HttpServlet {
 		jsonArray.put(listeJoueursJson);
 
 		response.setContentType("application/json");
-		System.out.println(jsonArray.toString());
 		response.getWriter().write(jsonArray.toString());
 	}
 

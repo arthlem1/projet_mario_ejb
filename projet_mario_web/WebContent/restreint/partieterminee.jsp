@@ -1,4 +1,5 @@
 <title>Partie terminée</title>
+<script type="text/javascript" src="js/jquery.js"></script>
 <script src="assets/js/fin.js"></script>
 </head>
 <body>
@@ -12,7 +13,7 @@
 			</div>
 			<div class="form-bottom">
 
-				<div id="result"></div>
+				<div id="result">Partie terminée</div>
 				
 				<button id="terminer" class="btn btn-primary menu-btn">Retour au menu principal</button>
 				

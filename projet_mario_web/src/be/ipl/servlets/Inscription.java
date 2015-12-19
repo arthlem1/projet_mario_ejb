@@ -56,22 +56,13 @@ public class Inscription extends HttpServlet {
 		String pseudo = request.getParameter("pseudo");
 		String mdp = request.getParameter("mdp");
 
-		System.out.println(prenom + " " + pseudo + " " + mdp);
 
 		Map<String, Object> config = new HashMap<String, Object>();
 		config.put("javax.json.stream.JsonGenerator.prettyPrinting", Boolean.valueOf(true));
 		JsonBuilderFactory factory = Json.createBuilderFactory(config);
 		JsonObject value;
 
-//		Joueur joueur = gestionJoueurs.rechercher(pseudo);
-//		if (joueur != null) {
-//			String message = "Ce pseudo est déjà utilisé. Veuillez en utiliser un autre S.V.P.";
-//
-//			value = factory.createObjectBuilder().add("success", "0").add("message", message).build();
-//			response.setContentType("application/json");
-//			response.getWriter().write(value.toString());
-//			return;
-//		}
+
 		try {
 			gestionJoueurs.creerJoueur(prenom, pseudo, mdp);
 		} catch (JoueurDejaExistantException e) {

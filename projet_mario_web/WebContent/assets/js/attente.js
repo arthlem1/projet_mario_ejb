@@ -13,11 +13,9 @@ jQuery(document).ready(function() {
 		$.ajax({
 			url:"WaitingPlayerList"
 		}).done(function(data){
-			console.log(data[0].etat);
 						
 			switch(data[0].etat){
 			case "INITIAL":
-				console.log("ici");
 				var liste = $('#liste_joueur');
 				liste.empty();
 				jQuery.each(data[1], function(index, item){
@@ -40,7 +38,6 @@ jQuery(document).ready(function() {
 	}
 	
 	$("#quitter").click(function(){
-		console.log("ici");
 		$.ajax({
 			url:"Quitter_salle_attente"
 		}).done(function(data){

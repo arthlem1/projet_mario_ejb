@@ -59,7 +59,6 @@ public class PasserTour extends HttpServlet {
 		
 		gestionParties.joueurSuivant(partieEnCours);
 		
-		//TODO Renvoyer que le tour est bien passé et afficher un petit message à l'utilisateur
 		
 	}
 

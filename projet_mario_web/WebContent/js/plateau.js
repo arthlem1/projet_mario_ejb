@@ -13,7 +13,6 @@ function init_plateau(theurl) {
 			})
 			.done(
 					function(data) {
-						console.log(data);
 						var pioche = $("#pioche");
 						for (var i = 0; i < data.pioche; i++) {
 							var divTmp = '<li><div onClick="tirerCarte()" class="tirable card back no-shadow">*</div></li>';
@@ -72,7 +71,6 @@ function init_plateau(theurl) {
 
 function selection(pseudo) {
 	selectionJoueur = pseudo;
-	console.log(pseudo);
 }
 
 function emptyDiv() {
@@ -241,7 +239,7 @@ function appelJouerCarte(id, cible) {
 			tour = false;
 			$("#passer_tour").addClass("disabled");
 		} else {
-			$.notiny({text: data.message, theme: 'error'});
+			setMessage(data.message);
 		}
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert("error : " + errorThrown);
@@ -275,14 +273,14 @@ function jouerCarte(id, interaction) {
 					}
 				
 			} else {
-				$.notiny({text: "Vous devez d'abord donner vos dés", theme: 'error'});
+				setMessage( "Vous devez d'abord donner vos dés");
 			}
 		} else {
-			$.notiny({text: "Vous n'avez pas lancé les dés", theme: 'error'});
+			setMessage( "Vous n'avez pas lancé les dés");
 		}
 
 	} else {
-		$.notiny({text: "Ce n'est pas votre tour", theme: 'error'});
+		setMessage( "Ce n'est pas votre tour");
 	}
 
 }
@@ -367,18 +365,23 @@ function tirerCarte() {
 													+ '</div></a></li>');
 
 								} else {
-									$.notiny({text: data.message, theme: 'error'});
+									setMessage( data.message);
 								}
 							}).fail(function(jqXHR, textStatus, errorThrown) {
 						alert("error : " + errorThrown);
 					});
 			nb_pioche--;
 		} else {
-			$.notiny({text: "Vous ne pouvez plus piocher", theme: 'error'});
+			setMessage( "Vous ne pouvez plus piocher");
 		}
 	} else {
-		$.notiny({text: "Ce n'est pas votre tour", theme: 'error'});
+		setMessage("Ce n'est pas votre tour");
 	}
+}
+
+
+function setMessage(message){
+	$('.info').text(message);
 }
 
 function infos() {
@@ -398,14 +401,16 @@ function infos() {
 				$("#passer_tour").removeClass("disabled");
 				tour = true;
 				de_lance = false;
-				$.notiny({text: "C'est votre tour", theme: 'success'});
+				setMessage("C'est votre tour");
 			} else {
 				tour = false;
 				$("#lancer_des").addClass("disabled");
 				$("#passer_tour").addClass("disabled");
-				refreshMain("Init_partie");
 			}
+			
 		}
+		
+		refreshMain("Init_partie");
 		
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert("error : " + errorThrown);
@@ -428,7 +433,7 @@ function appel_don_de(pseudo) {
 			refreshMain("Init_partie");
 
 		} else {
-			$.notiny({text: data.message, theme: 'error'});
+			setMessage(data.message);
 		}
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert("error : " + errorThrown);
@@ -518,17 +523,17 @@ $(function() {
 					$.ajax({
 						url : "PasserTour"
 					}).done(function() {
-						$.notiny({text: "Vous avez passé votre tour", theme: 'success'});
+						setMessage("Vous avez passé votre tour");
 						tour = false;
 	
 					}).fail(function(jqXHR, textStatus, errorThrown) {
 						alert("error : " + errorThrown);
 					});
 				}else{
-					$.notiny({text: "Il reste des dés à donner", theme: 'error'});
+					setMessage("Il reste des dés à donner");
 				}
 			}else{
-				$.notiny({text: "Vous n'avez pas lancé les dés", theme: 'error'});
+				setMessage("Vous n'avez pas lancé les dés");
 			}
 		}
 	});

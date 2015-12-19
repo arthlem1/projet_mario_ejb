@@ -74,8 +74,6 @@ public class JouerCarte extends HttpServlet {
 
 		List<Carte> listeCarte = gestionJoueurPartie.listerCartes(joueur, partieEnCours);
 
-		System.out.println(id_carte);
-
 		int nb_w = (int) session.getAttribute("nb_w");
 
 		JSONObject resultat = new JSONObject();

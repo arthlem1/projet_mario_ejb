@@ -88,7 +88,6 @@ public class Init_partie extends HttpServlet {
 			partieEnCours = gestionParties.getPartieEnCours();
 
 			try {
-				System.out.println("TAILLE PIOCHE " + partieEnCours.getPioche().size());
 				partie.put("pioche", partieEnCours.getPioche().size());
 				partie.put("nb_joueur", partieEnCours.getListeJoueurs().size());
 				partie.put("joueurs", joueurs);
