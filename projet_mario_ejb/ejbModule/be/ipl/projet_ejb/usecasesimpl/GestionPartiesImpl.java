@@ -109,7 +109,6 @@ public class GestionPartiesImpl implements GestionParties {
 		partie = partieDao.creerPartie(nom, createur);
 		System.out.println("ID PARTIE " + partie.getId());
 		// partie.getEtat().ajouterJoueur(createur, partie, this);
-		//partie = partieDao.mettreAJour(partie);
 		return partie;
 	}
 
@@ -184,7 +183,8 @@ public class GestionPartiesImpl implements GestionParties {
 		for (JoueurPartie joueurPartie : joueurs) {
 			System.out.println("ajouter carte joueur "+joueurPartie.getJoueur().getPseudo());
 			for (int i = 0; i < 3; i++) {
-				partie = partieDao.piocher(joueurPartie);
+				Carte carte =partieDao.piocher(partie);
+				joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
 			}
 		}
 		return partie;
@@ -217,7 +217,6 @@ public class GestionPartiesImpl implements GestionParties {
 			for (int i = 0; i < 4; i++) {
 				De de = des.remove(0);
 				joueurPartie.getMainsDe().add(de);
-				//joueurPartieDaoImpl.mettreAJour(joueurPartie);
 			}
 		}
 

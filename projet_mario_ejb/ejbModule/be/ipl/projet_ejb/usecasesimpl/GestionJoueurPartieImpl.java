@@ -61,8 +61,10 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		Util.checkObject(partie);
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDao.recharger(joueur.getId());
+		Carte carte = partieDao.piocher(partie);// premiere carte
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
-		return partieDao.piocher(joueurPartie);
+		joueurPartieDao.rajouterCarte(joueurPartie, carte);
+		return partie;
 	}
 
 	@Override
@@ -178,7 +180,6 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		p = partieDao.recharger(p.getId());
 		j = joueurDao.recharger(j.getId());
 		System.out.println("id j " + j.getId());
-		// p = partieDao.rechercher(p.getNom());
 		System.out.println("id p " + p.getId());
 		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
 	}

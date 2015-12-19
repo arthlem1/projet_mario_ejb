@@ -38,7 +38,6 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 			JoueurPartie courant = tirerJoueurAuHasard(partie);
 			partie.setJoueur_courant(courant);
 			partie.setStarted(true);
-			// mettreAJour(partie);
 		} catch (Exception e) {
 			System.out.println("dans commencer partie");
 			e.printStackTrace();
@@ -76,12 +75,9 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		}
 
 		partie.getListeJoueurs().size();
-		System.out.println("////////////////COURANT : " + partie.getJoueur_courant().getId());
-		System.out.println("////////////////SUIVANT : " + suivant.getId());
 		if (partie.getListeJoueurs().contains(suivant)) {
 			partie.setJoueur_courant(suivant);
 		}
-		System.out.println("////////////////" + partie.getListeJoueurs().size());
 		return partie;
 	}
 
@@ -103,7 +99,6 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 			partie = recharger(partie.getId());
 			partie.getListeJoueurs().add(joueurPartie);
 			// partie.setNbJoueur((partie.getNbJoueur()+1));
-
 		} catch (Exception e) {
 			System.out.println("fail ajouterJoueur");
 			e.printStackTrace();
@@ -134,13 +129,11 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		} else {
 			throw new JoueurNonTrouveException();
 		}
-		// mettreAJour(p);
 	}
 
 	public Partie getPartieInitiale() {
 		String query = "SELECT p FROM Partie p WHERE p.etat = ?1";
 		Partie p = recherche(query, GestionPartiesImpl.Etat.INITIAL);
-		// p = recharger(p.getId());
 		return p;
 	}
 
@@ -152,18 +145,16 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		return p;
 	}
 
-	public Partie piocher(JoueurPartie joueurPartie) throws PiocheVideException {
-		List<Carte> pioche = joueurPartie.getPartie().getPioche();
-		//System.out.println("--------AVANT PIOCHE---------" + pioche.size());
-		//System.out.println("--------MAIN JOUEUR----------" + joueurPartie.getMainsCarte().size());
+	public Carte piocher(Partie p) throws PiocheVideException {
+		p=recharger(p.getId());
+		List<Carte> pioche = p.getPioche();
 		if (pioche.size() == 0) {
-			// TODO On throw vraiment une exception??
 			throw new PiocheVideException("Il n'y a plus de cartes dans la pioche");
 		}
+
+		java.util.Collections.shuffle(pioche);
 		Carte c = pioche.remove(0);
-		//System.out.println("--------APRES PIOCHE---------" + pioche.size());
-		joueurPartie.getMainsCarte().add(c);
-		//System.out.println("--------MAIN JOUEUR----------" + joueurPartie.getMainsCarte().size());
-		return joueurPartie.getPartie();
+		return c;
 	}
+	
 }

@@ -37,7 +37,6 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 
 	public int retirerDe(int joueurId, Partie p) {
 		JoueurPartie jp = getPlayer(joueurId, p.getId());
-		//jp = recharger(jp.getId());
 		jp.getMainsDe().remove(0);
 		mettreAJour(jp);
 		return jp.getMainsDe().size();
@@ -46,7 +45,6 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 	public int addDe(Joueur j, Partie p, De d) {
 		JoueurPartie jp = getPlayer(j.getId(), p.getId());
 		jp.getMainsDe().add(d);
-		//mettreAJour(jp);
 		return jp.getMainsDe().size();
 	}
 
@@ -54,8 +52,6 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		JoueurPartie recever = getPlayer(recevant.getId(), p.getId());
 		JoueurPartie giver = getPlayer(donnant.getId(), p.getId());
 		recever.getMainsDe().add(giver.getMainsDe().remove(giver.getMainsDe().size()-1));
-		//mettreAJour(giver);
-		//mettreAJour(recever);
 		return giver.getMainsDe().size();
 	}
 
@@ -64,7 +60,6 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		if (!jp.getMainsCarte().contains(c))
 			return false;
 		jp.getMainsCarte().remove(c);
-		// mettreAJour(jp);
 		return true;
 	}
 
@@ -76,17 +71,14 @@ public class JoueurPartieDaoImpl extends DaoImpl<Integer, JoueurPartie> {
 		}
 		jg.getMainsCarte().remove(c);
 		jr.getMainsCarte().add(c);
-		//mettreAJour(jr);
-		//mettreAJour(jg);
 		return true;
 	}
 
 	public boolean rajouterCarte(JoueurPartie joueurPartie, Carte c) {
-		//joueurPartie = rechercher(joueurPartie.getId());
+		joueurPartie = recharger(joueurPartie.getId());
 		if (joueurPartie.getMainsCarte().contains(c))
 			return false;
 		joueurPartie.getMainsCarte().add(c);
-		//joueurPartie = mettreAJour(joueurPartie);
 		return true;
 	}
 
