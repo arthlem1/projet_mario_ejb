@@ -25,6 +25,7 @@ import be.ipl.projet_ejb.exceptions.JoueurNonTrouveException;
 import be.ipl.projet_ejb.exceptions.PiocheVideException;
 import be.ipl.projet_ejb.strategy.Strategy;
 import be.ipl.projet_ejb.usecases.GestionJoueurPartie;
+import be.ipl.projet_ejb.usecasesimpl.GestionPartiesImpl.Etat;
 import be.ipl.projet_ejb.util.Util;
 
 @Stateless
@@ -217,6 +218,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		joueurPartieDao.supprimer(joueurPartie.getId());
 		joueur = joueurDao.mettreAJour(joueur);
 
+		if(partie.getListeJoueurs().size()==1){
+			partie.setEtat(Etat.FINI);
+		}
 		return partie.getListeJoueurs().size();
 	}
 
