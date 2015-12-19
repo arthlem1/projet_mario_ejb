@@ -108,4 +108,6 @@ public interface GestionJoueurPartie {
 	public int nbDe(Joueur j, Partie p);
 
 	int supprimerJoueurPartie(Joueur joueur, Partie partie);
+	
+	public Map<String, Integer> getResultatDes();
 }

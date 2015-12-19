@@ -219,4 +219,9 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 
 		return partie.getListeJoueurs().size();
 	}
+
+	@Override
+	public Map<String, Integer> getResultatDes() {
+		return Collections.unmodifiableMap(faces);
+	}
 }
