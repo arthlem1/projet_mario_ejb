@@ -58,22 +58,25 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 
 		partie = mettreAJour(partie);
 		JoueurPartie suivant;
-		JoueurPartie current = partie.getJoueur_courant();
 
-		if (partie.isClockwise()) {
-			if (current.getOrdreJoueurs() == (partie.getListeJoueurs().size())) {
-				suivant = partie.getListeJoueurs().get(0);
+		do {
+			JoueurPartie current = partie.getJoueur_courant();
+			
+			if (partie.isClockwise()) {
+				if (current.getOrdreJoueurs() == (partie.getListeJoueurs().size())) {
+					suivant = partie.getListeJoueurs().get(0);
+				} else {
+					suivant = partie.getListeJoueurs().get((current.getOrdreJoueurs()));
+				}
 			} else {
-				suivant = partie.getListeJoueurs().get((current.getOrdreJoueurs()));
+				if (current.getOrdreJoueurs() == 1) {
+					suivant = partie.getListeJoueurs().get((partie.getListeJoueurs().size() - 1));
+				} else {
+					suivant = partie.getListeJoueurs().get((current.getOrdreJoueurs() - 2));
+				}
 			}
-		} else {
-			if (current.getOrdreJoueurs() == 1) {
-				suivant = partie.getListeJoueurs().get((partie.getListeJoueurs().size() - 1));
-			} else {
-				suivant = partie.getListeJoueurs().get((current.getOrdreJoueurs() - 2));
-			}
-		}
-
+		} while (suivant.isBlocked());
+		
 		partie.getListeJoueurs().size();
 		if (partie.getListeJoueurs().contains(suivant)) {
 			partie.setJoueur_courant(suivant);
@@ -155,5 +158,5 @@ public class PartieDaoImpl extends DaoImpl<Integer, Partie> {
 		Carte c = pioche.remove(0);
 		return c;
 	}
-	
+
 }
