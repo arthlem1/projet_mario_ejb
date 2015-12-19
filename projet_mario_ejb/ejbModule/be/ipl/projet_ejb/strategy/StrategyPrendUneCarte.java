@@ -17,10 +17,6 @@ public class StrategyPrendUneCarte implements Strategy {
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException {
 		Random random = new Random();
-//		if (!partie.getListeJoueurs().contains(joueur))
-//			throw new JoueurNonTrouveException();
-//		if (!partie.getListeJoueurs().contains(cible))
-//			throw new JoueurNonTrouveException();
 		List<Carte> listeCartes = joueurPartieDao.getCartes(cible, partie);
 		Carte carte = listeCartes.get(random.nextInt(listeCartes.size() - 1));
 		joueurPartieDao.transfererCarte(cible, joueur, partie, carte);

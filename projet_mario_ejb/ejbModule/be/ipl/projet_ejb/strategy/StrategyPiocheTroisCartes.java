@@ -17,8 +17,6 @@ public class StrategyPiocheTroisCartes implements Strategy {
 	public void effectuer(DeDaoImpl deDao, PartieDaoImpl partieDao, JoueurPartieDaoImpl joueurPartieDao, Partie partie,
 			Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException {
 		List<Carte> pioche = partie.getPioche();
-//		if (!partie.getListeJoueurs().contains(joueur))
-//			throw new JoueurNonTrouveException();
 		for (int i = 0; i < 3; i++) {
 			if (pioche.size() == 0) {
 				/*

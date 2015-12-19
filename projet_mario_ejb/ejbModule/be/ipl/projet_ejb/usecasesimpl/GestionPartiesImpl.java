@@ -52,7 +52,6 @@ public class GestionPartiesImpl implements GestionParties {
 				JoueurPartie jp;
 				try {
 					jp = new JoueurPartie(joueur, partie, ordreJoueur++);
-					System.out.println("ID JOUEUR " + jp.getJoueur().getId() + " ID PARTIE " + jp.getPartie().getId());
 					gpi.joueurPartieDaoImpl.enregistrer(jp);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -108,8 +107,6 @@ public class GestionPartiesImpl implements GestionParties {
 		}
 		ordreJoueur = 2;
 		partie = partieDao.creerPartie(nom, createur);
-		System.out.println("ID PARTIE " + partie.getId());
-		// partie.getEtat().ajouterJoueur(createur, partie, this);
 		return partie;
 	}
 
@@ -179,10 +176,7 @@ public class GestionPartiesImpl implements GestionParties {
 	public Partie initialiserMainsCartes(Partie partie) throws PiocheVideException {
 		partie = partieDao.recharger(partie.getId());
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
-		int nbJoueur = joueurs.size();
-		System.out.println("********"+nbJoueur);
 		for (JoueurPartie joueurPartie : joueurs) {
-			System.out.println("ajouter carte joueur "+joueurPartie.getJoueur().getPseudo());
 			for (int i = 0; i < 3; i++) {
 				Carte carte =partieDao.piocher(joueurPartie);
 				joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
@@ -207,12 +201,8 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserMainsDes(Partie partie) {
-		System.out.println("InitialiserMainDe");
 		partie = partieDao.recharger(partie.getId());
 		List<De> des = deDao.lister();
-		for (De de : des) {
-			System.out.println("ICI id d� " + de.getId());
-		}
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
 			for (int i = 0; i < 4; i++) {

@@ -74,7 +74,6 @@ public abstract class DaoImpl<K, E> implements Dao<K, E> {
 	}
 
 	protected E recherche(String queryString, Object... params) {
-		System.out.println("nb param " + params.length);
 		try {
 			TypedQuery<E> query = entityManager.createQuery(queryString, entityClass);
 			int i = 0, j = 1;

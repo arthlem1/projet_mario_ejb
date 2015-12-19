@@ -122,7 +122,6 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 		faceC = 0;
 		faces = new HashMap<String, Integer>();
 		JoueurPartie jp = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
-		System.out.println("Main Dés: " + jp.getMainsDe().size());
 		De de = deDao.recharger(jp.getMainsDe().get(0).getId());
 		Random random = new Random();
 		for (int i = 0; i < nbDes; i++) {
@@ -182,8 +181,6 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	public boolean lancerTour(Joueur j, Partie p) {
 		p = partieDao.recharger(p.getId());
 		j = joueurDao.recharger(j.getId());
-		System.out.println("id j " + j.getId());
-		System.out.println("id p " + p.getId());
 		return !joueurPartieDao.isBlocked(j.getId(), p.getId());
 	}
 
