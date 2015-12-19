@@ -192,7 +192,7 @@ public class GestionPartiesImpl implements GestionParties {
 
 	@Override
 	public Partie initialiserPioche(Partie partie) {
-		partie = partieDao.rechercher(partie.getNom());
+		partie = partieDao.recharger(partie.getId());
 		List<Carte> pioche = partie.getPioche();
 		List<Carte> cartes = carteDao.lister();
 		pioche.addAll(cartes);
@@ -210,7 +210,7 @@ public class GestionPartiesImpl implements GestionParties {
 		partie = partieDao.recharger(partie.getId());
 		List<De> des = deDao.lister();
 		for (De de : des) {
-			System.out.println("ICI id dé " + de.getId());
+			System.out.println("ICI id dï¿½ " + de.getId());
 		}
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		for (JoueurPartie joueurPartie : joueurs) {
