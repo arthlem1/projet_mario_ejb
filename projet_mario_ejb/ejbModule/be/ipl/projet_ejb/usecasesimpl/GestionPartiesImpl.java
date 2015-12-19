@@ -102,7 +102,7 @@ public class GestionPartiesImpl implements GestionParties {
 		} catch (Exception e) {
 			return null;
 		}
-		Partie partie = partieDao.rechercher(nom);
+		Partie partie = partieDao.getPartieEnCours();
 		if (partie != null && partie.getEtat() == Etat.EN_COURS) {
 			throw new PartieDejaEnCoursException("Impossible de cr�er une partie, une autre est d�j� en cours");
 		}
