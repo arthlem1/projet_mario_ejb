@@ -18,10 +18,11 @@ public interface GestionJoueurPartie {
 	 * 
 	 * @param joueurPartie.//
 	 *            adapter DAo car doublon dans les params
+	 * @return 
 	 * @throws PiocheVideException
 	 *             si plus de carte dans la pioche
 	 */
-	void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException;
+	Partie tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException;
 
 	/**
 	 * Méthode qui va activer l'effet de la carte.
@@ -29,7 +30,7 @@ public interface GestionJoueurPartie {
 	 * @param carte.//idem
 	 * @throws JoueurNonTrouveException
 	 */
-	void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException;
+	Partie utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException;
 
 	/**
 	 * lister les cartes qui peuvent être utilisées avec le nombre de Wasabis

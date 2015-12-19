@@ -56,39 +56,33 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public void tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
+	public Partie tirerUneCarte(Partie partie, Joueur joueur) throws PiocheVideException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
-		// List<Carte> pioche = partie.getPioche();
-		//// if (pioche.size() == 0) {
-		//// throw new PiocheVideException("Il n'y a plus de cartes dans la
-		// pioche");
-		//// /*
-		//// * TODO à discuter. Selon les consignes, si plus de carte dans la
-		//// * pioche, prendre une carte dans la main d'un autre
-		//// */
-		//// }
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDao.recharger(joueur.getId());
-		Carte carte = partieDao.piocher(partie);// premiere carte
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
-		joueurPartieDao.rajouterCarte(joueurPartie, carte);
+		return partieDao.piocher(joueurPartie);
 	}
 
 	@Override
-	public void utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize) throws JoueurNonTrouveException {
+	public Partie utiliserCarte(Carte carte, Partie partie, Joueur joueur, Joueur cible, boolean clockwize)
+			throws JoueurNonTrouveException {
 		Util.checkObject(joueur);
 		Util.checkObject(partie);
 		Util.checkObject(carte);
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDao.recharger(joueur.getId());
-		cible = joueurDao.recharger(cible.getId());
+		if (cible != null)
+			cible = joueurDao.recharger(cible.getId());
 		partieDao.passerAuJoueurSuivant(partie);
-		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible,clockwize);
+		effetCarte.get(carte.getCodeEffet()).effectuer(deDao, partieDao, joueurPartieDao, partie, joueur, cible,
+				clockwize);
 		joueurPartieDao.retirerCarte(joueur, partie, carte);
 		if (partie.getJoueur_courant().getMainsDe().isEmpty()) {
 			partie.setVainqueur(joueurDao.rechercher(partie.getJoueur_courant().getJoueur().getId()));
 		}
+		return partie;
 	}
 
 	@Override
@@ -208,20 +202,20 @@ public class GestionJoueurPartieImpl implements GestionJoueurPartie {
 	}
 
 	@Override
-	public int supprimerJoueurPartie(Joueur joueur, Partie partie){
+	public int supprimerJoueurPartie(Joueur joueur, Partie partie) {
 
 		partie = partieDao.recharger(partie.getId());
 		joueur = joueurDao.recharger(joueur.getId());
 		JoueurPartie joueurPartie = joueurPartieDao.getPlayer(joueur.getId(), partie.getId());
-		
+
 		partie.supprimer(joueurPartie);
 		joueur.supprimer(joueurPartie);
-		
+
 		partie = partieDao.mettreAJour(partie);
-		
+
 		joueurPartieDao.supprimer(joueurPartie.getId());
 		joueur = joueurDao.mettreAJour(joueur);
-		
+
 		return partie.getListeJoueurs().size();
 	}
 }

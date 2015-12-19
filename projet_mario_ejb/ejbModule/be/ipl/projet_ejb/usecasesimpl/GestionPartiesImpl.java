@@ -178,18 +178,15 @@ public class GestionPartiesImpl implements GestionParties {
 	@Override
 	public Partie initialiserMainsCartes(Partie partie) throws PiocheVideException {
 		partie = partieDao.recharger(partie.getId());
-		// List<Carte> cartes = carteDao.lister();
 		List<JoueurPartie> joueurs = partieDao.listerJoueursPartie(partie);
 		int nbJoueur = joueurs.size();
 		System.out.println("********"+nbJoueur);
 		for (JoueurPartie joueurPartie : joueurs) {
 			System.out.println("ajouter carte joueur "+joueurPartie.getJoueur().getPseudo());
 			for (int i = 0; i < 3; i++) {
-				Carte carte =partieDao.piocher(partie);
-				joueurPartieDaoImpl.rajouterCarte(joueurPartie, carte);
+				partie = partieDao.piocher(joueurPartie);
 			}
 		}
-
 		return partie;
 	}
 
